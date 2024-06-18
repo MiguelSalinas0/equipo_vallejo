@@ -1,0 +1,15 @@
+DOCUMENTACION ML: https://developers.mercadolibre.com.ar/es_ar/
+    - OBTENER ORDENES POR FECHA: https://api.mercadolibre.com/orders/search?seller=$SELLER_ID&order.date_created.from=2015-07-01T00:00:00.000-00:00&order.date_created.to=2015-07-31T00:00:00.000-00:00
+    - CONSULTAR DATOS DE FACTURACION: https://developers.mercadolibre.com.ar/es_ar/facturacion
+        -- https://developers.mercadolibre.com.ar/es_ar/facturacion#Consultar%20los%20datos%20de%20facturaci%C3%B3n
+        -- OBTENER DATOS DEL CLIENTE POR ORDEN: https://api.mercadolibre.com/orders/$ORDER_ID/billing_info
+    - ACTUALIZAR ESTADO DE ORDEN: https://developers.mercadolibre.com.ar/es_ar/estados-de-ordenes-me1
+
+1 - Establecer conexion con API ML y DB
+    - Necesitamos configuracion (dll,etc) 
+
+2 - Tipar respuesta de API ML
+    - CLASE ORDEN 
+    - CLASE CLIENTE (DENTRO DE CLASE ORDEN)
+    
+3 - INSERTAR EN LA DB MEDIANTE EL SP
