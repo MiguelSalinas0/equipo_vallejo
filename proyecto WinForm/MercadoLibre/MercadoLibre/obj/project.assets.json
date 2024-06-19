@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\xampp\\htdocs\\scripts_php\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
+      "projectUniqueName": "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
       "projectName": "MercadoLibre",
-      "projectPath": "C:\\xampp\\htdocs\\scripts_php\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
+      "projectPath": "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\xampp\\htdocs\\scripts_php\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\obj\\",
+      "outputPath": "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
