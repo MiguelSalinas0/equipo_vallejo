@@ -18,3 +18,4 @@ C:\xampp\htdocs\scripts\ordenes\proyecto WinForm\MercadoLibre\MercadoLibre\obj\D
 C:\xampp\htdocs\scripts\ordenes\proyecto WinForm\MercadoLibre\MercadoLibre\obj\Debug\net8.0-windows\MercadoLibre.pdb
 C:\xampp\htdocs\scripts\ordenes\proyecto WinForm\MercadoLibre\MercadoLibre\obj\Debug\net8.0-windows\MercadoLibre.genruntimeconfig.cache
 C:\xampp\htdocs\scripts\ordenes\proyecto WinForm\MercadoLibre\MercadoLibre\obj\Debug\net8.0-windows\ref\MercadoLibre.dll
+C:\xampp\htdocs\scripts\ordenes\proyecto WinForm\MercadoLibre\MercadoLibre\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
