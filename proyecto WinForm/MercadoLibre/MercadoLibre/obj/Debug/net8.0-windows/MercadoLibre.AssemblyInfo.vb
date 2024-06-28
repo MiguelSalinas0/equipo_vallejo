@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("MercadoLibre"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c5883ddecc9ff1722de7b0afd1a40c9a721018f"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5d2b9ac4d87fac890242cded5fed005079ce6a8"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("MercadoLibre"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("MercadoLibre"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _

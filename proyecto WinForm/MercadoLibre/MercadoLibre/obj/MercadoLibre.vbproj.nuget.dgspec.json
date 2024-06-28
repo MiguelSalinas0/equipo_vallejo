@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj": {}
+    "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj": {}
   },
   "projects": {
-    "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj": {
+    "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
+        "projectUniqueName": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
         "projectName": "MercadoLibre",
-        "projectPath": "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
+        "projectPath": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\MercadoLibre.vbproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\xampp\\htdocs\\scripts\\ordenes\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\obj\\",
+        "outputPath": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\proyecto WinForm\\MercadoLibre\\MercadoLibre\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,20 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.2.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

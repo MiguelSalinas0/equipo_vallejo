@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MercadoLibre</id>
+    <version>1.0.0</version>
+    <authors>MercadoLibre</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="d5d2b9ac4d87fac890242cded5fed005079ce6a8" />
+    <dependencies>
+      <group targetFramework="net8.0-windows7.0" />
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net8.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WindowsForms" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\MercadoLibre\MercadoLibre\bin\Debug\net8.0-windows\MercadoLibre.runtimeconfig.json" target="lib\net8.0-windows7.0\MercadoLibre.runtimeconfig.json" />
+    <file src="C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\MercadoLibre\MercadoLibre\bin\Debug\net8.0-windows\MercadoLibre.dll" target="lib\net8.0-windows7.0\MercadoLibre.dll" />
+  </files>
+</package>

@@ -72,8 +72,11 @@ $redirect_uri = 'https://mercadolibres.com.ar'; // Your redirect_uri
     $to =  date('Y-m-d',strtotime("+1 days")).'T00:00:00';
     $from = date('Y-m-d',strtotime("-2 days")).'T00:00:00';
 
+
+
 $url = 'https://api.mercadolibre.com/orders/search?seller='.$user_id.'&order.status=paid&order.date_created.from='.$from.'.000-00:00&order.date_created.to='.$to.'.000-00:00';
 
+echo $url. "--------------------------";
    $headers = [    
      'Authorization: Bearer '.$ss["token"]
    ];
