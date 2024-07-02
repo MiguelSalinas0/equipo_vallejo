@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.cegid.fr/Retail/1.0" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" targetNamespace="http://www.cegid.fr/Retail/1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.cegid.fr/Retail/1.0/Imports">
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd0" namespace="http://www.cegid.fr/Retail/1.0" />
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd2" namespace="http://www.cegid.fr/fault" />
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IItemInventoryWcfService_HelloWorld_InputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_HelloWorld_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_HelloWorld_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://www.cegid.fr/fault" name="detail" element="q1:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_HelloWorld_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://www.cegid.fr/fault" name="detail" element="q2:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_HelloWorld_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q3="http://www.cegid.fr/fault" name="detail" element="q3:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_HelloWorld_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q4="http://www.cegid.fr/fault" name="detail" element="q4:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableQty_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableQty" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableQty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableQtyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableQty_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://www.cegid.fr/fault" name="detail" element="q5:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableQty_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://www.cegid.fr/fault" name="detail" element="q6:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableQty_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q7="http://www.cegid.fr/fault" name="detail" element="q7:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableQty_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q8="http://www.cegid.fr/fault" name="detail" element="q8:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableCumulativeQtyAllStores" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableCumulativeQtyAllStoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://www.cegid.fr/fault" name="detail" element="q9:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://www.cegid.fr/fault" name="detail" element="q10:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q11="http://www.cegid.fr/fault" name="detail" element="q11:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q12="http://www.cegid.fr/fault" name="detail" element="q12:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetInventoryDetailByStore_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInventoryDetailByStore" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetInventoryDetailByStore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInventoryDetailByStoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetInventoryDetailByStore_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://www.cegid.fr/fault" name="detail" element="q13:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetInventoryDetailByStore_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://www.cegid.fr/fault" name="detail" element="q14:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetInventoryDetailByStore_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q15="http://www.cegid.fr/fault" name="detail" element="q15:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetInventoryDetailByStore_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q16="http://www.cegid.fr/fault" name="detail" element="q16:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_UpdateShoppingCart_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateShoppingCart" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_UpdateShoppingCart_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateShoppingCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_UpdateShoppingCart_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://www.cegid.fr/fault" name="detail" element="q17:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_UpdateShoppingCart_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://www.cegid.fr/fault" name="detail" element="q18:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_UpdateShoppingCart_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q19="http://www.cegid.fr/fault" name="detail" element="q19:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_UpdateShoppingCart_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q20="http://www.cegid.fr/fault" name="detail" element="q20:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_ResetShoppingCart_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResetShoppingCart" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_ResetShoppingCart_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetShoppingCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_ResetShoppingCart_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://www.cegid.fr/fault" name="detail" element="q21:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_ResetShoppingCart_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://www.cegid.fr/fault" name="detail" element="q22:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_ResetShoppingCart_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q23="http://www.cegid.fr/fault" name="detail" element="q23:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_ResetShoppingCart_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q24="http://www.cegid.fr/fault" name="detail" element="q24:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetListItemInventoryDetailByStore_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetListItemInventoryDetailByStore" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetListItemInventoryDetailByStore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetListItemInventoryDetailByStoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetListItemInventoryDetailByStore_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://www.cegid.fr/fault" name="detail" element="q25:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetListItemInventoryDetailByStore_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://www.cegid.fr/fault" name="detail" element="q26:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetListItemInventoryDetailByStore_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q27="http://www.cegid.fr/fault" name="detail" element="q27:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="IItemInventoryWcfService_GetListItemInventoryDetailByStore_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q28="http://www.cegid.fr/fault" name="detail" element="q28:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:portType name="IItemInventoryWcfService">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorld" message="tns:IItemInventoryWcfService_HelloWorld_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldResponse" message="tns:IItemInventoryWcfService_HelloWorld_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:IItemInventoryWcfService_HelloWorld_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:IItemInventoryWcfService_HelloWorld_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldExceptionDetailFault" name="ExceptionDetail" message="tns:IItemInventoryWcfService_HelloWorld_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:IItemInventoryWcfService_HelloWorld_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableQty">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQty" message="tns:IItemInventoryWcfService_GetAvailableQty_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyResponse" message="tns:IItemInventoryWcfService_GetAvailableQty_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:IItemInventoryWcfService_GetAvailableQty_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:IItemInventoryWcfService_GetAvailableQty_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyExceptionDetailFault" name="ExceptionDetail" message="tns:IItemInventoryWcfService_GetAvailableQty_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:IItemInventoryWcfService_GetAvailableQty_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableCumulativeQtyAllStores">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQtyAllStores" message="tns:IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQtyAllStoresResponse" message="tns:IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQtyAllStoresCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQtyAllStoresBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQtyAllStoresExceptionDetailFault" name="ExceptionDetail" message="tns:IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQtyAllStoresCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:IItemInventoryWcfService_GetAvailableCumulativeQtyAllStores_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInventoryDetailByStore">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore" message="tns:IItemInventoryWcfService_GetInventoryDetailByStore_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStoreResponse" message="tns:IItemInventoryWcfService_GetInventoryDetailByStore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStoreCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:IItemInventoryWcfService_GetInventoryDetailByStore_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStoreBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:IItemInventoryWcfService_GetInventoryDetailByStore_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStoreExceptionDetailFault" name="ExceptionDetail" message="tns:IItemInventoryWcfService_GetInventoryDetailByStore_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStoreCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:IItemInventoryWcfService_GetInventoryDetailByStore_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateShoppingCart">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCart" message="tns:IItemInventoryWcfService_UpdateShoppingCart_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartResponse" message="tns:IItemInventoryWcfService_UpdateShoppingCart_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:IItemInventoryWcfService_UpdateShoppingCart_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:IItemInventoryWcfService_UpdateShoppingCart_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartExceptionDetailFault" name="ExceptionDetail" message="tns:IItemInventoryWcfService_UpdateShoppingCart_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:IItemInventoryWcfService_UpdateShoppingCart_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetShoppingCart">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCart" message="tns:IItemInventoryWcfService_ResetShoppingCart_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartResponse" message="tns:IItemInventoryWcfService_ResetShoppingCart_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:IItemInventoryWcfService_ResetShoppingCart_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:IItemInventoryWcfService_ResetShoppingCart_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartExceptionDetailFault" name="ExceptionDetail" message="tns:IItemInventoryWcfService_ResetShoppingCart_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:IItemInventoryWcfService_ResetShoppingCart_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListItemInventoryDetailByStore">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetailByStore" message="tns:IItemInventoryWcfService_GetListItemInventoryDetailByStore_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetailByStoreResponse" message="tns:IItemInventoryWcfService_GetListItemInventoryDetailByStore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetailByStoreCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:IItemInventoryWcfService_GetListItemInventoryDetailByStore_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetailByStoreBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:IItemInventoryWcfService_GetListItemInventoryDetailByStore_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetailByStoreExceptionDetailFault" name="ExceptionDetail" message="tns:IItemInventoryWcfService_GetListItemInventoryDetailByStore_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetailByStoreCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:IItemInventoryWcfService_GetListItemInventoryDetailByStore_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
