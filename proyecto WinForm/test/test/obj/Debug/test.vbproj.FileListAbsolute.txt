@@ -34,3 +34,39 @@ C:\Users\Usuario\source\repos\test\test\obj\Debug\test.vbproj.Up2Date
 C:\Users\Usuario\source\repos\test\test\obj\Debug\test.exe
 C:\Users\Usuario\source\repos\test\test\obj\Debug\test.xml
 C:\Users\Usuario\source\repos\test\test\obj\Debug\test.pdb
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\test.exe.config
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\test.exe
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\test.pdb
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\test.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\ConexionBBDD.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\Newtonsoft.Json.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Buffers.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Data.SqlClient.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Memory.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Numerics.Vectors.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Text.Encodings.Web.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Text.Json.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.ValueTuple.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\Newtonsoft.Json.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Buffers.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Data.SqlClient.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Memory.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Numerics.Vectors.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Text.Encodings.Web.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Text.Json.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\bin\Debug\System.ValueTuple.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.vbproj.AssemblyReference.cache
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.Form1.resources
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.Resources.resources
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.vbproj.GenerateResource.cache
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.vbproj.CoreCompileInputs.cache
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.vbproj.Up2Date
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.exe
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.xml
+C:\xampp\htdocs\scripts\equipo_vallejo\proyecto WinForm\test\test\obj\Debug\test.pdb

@@ -5,12 +5,30 @@ Imports Newtonsoft.Json
 Imports test.ClienteMl
 Imports test.Producto
 Imports test.ServiceReference1
+Imports test.CustomBehavior
 
 Public Class Form1
+
+    Dim dtSucs As DataTable
+
+    'Datos ML
+    Dim apiMLBase As String = "https://api.mercadolibre.com/"
+    Dim userId As Integer = 257128833
+    Dim clientId As String = "5038796649356510"
+    Dim clientSecret As String = "SSP5q4xPndDRru0ut4FelVTg5BrUXRu7"
+    Dim dateFrom As String = Date.Now.AddDays(-2).Date.ToString("yyyy-MM-dd") + "T00:00:00"
+    Dim dateTo As String = Date.Now.AddDays(1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
+    Dim url As String = apiMLBase + "orders/search?seller=" + userId.ToString + "&order.status=paid&order.date_created.from=" + dateFrom + ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
+    Dim httpClient = New HttpClient()
+
+
+    'Datos ordenes
+    Dim ordenes As List(Of Producto)
+
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         'Establecer la conexion a DB 
-        Dim dtSucs As DataTable
+
 
         dtSucs = ConexionBBDD.ConexionSQL.EjecutarSP("sp_obtener_sucursales")
 
@@ -20,22 +38,11 @@ Public Class Form1
         Dim dtToken As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP_SAP("SP_OBTENER_TOKEN", 1)
         Dim token As String = dtToken.Rows(0).Item(0)
 
-        'Datos ML
-        Dim apiMLBase As String = "https://api.mercadolibre.com/"
-        Dim userId As Integer = 257128833
-        Dim clientId As String = "5038796649356510"
-        Dim clientSecret As String = "SSP5q4xPndDRru0ut4FelVTg5BrUXRu7"
 
-        Dim dateFrom As String = Date.Now.AddDays(-2).Date.ToString("yyyy-MM-dd") + "T00:00:00"
-        Dim dateTo As String = Date.Now.AddDays(1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
-
-        Dim url As String = apiMLBase + "orders/search?seller=" + userId.ToString + "&order.status=paid&order.date_created.from=" + dateFrom + ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
-        Dim httpClient = New HttpClient()
-
+        'Consulta a ML
         httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token)
 
         Dim respuesta As HttpResponseMessage = Await httpClient.GetAsync(url)
-
         Dim body = Await respuesta.Content.ReadAsStringAsync
 
         Dim jsonDoc As JsonDocument = JsonDocument.Parse(body)
@@ -43,7 +50,7 @@ Public Class Form1
 
 
         '' tipeo de las ordenes
-        Dim ordenes As List(Of Producto) = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString)
+        ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString)
         Dim ordenId As Long
         Dim urlGetBuy As String
         Dim respuestaBuy As HttpResponseMessage
@@ -56,7 +63,6 @@ Public Class Form1
         For Each ord In ordenes
             ordenId = ord.Id
             urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
-            'httpClient.DefaultRequestHeaders.Add("x-format-new", True)
 
             ' Peticion para traer detalles del cliente a partir de una orden
             respuestaBuy = Await httpClient.GetAsync(urlGetBuy)
@@ -168,39 +174,14 @@ Public Class Form1
             For Each item In orderItems
                 'txtRespuesta.Text = headerDate
                 Dim reference As String = item.Item.SellerCustomField
-                Dim storeId As String = "000199"
+                Dim storeId As String = "000013"
                 Dim label As String = item.Item.Title.ToString
                 Dim deliveryDate As String = headerDate.ToString("dd-MM-yyyy")
                 Dim quantity As Integer = item.Quantity
                 Dim netUnitPrice As Double = item.UnitPrice
-                Dim warehouseId As String = "000102"
-                Dim itemIdentifier As ItemIdentifier
-                Dim retailContext As RetailContext
+                Dim warehouseId As String = "000013"
 
-                'ItemIdentifier.Reference = item.Item.SellerCustomField
-
-                ' Crear una instancia del cliente del servicio
-                Dim binding As New BasicHttpBinding()
-                binding.Security.Mode = BasicHttpSecurityMode.TransportCredentialOnly
-                binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
-
-                Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc")
-
-                Dim clientCegid As New ItemInventoryWcfServiceClient(binding, endpoint)
-
-                ' Establecer las credenciales
-                clientCegid.ClientCredentials.UserName.UserName = "VATEST\\MATIAS"
-                clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
-                retailContext.DatabaseId = "VATEST"
-                itemIdentifier.Reference = item.Item.SellerCustomField
-
-                Try
-
-                    Dim resp = clientCegid.GetAvailableQty(item.Item.Id, itemIdentifier, storeId, warehouseId, retailContext)
-
-                Catch ex As Exception
-
-                End Try
+                cegid(item, storeId, warehouseId)
 
                 Dim dtMLDetalle As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_DETALLE",
                     ordenId,
@@ -222,9 +203,49 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSucursales.SelectedIndexChanged
+
+    Sub cegid(ByVal item As OrderItem, ByVal storeId As String, ByVal warehouseId As String)
+
+        Dim itemIdentifier As New ServiceReference1.ItemIdentifier
+        Dim retailContext = New RetailContext
+
+        'ItemIdentifier.Reference = item.Item.SellerCustomField
+
+        ' Crear una instancia del cliente del servicio
+        Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+
+
+        'binding.Security.Mode = BasicHttpSecurityMode.TransportCredentialOnly
+        binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
+        binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
+
+        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?singleWsdl")
+
+        Dim clientCegid As New ItemInventoryWcfServiceClient(binding, endpoint)
+
+        ' Establecer las credenciales
+        clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
+        clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
+
+        retailContext.DatabaseId = "VATEST"
+        ' Agregar el comportamiento personalizado para el Content-Type
+        'Dim customBehavior As New CustomBehavior()
+        'clientCegid.Endpoint.EndpointBehaviors.Add(customBehavior)
+
+        itemIdentifier.Id = item.Item.SellerCustomField
+        itemIdentifier.Reference = item.Item.SellerCustomField
+
+        Try
+
+            Dim resp = clientCegid.GetAvailableQty(item.Item.Id.ToString, itemIdentifier, storeId.ToString, warehouseId.ToString, retailContext)
+            MsgBox(resp.AvailableQty)
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
+
 End Class
 
 
