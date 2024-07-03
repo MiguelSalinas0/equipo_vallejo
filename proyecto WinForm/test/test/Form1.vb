@@ -8,7 +8,7 @@ Imports test.ServiceReference1
 
 Public Class Form1
 
-    'Dim dtSucs As DataTable
+    Dim dtSucs As DataTable
 
     'Datos ML
     Dim apiMLBase As String = "https://api.mercadolibre.com/"
@@ -49,173 +49,12 @@ Public Class Form1
 
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        'Establecer la conexion a DB 
 
-
-        'dtSucs = ConexionBBDD.ConexionSQL.EjecutarSP("sp_obtener_sucursales")
+        'Obtener sucursales
+        dtSucs = ConexionBBDD.ConexionSQL.EjecutarSP("sp_obtener_sucursales")
 
         'cmbSucursales.DataSource = dtSucs
         'cmbSucursales.DisplayMember = "Sucursal"
-
-
-        'Consulta a ML
-        'httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token)
-
-        'Dim respuesta As HttpResponseMessage = Await httpClient.GetAsync(urlGetOrdenes)
-        'Dim body = Await respuesta.Content.ReadAsStringAsync
-
-        'Dim jsonDoc As JsonDocument = JsonDocument.Parse(body)
-        'Dim root As JsonElement = jsonDoc.RootElement
-
-
-        '' tipeo de las ordenes
-        'ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString)
-        'Dim ordenId As Long
-        'Dim urlGetBuy As String
-        'Dim respuestaBuy As HttpResponseMessage
-        'Dim bodyBuy As String
-        'Dim jsonClient As JsonDocument
-        'Dim rootC As JsonElement
-        'HttpClient.DefaultRequestHeaders.Add("x-version", 2)
-
-        'iteracion de ordenes y obtencion de informacion de cliente
-        'For Each ord In ordenes
-        '    ordenId = ord.Id
-        '    urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
-
-        '    ' Peticion para traer detalles del cliente a partir de una orden
-        '    respuestaBuy = Await httpClient.GetAsync(urlGetBuy)
-        '    bodyBuy = Await respuestaBuy.Content.ReadAsStringAsync
-        '    jsonClient = JsonDocument.Parse(bodyBuy)
-        '    rootC = jsonClient.RootElement
-        '    Dim buy As ClienteMl = JsonConvert.DeserializeObject(Of ClienteMl)(rootC.ToString)
-
-        '    ' Peticion para traer datos del envio a partir de una orden
-        '    Dim urlGetshipment As String = apiMLBase & "orders/" & ordenId & "/shipments"
-        '    Dim respuestaShip = Await httpClient.GetAsync(urlGetshipment)
-        '    Dim bodyShip = Await respuestaShip.Content.ReadAsStringAsync
-        '    Dim jsonShip = JsonDocument.Parse(bodyShip)
-        '    Dim rootS = jsonShip.RootElement
-
-
-        '    ' Definicion de parametros para SP
-        '    Dim firstName As String = buy.Buyer.BillingInfo.Name
-        '    Dim lastName As String = buy.Buyer.BillingInfo.LastName
-        '    Dim iscompany As Boolean = 0
-        '    Dim dniOrCuit As String = buy.Buyer.BillingInfo.Identification.Number
-        '    Dim CompanyIdNumer As String
-        '    Dim addressLine As String = buy.Buyer.BillingInfo.Address.StreetName
-        '    Dim city As String = buy.Buyer.BillingInfo.Address.CityName
-        '    Dim zipCode As String = buy.Buyer.BillingInfo.Address.ZipCode
-        '    Dim homePhoneNumber As String = ""
-        '    Dim fiscalId As String = dniOrCuit
-        '    Dim receiverAddressCity As String = rootS.GetProperty("receiver_address").GetProperty("state").GetProperty("name").ToString
-        '    Dim receiverAddressFirstName As String = rootS.GetProperty("receiver_address").GetProperty("receiver_name").ToString
-        '    Dim receiverAddressLastName As String = rootS.GetProperty("receiver_address").GetProperty("receiver_name").ToString
-        '    Dim receiverAddressLine As String = rootS.GetProperty("receiver_address").GetProperty("address_line").ToString
-        '    Dim receiverAddressZipCode As String = rootS.GetProperty("receiver_address").GetProperty("zip_code").ToString
-        '    Dim headerComment As String = ord.Shipping.Id
-        '    Dim headerCustomerId As String = dniOrCuit
-        '    Dim headerCurrencyId As String = "ARG"
-        '    Dim headerDate As DateTime = rootS.GetProperty("date_created").ToString
-        '    Dim headerInternalReference As String = ordenId
-        '    Dim headerBillingStatus As String = rootS.GetProperty("status").ToString
-        '    Dim headerDeliveryType As String = rootS.GetProperty("shipping_option").GetProperty("delivery_type").ToString
-        '    Dim headerFollowUpStatus As String = "WaitingCommodity"
-        '    Dim headerGiftMessageType As String = "None"
-        '    Dim headerPaymentStatus As String = "Totally"
-        '    Dim headerReturnStatus As String = rootS.GetProperty("return_details").ToString
-        '    Dim headerShippingStatus As String = "Pending"
-        '    Dim headerTransporter As String = "MELI VALLEJO"
-        '    Dim headerStoreId As String = "000102"
-        '    Dim headerWareHouseId As String = "000102"
-        '    Dim headerSalesPersonId As String = "MELI"
-        '    Dim headerType As String = "CustomerOrder"
-        '    Dim amount As String = "0"
-        '    Dim methodId As String = "ECO"
-        '    Dim paymentId As Integer = 20
-        '    Dim dueDate As DateTime = rootS.GetProperty("date_created").ToString
-        '    Dim isReceivedPayment As Boolean = 0
-        '    Dim currencyId As String = "ARG"
-
-        '    CompanyIdNumer = dniOrCuit
-        '    If buy.Buyer.BillingInfo.Identification.Type = "CUIT" Then
-        '        lastName = firstName + " " + buy.Buyer.BillingInfo.LastName
-        '        firstName = ""
-        '        iscompany = 1
-        '    End If
-
-        ' insercion de datos de cabecera
-        'Dim dtMLCabecera As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_CABECERA",
-        '        "VALLEJO",
-        '        dniOrCuit,
-        '        firstName,
-        '        iscompany,
-        '        lastName,
-        '        addressLine,
-        '        city,
-        '        zipCode,
-        '        homePhoneNumber,
-        '        fiscalId,
-        '        CompanyIdNumer,
-        '        receiverAddressCity,
-        '        receiverAddressFirstName,
-        '        receiverAddressLastName,
-        '        receiverAddressLine,
-        '        receiverAddressZipCode,
-        '        headerComment,
-        '        headerCustomerId,
-        '        headerCurrencyId,
-        '        headerDate,
-        '        headerInternalReference,
-        '        headerBillingStatus,
-        '        headerDeliveryType,
-        '        headerFollowUpStatus,
-        '        headerGiftMessageType,
-        '        headerPaymentStatus,
-        '        headerReturnStatus,
-        '        headerShippingStatus,
-        '        headerTransporter,
-        '        headerStoreId,
-        '        headerWareHouseId,
-        '        headerSalesPersonId,
-        '        headerType,
-        '        amount,
-        '        methodId,
-        '        paymentId,
-        '        dueDate,
-        '        isReceivedPayment,
-        '        currencyId
-        '    )
-
-        'Dim orderItems As List(Of OrderItem) = ord.OrderItems
-
-        'For Each item In orderItems
-        '        'txtRespuesta.Text = headerDate
-        '        Dim reference As String = item.Item.SellerCustomField
-        '        Dim storeId As String = "000013"
-        '        Dim label As String = item.Item.Title.ToString
-        '        Dim deliveryDate As String = headerDate.ToString("dd-MM-yyyy")
-        '        Dim quantity As Integer = item.Quantity
-        '        Dim netUnitPrice As Double = item.UnitPrice
-        '        Dim warehouseId As String = "000013"
-
-        '        cegid(item, storeId, warehouseId)
-
-        '        Dim dtMLDetalle As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_DETALLE",
-        '            ordenId,
-        '            reference,
-        '            storeId,
-        '            label,
-        '            deliveryDate,
-        '            quantity,
-        '            netUnitPrice,
-        '            warehouseId
-        '        )
-
-        '    Next
-
-        'Next
 
     End Sub
 
@@ -271,11 +110,14 @@ Public Class Form1
 
             For Each item In orderItems
 
-                insertarDetalle(item, headerDate)
+                insertarDetalle(ordenId, item, headerDate)
 
             Next
 
         Next
+
+        MostrarDatos()
+
 
     End Sub
 
@@ -373,17 +215,17 @@ Public Class Form1
 
     End Sub
 
-    Sub insertarDetalle(ByVal item As OrderItem, ByVal headerDate As Date)
+    Sub insertarDetalle(ByVal ordenId As Long, ByVal item As OrderItem, ByVal headerDate As Date)
 
         Dim reference As String = item.Item.SellerCustomField
-        Dim storeId As String = "000013"
+        Dim storeId As String = "000102"
         Dim label As String = item.Item.Title.ToString
         Dim deliveryDate As String = headerDate.ToString("dd-MM-yyyy")
         Dim quantity As Integer = item.Quantity
         Dim netUnitPrice As Double = item.UnitPrice
-        Dim warehouseId As String = "000198"
+        Dim warehouseId As New List(Of String) From {"000198", "000199", "no encontrado"}
 
-        Dim availableQty As Decimal = cegid(item, storeId, warehouseId)
+        Dim warehouse As String = cegid(item, storeId, warehouseId)
 
         Dim dtMLDetalle As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_DETALLE",
             ordenId,
@@ -393,12 +235,12 @@ Public Class Form1
             deliveryDate,
             quantity,
             netUnitPrice,
-            warehouseId
+            warehouse
         )
 
     End Sub
 
-    Function cegid(ByVal item As OrderItem, ByVal storeId As String, ByVal warehouseId As String) As Decimal
+    Function cegid(ByVal item As OrderItem, ByVal storeId As String, ByVal warehouseId As List(Of String)) As String
 
         Dim itemIdentifier As New ItemIdentifier
         Dim retailContext As New RetailContext
@@ -413,26 +255,52 @@ Public Class Form1
 
         Dim clientCegid As New ItemInventoryWcfServiceClient(binding, endpoint)
 
+        Dim cantidad As Decimal = 0
+        Dim warehouse As String = ""
+
         ' Establecer las credenciales
-        clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
+        clientCegid.ClientCredentials.UserName.UserName = "VAPRODC\MATIAS"
         clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
 
-        retailContext.DatabaseId = "VATEST"
+        retailContext.DatabaseId = "VAPRODC"
 
-        itemIdentifier.Id = item.Item.SellerCustomField
+        '  itemIdentifier.Id = item.Item.SellerCustomField
         itemIdentifier.Reference = item.Item.SellerCustomField
 
-        Try
 
-            Dim resp = clientCegid.GetAvailableQty(item.Item.Id.ToString, itemIdentifier, storeId.ToString, warehouseId.ToString, retailContext)
-            Return resp.AvailableQty
-            'MsgBox(resp.AvailableQty)
+        Try
+            For Each wh In warehouseId
+                If wh <> warehouseId.Last Then
+                    Dim resp As AvailableQtyReturn = clientCegid.GetAvailableQty(item.Item.SellerCustomField, itemIdentifier, storeId.ToString, wh.ToString, retailContext)
+                    cantidad = resp.AvailableQty
+                End If
+
+                If cantidad >= 1 Or wh = warehouseId.Last Then
+                    warehouse = wh
+                    Exit For
+                End If
+            Next
+
+            Return warehouse
 
         Catch ex As Exception
-
+            Return "error"
         End Try
 
     End Function
+
+    Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        consultasMLAsync()
+
+    End Sub
+
+    Sub MostrarDatos()
+
+        Dim dt As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_DETALLES")
+        dgvDetalles.DataSource = dt
+
+    End Sub
 
 End Class
 
