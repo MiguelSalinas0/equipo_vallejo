@@ -14,7 +14,7 @@ Option Explicit On
 Imports System
 Imports System.Runtime.Serialization
 
-Namespace ServiceReference1
+Namespace WSProductos
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
@@ -67,7 +67,7 @@ Namespace ServiceReference1
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
      System.SerializableAttribute(),  _
-     System.Runtime.Serialization.KnownTypeAttribute(GetType(ServiceReference1.BusinessFaultDetail))>  _
+     System.Runtime.Serialization.KnownTypeAttribute(GetType(WSProductos.BusinessFaultDetail))>  _
     Partial Public Class CbpFaultDetail
         Inherits Object
         Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
@@ -196,7 +196,7 @@ Namespace ServiceReference1
      System.Runtime.Serialization.DataContractAttribute(Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
      System.SerializableAttribute()>  _
     Partial Public Class BusinessFaultDetail
-        Inherits ServiceReference1.CbpFaultDetail
+        Inherits WSProductos.CbpFaultDetail
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private MemberNamesField() As String
@@ -219,7 +219,7 @@ Namespace ServiceReference1
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
      System.SerializableAttribute(),  _
-     System.Runtime.Serialization.KnownTypeAttribute(GetType(ServiceReference1.CbpExceptionDetail))>  _
+     System.Runtime.Serialization.KnownTypeAttribute(GetType(WSProductos.CbpExceptionDetail))>  _
     Partial Public Class ExceptionDetail
         Inherits Object
         Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
@@ -231,7 +231,7 @@ Namespace ServiceReference1
         Private HelpLinkField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private InnerExceptionField As ServiceReference1.ExceptionDetail
+        Private InnerExceptionField As WSProductos.ExceptionDetail
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private MessageField As String
@@ -269,7 +269,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue:=false)>  _
-        Public Property InnerException() As ServiceReference1.ExceptionDetail
+        Public Property InnerException() As WSProductos.ExceptionDetail
             Get
                 Return Me.InnerExceptionField
             End Get
@@ -348,7 +348,7 @@ Namespace ServiceReference1
      System.Runtime.Serialization.DataContractAttribute(Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
      System.SerializableAttribute()>  _
     Partial Public Class CbpExceptionDetail
-        Inherits ServiceReference1.ExceptionDetail
+        Inherits WSProductos.ExceptionDetail
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IdField As String
@@ -461,7 +461,7 @@ Namespace ServiceReference1
         Private AvailableQtyField As Decimal
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private QueryStatusField As ServiceReference1.QueryExecutionStatus
+        Private QueryStatusField As WSProductos.QueryExecutionStatus
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -487,7 +487,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property QueryStatus() As ServiceReference1.QueryExecutionStatus
+        Public Property QueryStatus() As WSProductos.QueryExecutionStatus
             Get
                 Return Me.QueryStatusField
             End Get
@@ -619,7 +619,7 @@ Namespace ServiceReference1
         <System.NonSerializedAttribute()>  _
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
-        Private ItemIdentifierField As ServiceReference1.ItemIdentifier
+        Private ItemIdentifierField As WSProductos.ItemIdentifier
         
         Private QuantityField As Decimal
         
@@ -636,7 +636,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute(IsRequired:=true)>  _
-        Public Property ItemIdentifier() As ServiceReference1.ItemIdentifier
+        Public Property ItemIdentifier() As WSProductos.ItemIdentifier
             Get
                 Return Me.ItemIdentifierField
             End Get
@@ -696,7 +696,7 @@ Namespace ServiceReference1
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private ItemIdentifierField As ServiceReference1.ItemIdentifier
+        Private ItemIdentifierField As WSProductos.ItemIdentifier
         
         Private WarehouseIdField As String
         
@@ -711,7 +711,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property ItemIdentifier() As ServiceReference1.ItemIdentifier
+        Public Property ItemIdentifier() As WSProductos.ItemIdentifier
             Get
                 Return Me.ItemIdentifierField
             End Get
@@ -763,13 +763,13 @@ Namespace ServiceReference1
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private DetailSkuField As Boolean
         
-        Private ItemIdentifiersField() As ServiceReference1.ItemIdentifier
+        Private ItemIdentifiersField() As WSProductos.ItemIdentifier
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private OnlyAvailableStockField As Boolean
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private PagerField As ServiceReference1.Pager
+        Private PagerField As WSProductos.Pager
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private StoreIdsField() As String
@@ -814,7 +814,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute(IsRequired:=true)>  _
-        Public Property ItemIdentifiers() As ServiceReference1.ItemIdentifier()
+        Public Property ItemIdentifiers() As WSProductos.ItemIdentifier()
             Get
                 Return Me.ItemIdentifiersField
             End Get
@@ -840,7 +840,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Pager() As ServiceReference1.Pager
+        Public Property Pager() As WSProductos.Pager
             Get
                 Return Me.PagerField
             End Get
@@ -963,7 +963,7 @@ Namespace ServiceReference1
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private InventoryDetailsByStoreField() As ServiceReference1.AvailableQtyByItemByStore
+        Private InventoryDetailsByStoreField() As WSProductos.AvailableQtyByItemByStore
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -976,7 +976,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property InventoryDetailsByStore() As ServiceReference1.AvailableQtyByItemByStore()
+        Public Property InventoryDetailsByStore() As WSProductos.AvailableQtyByItemByStore()
             Get
                 Return Me.InventoryDetailsByStoreField
             End Get
@@ -1013,7 +1013,7 @@ Namespace ServiceReference1
         Private ItemCodeField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private StoresAvailableQtyField() As ServiceReference1.StoreAvailableQty
+        Private StoresAvailableQtyField() As WSProductos.StoreAvailableQty
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -1039,7 +1039,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property StoresAvailableQty() As ServiceReference1.StoreAvailableQty()
+        Public Property StoresAvailableQty() As WSProductos.StoreAvailableQty()
             Get
                 Return Me.StoresAvailableQtyField
             End Get
@@ -1076,7 +1076,7 @@ Namespace ServiceReference1
         Private AvailableQuantityField As Decimal
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private AvailableSkusQtyField() As ServiceReference1.AvailableSkuQty
+        Private AvailableSkusQtyField() As WSProductos.AvailableSkuQty
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private StoreIdField As String
@@ -1108,7 +1108,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property AvailableSkusQty() As ServiceReference1.AvailableSkuQty()
+        Public Property AvailableSkusQty() As WSProductos.AvailableSkuQty()
             Get
                 Return Me.AvailableSkusQtyField
             End Get
@@ -1284,134 +1284,134 @@ Namespace ServiceReference1
     End Class
     
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0"),  _
-     System.ServiceModel.ServiceContractAttribute([Namespace]:="http://www.cegid.fr/Retail/1.0", ConfigurationName:="ServiceReference1.IItemInventoryWcfService")>  _
+     System.ServiceModel.ServiceContractAttribute([Namespace]:="http://www.cegid.fr/Retail/1.0", ConfigurationName:="WSProductos.IItemInventoryWcfService")>  _
     Public Interface IItemInventoryWcfService
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorld", ReplyAction:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldResponse"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpFaultDet"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpFaultDet"& _ 
             "ailFault", Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldBusinessFau"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldBusinessFau"& _ 
             "ltDetailFault", Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldExceptionDe"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldExceptionDe"& _ 
             "tailFault", Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpExceptio"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpExceptio"& _ 
             "nDetailFault", Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault")>  _
-        Function HelloWorld(ByVal text As String, ByVal clientContext As ServiceReference1.RetailContext) As String
+        Function HelloWorld(ByVal text As String, ByVal clientContext As WSProductos.RetailContext) As String
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorld", ReplyAction:="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldResponse")>  _
-        Function HelloWorldAsync(ByVal text As String, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of String)
+        Function HelloWorldAsync(ByVal text As String, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of String)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQty", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyResponse"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyCbpFaultDe"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyCbpFaultDe"& _ 
             "tailFault", Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyBusinessFa"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyBusinessFa"& _ 
             "ultDetailFault", Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyExceptionD"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyExceptionD"& _ 
             "etailFault", Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyCbpExcepti"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyCbpExcepti"& _ 
             "onDetailFault", Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault")>  _
-        Function GetAvailableQty(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.AvailableQtyReturn
+        Function GetAvailableQty(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As WSProductos.RetailContext) As WSProductos.AvailableQtyReturn
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQty", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableQtyResponse")>  _
-        Function GetAvailableQtyAsync(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.AvailableQtyReturn)
+        Function GetAvailableQtyAsync(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.AvailableQtyReturn)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStores", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStoresResponse"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStoresCbpFaultDetailFault", Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStoresBusinessFaultDetailFault", Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStoresExceptionDetailFault", Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStoresCbpExceptionDetailFault", Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault")>  _
-        Function GetAvailableCumulativeQtyAllStores(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.AvailableQtyReturn
+        Function GetAvailableCumulativeQtyAllStores(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As WSProductos.AvailableQtyReturn
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStores", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetAvailableCumulativeQty"& _ 
             "AllStoresResponse")>  _
-        Function GetAvailableCumulativeQtyAllStoresAsync(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.AvailableQtyReturn)
+        Function GetAvailableCumulativeQtyAllStoresAsync(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.AvailableQtyReturn)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "Response"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "CbpFaultDetailFault", Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "BusinessFaultDetailFault", Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "ExceptionDetailFault", Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "CbpExceptionDetailFault", Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault")>  _
-        Function GetInventoryDetailByStore(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.AvailableQtyByStore()
+        Function GetInventoryDetailByStore(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As WSProductos.AvailableQtyByStore()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetInventoryDetailByStore"& _ 
             "Response")>  _
-        Function GetInventoryDetailByStoreAsync(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.AvailableQtyByStore())
+        Function GetInventoryDetailByStoreAsync(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.AvailableQtyByStore())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCart", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartRespons"& _ 
             "e"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartCbpFaul"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartCbpFaul"& _ 
             "tDetailFault", Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartBusines"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartBusines"& _ 
             "sFaultDetailFault", Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartExcepti"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartExcepti"& _ 
             "onDetailFault", Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartCbpExce"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartCbpExce"& _ 
             "ptionDetailFault", Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault")>  _
-        Sub UpdateShoppingCart(ByVal request As ServiceReference1.UpdateShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext)
+        Sub UpdateShoppingCart(ByVal request As WSProductos.UpdateShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCart", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/UpdateShoppingCartRespons"& _ 
             "e")>  _
-        Function UpdateShoppingCartAsync(ByVal request As ServiceReference1.UpdateShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task
+        Function UpdateShoppingCartAsync(ByVal request As WSProductos.UpdateShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCart", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartResponse"& _ 
             ""),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartCbpFault"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartCbpFault"& _ 
             "DetailFault", Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartBusiness"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartBusiness"& _ 
             "FaultDetailFault", Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartExceptio"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartExceptio"& _ 
             "nDetailFault", Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartCbpExcep"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartCbpExcep"& _ 
             "tionDetailFault", Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault")>  _
-        Sub ResetShoppingCart(ByVal request As ServiceReference1.ResetShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext)
+        Sub ResetShoppingCart(ByVal request As WSProductos.ResetShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCart", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/ResetShoppingCartResponse"& _ 
             "")>  _
-        Function ResetShoppingCartAsync(ByVal request As ServiceReference1.ResetShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task
+        Function ResetShoppingCartAsync(ByVal request As WSProductos.ResetShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStore", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStoreResponse"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStoreCbpFaultDetailFault", Name:="CbpFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.BusinessFaultDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStoreBusinessFaultDetailFault", Name:="BusinessFaultDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.ExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStoreExceptionDetailFault", Name:="ExceptionDetail", [Namespace]:="http://www.cegid.fr/fault"),  _
-         System.ServiceModel.FaultContractAttribute(GetType(ServiceReference1.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
+         System.ServiceModel.FaultContractAttribute(GetType(WSProductos.CbpExceptionDetail), Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStoreCbpExceptionDetailFault", Name:="CbpExceptionDetail", [Namespace]:="http://www.cegid.fr/fault")>  _
-        Function GetListItemInventoryDetailByStore(ByVal inventoryStoreItemDetailRequest As ServiceReference1.GetListItemInventoryDetailByStore_Request, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.GetListItemInventoryDetailByStore_Reply
+        Function GetListItemInventoryDetailByStore(ByVal inventoryStoreItemDetailRequest As WSProductos.GetListItemInventoryDetailByStore_Request, ByVal clientContext As WSProductos.RetailContext) As WSProductos.GetListItemInventoryDetailByStore_Reply
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStore", ReplyAction:="http://www.cegid.fr/Retail/1.0/IItemInventoryWcfService/GetListItemInventoryDetai"& _ 
             "lByStoreResponse")>  _
-        Function GetListItemInventoryDetailByStoreAsync(ByVal inventoryStoreItemDetailRequest As ServiceReference1.GetListItemInventoryDetailByStore_Request, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.GetListItemInventoryDetailByStore_Reply)
+        Function GetListItemInventoryDetailByStoreAsync(ByVal inventoryStoreItemDetailRequest As WSProductos.GetListItemInventoryDetailByStore_Request, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.GetListItemInventoryDetailByStore_Reply)
     End Interface
     
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")>  _
     Public Interface IItemInventoryWcfServiceChannel
-        Inherits ServiceReference1.IItemInventoryWcfService, System.ServiceModel.IClientChannel
+        Inherits WSProductos.IItemInventoryWcfService, System.ServiceModel.IClientChannel
     End Interface
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")>  _
     Partial Public Class ItemInventoryWcfServiceClient
-        Inherits System.ServiceModel.ClientBase(Of ServiceReference1.IItemInventoryWcfService)
-        Implements ServiceReference1.IItemInventoryWcfService
+        Inherits System.ServiceModel.ClientBase(Of WSProductos.IItemInventoryWcfService)
+        Implements WSProductos.IItemInventoryWcfService
         
         Public Sub New()
             MyBase.New
@@ -1433,59 +1433,59 @@ Namespace ServiceReference1
             MyBase.New(binding, remoteAddress)
         End Sub
         
-        Public Function HelloWorld(ByVal text As String, ByVal clientContext As ServiceReference1.RetailContext) As String Implements ServiceReference1.IItemInventoryWcfService.HelloWorld
+        Public Function HelloWorld(ByVal text As String, ByVal clientContext As WSProductos.RetailContext) As String Implements WSProductos.IItemInventoryWcfService.HelloWorld
             Return MyBase.Channel.HelloWorld(text, clientContext)
         End Function
         
-        Public Function HelloWorldAsync(ByVal text As String, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of String) Implements ServiceReference1.IItemInventoryWcfService.HelloWorldAsync
+        Public Function HelloWorldAsync(ByVal text As String, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of String) Implements WSProductos.IItemInventoryWcfService.HelloWorldAsync
             Return MyBase.Channel.HelloWorldAsync(text, clientContext)
         End Function
         
-        Public Function GetAvailableQty(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.AvailableQtyReturn Implements ServiceReference1.IItemInventoryWcfService.GetAvailableQty
+        Public Function GetAvailableQty(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As WSProductos.RetailContext) As WSProductos.AvailableQtyReturn Implements WSProductos.IItemInventoryWcfService.GetAvailableQty
             Return MyBase.Channel.GetAvailableQty(itemId, itemIdentifier, storeId, warehouseId, clientContext)
         End Function
         
-        Public Function GetAvailableQtyAsync(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.AvailableQtyReturn) Implements ServiceReference1.IItemInventoryWcfService.GetAvailableQtyAsync
+        Public Function GetAvailableQtyAsync(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal storeId As String, ByVal warehouseId As String, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.AvailableQtyReturn) Implements WSProductos.IItemInventoryWcfService.GetAvailableQtyAsync
             Return MyBase.Channel.GetAvailableQtyAsync(itemId, itemIdentifier, storeId, warehouseId, clientContext)
         End Function
         
-        Public Function GetAvailableCumulativeQtyAllStores(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.AvailableQtyReturn Implements ServiceReference1.IItemInventoryWcfService.GetAvailableCumulativeQtyAllStores
+        Public Function GetAvailableCumulativeQtyAllStores(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As WSProductos.AvailableQtyReturn Implements WSProductos.IItemInventoryWcfService.GetAvailableCumulativeQtyAllStores
             Return MyBase.Channel.GetAvailableCumulativeQtyAllStores(itemId, itemIdentifier, clientContext)
         End Function
         
-        Public Function GetAvailableCumulativeQtyAllStoresAsync(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.AvailableQtyReturn) Implements ServiceReference1.IItemInventoryWcfService.GetAvailableCumulativeQtyAllStoresAsync
+        Public Function GetAvailableCumulativeQtyAllStoresAsync(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.AvailableQtyReturn) Implements WSProductos.IItemInventoryWcfService.GetAvailableCumulativeQtyAllStoresAsync
             Return MyBase.Channel.GetAvailableCumulativeQtyAllStoresAsync(itemId, itemIdentifier, clientContext)
         End Function
         
-        Public Function GetInventoryDetailByStore(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.AvailableQtyByStore() Implements ServiceReference1.IItemInventoryWcfService.GetInventoryDetailByStore
+        Public Function GetInventoryDetailByStore(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As WSProductos.AvailableQtyByStore() Implements WSProductos.IItemInventoryWcfService.GetInventoryDetailByStore
             Return MyBase.Channel.GetInventoryDetailByStore(itemId, itemIdentifier, clientContext)
         End Function
         
-        Public Function GetInventoryDetailByStoreAsync(ByVal itemId As String, ByVal itemIdentifier As ServiceReference1.ItemIdentifier, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.AvailableQtyByStore()) Implements ServiceReference1.IItemInventoryWcfService.GetInventoryDetailByStoreAsync
+        Public Function GetInventoryDetailByStoreAsync(ByVal itemId As String, ByVal itemIdentifier As WSProductos.ItemIdentifier, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.AvailableQtyByStore()) Implements WSProductos.IItemInventoryWcfService.GetInventoryDetailByStoreAsync
             Return MyBase.Channel.GetInventoryDetailByStoreAsync(itemId, itemIdentifier, clientContext)
         End Function
         
-        Public Sub UpdateShoppingCart(ByVal request As ServiceReference1.UpdateShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext) Implements ServiceReference1.IItemInventoryWcfService.UpdateShoppingCart
+        Public Sub UpdateShoppingCart(ByVal request As WSProductos.UpdateShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext) Implements WSProductos.IItemInventoryWcfService.UpdateShoppingCart
             MyBase.Channel.UpdateShoppingCart(request, clientContext)
         End Sub
         
-        Public Function UpdateShoppingCartAsync(ByVal request As ServiceReference1.UpdateShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task Implements ServiceReference1.IItemInventoryWcfService.UpdateShoppingCartAsync
+        Public Function UpdateShoppingCartAsync(ByVal request As WSProductos.UpdateShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task Implements WSProductos.IItemInventoryWcfService.UpdateShoppingCartAsync
             Return MyBase.Channel.UpdateShoppingCartAsync(request, clientContext)
         End Function
         
-        Public Sub ResetShoppingCart(ByVal request As ServiceReference1.ResetShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext) Implements ServiceReference1.IItemInventoryWcfService.ResetShoppingCart
+        Public Sub ResetShoppingCart(ByVal request As WSProductos.ResetShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext) Implements WSProductos.IItemInventoryWcfService.ResetShoppingCart
             MyBase.Channel.ResetShoppingCart(request, clientContext)
         End Sub
         
-        Public Function ResetShoppingCartAsync(ByVal request As ServiceReference1.ResetShoppingCart_Request, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task Implements ServiceReference1.IItemInventoryWcfService.ResetShoppingCartAsync
+        Public Function ResetShoppingCartAsync(ByVal request As WSProductos.ResetShoppingCart_Request, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task Implements WSProductos.IItemInventoryWcfService.ResetShoppingCartAsync
             Return MyBase.Channel.ResetShoppingCartAsync(request, clientContext)
         End Function
         
-        Public Function GetListItemInventoryDetailByStore(ByVal inventoryStoreItemDetailRequest As ServiceReference1.GetListItemInventoryDetailByStore_Request, ByVal clientContext As ServiceReference1.RetailContext) As ServiceReference1.GetListItemInventoryDetailByStore_Reply Implements ServiceReference1.IItemInventoryWcfService.GetListItemInventoryDetailByStore
+        Public Function GetListItemInventoryDetailByStore(ByVal inventoryStoreItemDetailRequest As WSProductos.GetListItemInventoryDetailByStore_Request, ByVal clientContext As WSProductos.RetailContext) As WSProductos.GetListItemInventoryDetailByStore_Reply Implements WSProductos.IItemInventoryWcfService.GetListItemInventoryDetailByStore
             Return MyBase.Channel.GetListItemInventoryDetailByStore(inventoryStoreItemDetailRequest, clientContext)
         End Function
         
-        Public Function GetListItemInventoryDetailByStoreAsync(ByVal inventoryStoreItemDetailRequest As ServiceReference1.GetListItemInventoryDetailByStore_Request, ByVal clientContext As ServiceReference1.RetailContext) As System.Threading.Tasks.Task(Of ServiceReference1.GetListItemInventoryDetailByStore_Reply) Implements ServiceReference1.IItemInventoryWcfService.GetListItemInventoryDetailByStoreAsync
+        Public Function GetListItemInventoryDetailByStoreAsync(ByVal inventoryStoreItemDetailRequest As WSProductos.GetListItemInventoryDetailByStore_Request, ByVal clientContext As WSProductos.RetailContext) As System.Threading.Tasks.Task(Of WSProductos.GetListItemInventoryDetailByStore_Reply) Implements WSProductos.IItemInventoryWcfService.GetListItemInventoryDetailByStoreAsync
             Return MyBase.Channel.GetListItemInventoryDetailByStoreAsync(inventoryStoreItemDetailRequest, clientContext)
         End Function
     End Class

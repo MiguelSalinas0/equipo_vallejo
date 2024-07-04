@@ -4,7 +4,8 @@ Imports System.Text.Json
 Imports Newtonsoft.Json
 Imports test.ClienteMl
 Imports test.Producto
-Imports test.ServiceReference1
+Imports test.WSProductos
+Imports test.WSClientes
 
 Public Class Form1
 
@@ -117,7 +118,6 @@ Public Class Form1
         Next
 
         MostrarDatos()
-
 
     End Sub
 
@@ -243,7 +243,7 @@ Public Class Form1
     Function cegid(ByVal item As OrderItem, ByVal storeId As String, ByVal warehouseId As List(Of String)) As String
 
         Dim itemIdentifier As New ItemIdentifier
-        Dim retailContext As New RetailContext
+        Dim retailContext As New WSProductos.RetailContext
 
         ' Crear una instancia del cliente del servicio
         Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
@@ -290,8 +290,12 @@ Public Class Form1
     End Function
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        crearOrden()
+        'consultasMLAsync()
+        'Dim d As String = "31366430"
+        'Dim d2 As String = "23545062"
 
-        consultasMLAsync()
+        'ConsultaClienteCegid(d)
 
     End Sub
 
@@ -302,6 +306,88 @@ Public Class Form1
 
     End Sub
 
+    Function ConsultaClienteCegid(ByVal cliente As String) As Boolean
+
+        Dim retailContext As New WSClientes.RetailContext
+        Dim searchData As New CustomerSearchDataType
+        'Dim respuesta As CustomerQueryData
+
+        ' Crear una instancia del cliente del servicio
+        Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?singleWsdl")
+        Dim clientCegid As CustomerWcfServiceClient
+
+        ' Establecer configuraciones
+        binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
+        binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
+
+        ' Establecer las credenciales
+        clientCegid = New CustomerWcfServiceClient(binding, endpoint)
+        clientCegid.ClientCredentials.UserName.UserName = "VAPRODC\MATIAS"
+        clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
+        retailContext.DatabaseId = "VAPRODC"
+
+        ' Establecer parametros de busqueda
+        'searchData.FiscalId = cliente.Buyer.BillingInfo.Identification.Number.ToString
+
+        searchData.FiscalId = cliente
+
+        Dim resp = clientCegid.SearchCustomerIds(searchData, retailContext)
+        Dim r = resp.Count
+
+        Return resp.Count = 0
+
+    End Function
+
+    Function crearOrden()
+        Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
+
+        For Each orden In dtCab.Rows
+            Dim dni As String = orden.Item("CustomerId").ToString
+            Dim ordenId = orden.Item("Header_InternalReference").ToString
+
+            'CREAR ORDEN Y CLIENTE EN VATEST
+            'If ConsultaClienteCegid(dni) Then
+            '    'creo orden
+            '    MsgBox("existeCliente")
+            'Else
+            '    'creo cliente
+            '    MsgBox("No existe")
+            'End If
+
+            Dim dtDet As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", ordenId)
+
+            For Each item In dtDet.Rows
+                MsgBox(item("Label"))
+            Next
+
+
+        Next
+
+        'For i = 0 To dtCab.Rows.Count - 1
+        '    Dim OrdenId = dtCab.Rows(i).Item("Header_InternalReference")
+        '    Dim DNI = dtCab.Rows(i).Item("CustomerId")
+
+        '    'CREAR ORDEN Y CLIENTE EN VATEST
+
+        '    If ConsultaClienteCegid(DNI) Then
+        '        'creo orden
+        '        MsgBox("existeCliente")
+        '    Else
+        '        'creo cliente
+        '        MsgBox("No existe")
+        '    End If
+
+        '    Dim dtDet As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", OrdenId)
+
+        '    For j = 0 To dtDet.Rows.Count - 1
+
+        '        MsgBox(dtDet.Rows(j).Item("Label"))
+        '    Next
+
+        'Next
+
+    End Function
 End Class
 
 

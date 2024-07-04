@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="GetListItemInventoryDetailByStore_Reply" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>test.ServiceReference1.GetListItemInventoryDetailByStore_Reply, Connected Services.ServiceReference1.Reference.vb.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>test.WSProductos.GetListItemInventoryDetailByStore_Reply, Connected Services.WSProductos.Reference.vb.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

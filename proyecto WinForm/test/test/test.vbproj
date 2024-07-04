@@ -128,9 +128,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\WSClientes\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="CustomBehavior.vb" />
     <Compile Include="ClienteML.vb" />
-    <Compile Include="Connected Services\ServiceReference1\Reference.vb">
+    <Compile Include="Connected Services\WSProductos\Reference.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -172,27 +177,44 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ServiceReference1\ItemInventoryWcfService.wsdl" />
-    <None Include="Connected Services\ServiceReference1\ItemInventoryWcfService.xsd">
+    <None Include="Connected Services\WSProductos\ItemInventoryWcfService.wsdl" />
+    <None Include="Connected Services\WSProductos\ItemInventoryWcfService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServiceReference1\ItemInventoryWcfService1.wsdl" />
-    <None Include="Connected Services\ServiceReference1\ItemInventoryWcfService1.xsd">
+    <None Include="Connected Services\WSProductos\ItemInventoryWcfService1.wsdl" />
+    <None Include="Connected Services\WSProductos\ItemInventoryWcfService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServiceReference1\ItemInventoryWcfService2.xsd">
+    <None Include="Connected Services\WSProductos\ItemInventoryWcfService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServiceReference1\ItemInventoryWcfService3.xsd">
+    <None Include="Connected Services\WSProductos\ItemInventoryWcfService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServiceReference1\test.ServiceReference1.AvailableQtyByStore.datasource">
+    <None Include="Connected Services\WSClientes\CustomerWcfService.wsdl" />
+    <None Include="Connected Services\WSClientes\CustomerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WSClientes\CustomerWcfService1.wsdl" />
+    <None Include="Connected Services\WSClientes\CustomerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WSClientes\CustomerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WSClientes\CustomerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WSClientes\test.WSClientes.CustomerQueryData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ServiceReference1\test.ServiceReference1.AvailableQtyReturn.datasource">
+    <None Include="Connected Services\WSProductos\test.WSProductos.AvailableQtyByStore.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ServiceReference1\test.ServiceReference1.GetListItemInventoryDetailByStore_Reply.datasource">
+    <None Include="Connected Services\WSProductos\test.WSProductos.AvailableQtyReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WSProductos\test.WSProductos.GetListItemInventoryDetailByStore_Reply.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="My Project\Application.myapp">
@@ -211,19 +233,20 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
+    <WCFMetadataStorage Include="Connected Services\WSProductos\" />
+    <WCFMetadataStorage Include="Connected Services\WSClientes\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ServiceReference1\ItemInventoryWcfService.disco" />
+    <None Include="Connected Services\WSProductos\ItemInventoryWcfService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ServiceReference1\configuration91.svcinfo" />
+    <None Include="Connected Services\WSProductos\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ServiceReference1\configuration.svcinfo" />
+    <None Include="Connected Services\WSProductos\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ServiceReference1\Reference.svcmap">
+    <None Include="Connected Services\WSProductos\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.vb</LastGenOutput>
     </None>
@@ -239,6 +262,21 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WSClientes\CustomerWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WSClientes\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WSClientes\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WSClientes\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

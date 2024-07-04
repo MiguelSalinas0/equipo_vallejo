@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="YjTiK1R6hYhJKCkrTUpC4pSVH+SfhQMjq7Yxl+7kEjE=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="N2rhBc6IWdsYbv4e0tRkV7ps9Szu34BkHYCSySJv94Q=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IItemInventoryWcfService">
       <properties>
@@ -112,7 +112,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IItemInventoryWcfService" contract="ServiceReference1.IItemInventoryWcfService" bindingType="basicHttpBinding" address="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc" bindingConfiguration="BasicHttpBinding_IItemInventoryWcfService">
+    <endpoint name="BasicHttpBinding_IItemInventoryWcfService" contract="WSProductos.IItemInventoryWcfService" bindingType="basicHttpBinding" address="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc" bindingConfiguration="BasicHttpBinding_IItemInventoryWcfService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc</serializedValue>
@@ -127,7 +127,7 @@
           <serializedValue>BasicHttpBinding_IItemInventoryWcfService</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ServiceReference1.IItemInventoryWcfService</serializedValue>
+          <serializedValue>WSProductos.IItemInventoryWcfService</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
