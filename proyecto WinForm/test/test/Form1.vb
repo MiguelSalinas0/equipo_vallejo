@@ -6,6 +6,7 @@ Imports test.ClienteMl
 Imports test.Producto
 Imports test.WSProductos
 Imports test.WSClientes
+Imports test.WSOrdenes
 
 Public Class Form1
 
@@ -290,7 +291,7 @@ Public Class Form1
     End Function
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        crearOrden()
+        procesarOrdenes()
         'consultasMLAsync()
         'Dim d As String = "31366430"
         'Dim d2 As String = "23545062"
@@ -339,8 +340,9 @@ Public Class Form1
 
     End Function
 
-    Function crearOrden()
+    Function procesarOrdenes()
         Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
+        dgvDetalles.DataSource = dtCab
 
         For Each orden In dtCab.Rows
             Dim dni As String = orden.Item("CustomerId").ToString
@@ -355,6 +357,8 @@ Public Class Form1
             '    MsgBox("No existe")
             'End If
 
+
+            ' Obtener items a partir de una orden
             Dim dtDet As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", ordenId)
 
             For Each item In dtDet.Rows
@@ -388,6 +392,30 @@ Public Class Form1
         'Next
 
     End Function
+
+    Function crearOrden()
+
+        Dim retailContext As New WSOrdenes.RetailContext
+        Dim create_request As New Create_Request
+
+        Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?singleWsdl")
+
+        Dim clientCegid As SaleDocumentServiceClient
+
+        binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
+        binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
+
+        clientCegid = New SaleDocumentServiceClient(binding, endpoint)
+        clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
+        clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
+        retailContext.DatabaseId = "VATEST"
+
+
+        'clientCegid.Create(create_request, retailContext)
+
+    End Function
+
 End Class
 
 
