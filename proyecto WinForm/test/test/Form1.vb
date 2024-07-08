@@ -6,7 +6,7 @@ Imports test.ClienteMl
 Imports test.Producto
 Imports test.WSProductos
 Imports test.WSClientes
-Imports test.WSOrdenes
+Imports test.WSorden
 
 Public Class Form1
 
@@ -224,7 +224,7 @@ Public Class Form1
         Dim deliveryDate As String = headerDate.ToString("dd-MM-yyyy")
         Dim quantity As Integer = item.Quantity
         Dim netUnitPrice As Double = item.UnitPrice
-        Dim warehouseId As New List(Of String) From {"000198", "000199", "no encontrado"}
+        Dim warehouseId As New List(Of String) From {"000199", "000198"}
 
         Dim warehouse As String = cegid(item, storeId, warehouseId)
 
@@ -243,7 +243,7 @@ Public Class Form1
 
     Function cegid(ByVal item As OrderItem, ByVal storeId As String, ByVal warehouseId As List(Of String)) As String
 
-        Dim itemIdentifier As New ItemIdentifier
+        Dim itemIdentifier As New WSProductos.ItemIdentifier
         Dim retailContext As New WSProductos.RetailContext
 
         ' Crear una instancia del cliente del servicio
@@ -276,9 +276,11 @@ Public Class Form1
                     cantidad = resp.AvailableQty
                 End If
 
-                If cantidad >= 1 Or wh = warehouseId.Last Then
+                If (cantidad >= 1 And cantidad >= item.Quantity) Then
                     warehouse = wh
                     Exit For
+                ElseIf cantidad = 0 And wh = warehouseId.Last Then
+                    warehouse = warehouseId.First
                 End If
             Next
 
@@ -324,9 +326,9 @@ Public Class Form1
 
         ' Establecer las credenciales
         clientCegid = New CustomerWcfServiceClient(binding, endpoint)
-        clientCegid.ClientCredentials.UserName.UserName = "VAPRODC\MATIAS"
+        clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
         clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
-        retailContext.DatabaseId = "VAPRODC"
+        retailContext.DatabaseId = "VATEST"
 
         ' Establecer parametros de busqueda
         'searchData.FiscalId = cliente.Buyer.BillingInfo.Identification.Number.ToString
@@ -334,9 +336,8 @@ Public Class Form1
         searchData.FiscalId = cliente
 
         Dim resp = clientCegid.SearchCustomerIds(searchData, retailContext)
-        Dim r = resp.Count
-
-        Return resp.Count = 0
+        Dim comp As Boolean = resp.Count <> 0
+        Return comp
 
     End Function
 
@@ -348,55 +349,27 @@ Public Class Form1
             Dim dni As String = orden.Item("CustomerId").ToString
             Dim ordenId = orden.Item("Header_InternalReference").ToString
 
-            'CREAR ORDEN Y CLIENTE EN VATEST
-            'If ConsultaClienteCegid(dni) Then
-            '    'creo orden
-            '    MsgBox("existeCliente")
-            'Else
-            '    'creo cliente
-            '    MsgBox("No existe")
-            'End If
+            'CREAR CLIENTE Y ORDEN
+            If Not ConsultaClienteCegid(dni) Then
+                'creo cliente
+                crearCliente(orden)
+            End If
 
+            'crearOrden(orden)
 
             ' Obtener items a partir de una orden
-            Dim dtDet As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", ordenId)
 
-            For Each item In dtDet.Rows
-                MsgBox(item("Label"))
-            Next
+
 
 
         Next
 
-        'For i = 0 To dtCab.Rows.Count - 1
-        '    Dim OrdenId = dtCab.Rows(i).Item("Header_InternalReference")
-        '    Dim DNI = dtCab.Rows(i).Item("CustomerId")
-
-        '    'CREAR ORDEN Y CLIENTE EN VATEST
-
-        '    If ConsultaClienteCegid(DNI) Then
-        '        'creo orden
-        '        MsgBox("existeCliente")
-        '    Else
-        '        'creo cliente
-        '        MsgBox("No existe")
-        '    End If
-
-        '    Dim dtDet As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", OrdenId)
-
-        '    For j = 0 To dtDet.Rows.Count - 1
-
-        '        MsgBox(dtDet.Rows(j).Item("Label"))
-        '    Next
-
-        'Next
-
     End Function
 
-    Function crearOrden()
+    Function crearOrden(ByVal orden As Object)
 
-        Dim retailContext As New WSOrdenes.RetailContext
-        Dim create_request As New Create_Request
+        Dim retailContext As New WSorden.RetailContext
+        Dim createRequest As New Create_Request
 
         Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
         Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?singleWsdl")
@@ -411,10 +384,84 @@ Public Class Form1
         clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
         retailContext.DatabaseId = "VATEST"
 
+        ' Obtener items de la orden
+        Dim orderItems As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", orden.Item("orderId").ToString)
 
-        'clientCegid.Create(create_request, retailContext)
+        For Each item As DataRow In orderItems.Rows
+
+
+            Try
+                'createRequest.DeliveryAddress
+            Catch ex As Exception
+
+            End Try
+        Next
+
+
+
+
+
+        clientCegid.Create(createRequest, retailContext)
 
     End Function
+
+    Sub crearCliente(ByVal orden As Object)
+
+        Dim retailContext As New WSClientes.RetailContext
+        Dim searchData As New CustomerSearchDataType
+
+        Dim customerInsert As New CustomerInsertData
+
+        ' Crear una instancia del Web Service
+        Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?singleWsdl")
+        Dim clientCegid As CustomerWcfServiceClient
+
+        ' Establecer configuraciones
+        binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
+        binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
+
+        ' Establecer las credenciales
+        clientCegid = New CustomerWcfServiceClient(binding, endpoint)
+        clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
+        clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
+        retailContext.DatabaseId = "VATEST"
+
+        ' Extraer datos desde la orden del sp
+        Dim addresData As New AddressDataType
+        Dim phoneData As New PhoneDataType
+
+        Try
+            customerInsert.CustomerId = orden.Item("CustomerId").ToString
+            customerInsert.FirstName = IIf(orden.Item("FirstName").ToString = "", "", orden.Item("FirstName").ToString) ' el NN no tiene sentido si se cambia luego de nuevo
+            customerInsert.IsCompany = IIf(orden.Item("IsCompany").ToString = "True", True, False)
+            customerInsert.LastName = orden.Item("LastName").ToString
+
+            addresData.AddressLine1 = orden.Item("AddressLine1").ToString
+            addresData.City = orden.Item("City").ToString
+            addresData.CountryId = "ARS" ' viene el countryid 
+            addresData.CountryIdType = WSClientes.CountryIdType.Internal
+            addresData.ZipCode = orden.Item("ZipCode").ToString
+            customerInsert.AddressData = addresData
+
+            phoneData.HomePhoneNumber = orden.Item("HomePhoneNumber").ToString
+            customerInsert.PhoneData = phoneData
+            customerInsert.UsualStoreId = "000102" ' viene de cegid
+            customerInsert.FiscalId = orden.Item("FiscalId").ToString
+
+            If customerInsert.IsCompany Then
+                customerInsert.LastName = orden.Item("FirstName").ToString + orden.Item("LastName").ToString 'no tiene sentido
+                customerInsert.CompanyIdNumber = orden.Item("CompanyIdNumber").ToString
+            End If
+            customerInsert.VATSystem = "TAX"
+
+            clientCegid.AddNewCustomer(customerInsert, retailContext)
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
 
 End Class
 

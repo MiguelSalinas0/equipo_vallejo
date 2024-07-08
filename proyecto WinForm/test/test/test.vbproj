@@ -133,6 +133,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\WSorden\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="CustomBehavior.vb" />
     <Compile Include="ClienteML.vb" />
     <Compile Include="Connected Services\WSProductos\Reference.vb">
@@ -177,6 +182,22 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\WSorden\SaleDocumentService.wsdl" />
+    <None Include="Connected Services\WSorden\test.WSorden.Create_Reply.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WSorden\test.WSorden.CustomersReservationCreate_Reply.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WSorden\test.WSorden.GetByExternalReference_Reply.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WSorden\test.WSorden.GetHeaderList_Reply.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WSorden\test.WSorden.Get_Reply.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\WSProductos\ItemInventoryWcfService.wsdl" />
     <None Include="Connected Services\WSProductos\ItemInventoryWcfService.xsd">
       <SubType>Designer</SubType>
@@ -233,6 +254,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\WSorden\" />
     <WCFMetadataStorage Include="Connected Services\WSProductos\" />
     <WCFMetadataStorage Include="Connected Services\WSClientes\" />
   </ItemGroup>
@@ -274,6 +296,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\WSClientes\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WSorden\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WSorden\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WSorden\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.vb</LastGenOutput>
     </None>
