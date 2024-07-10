@@ -7,6 +7,7 @@ Imports test.Producto
 Imports test.WSProductos
 Imports test.WSClientes
 Imports test.WSorden
+Imports System.Globalization
 
 Public Class Form1
 
@@ -345,7 +346,7 @@ Public Class Form1
         Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
         dgvDetalles.DataSource = dtCab
 
-        For Each orden In dtCab.Rows
+        For Each orden As DataRow In dtCab.Rows
             Dim dni As String = orden.Item("CustomerId").ToString
             Dim ordenId = orden.Item("Header_InternalReference").ToString
 
@@ -366,14 +367,12 @@ Public Class Form1
 
     End Function
 
-    Function crearOrden(ByVal orden As Object)
+    Sub crearOrden(ByVal orden As DataRow)
 
         Dim retailContext As New WSorden.RetailContext
         Dim createRequest As New Create_Request
-
         Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
         Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?singleWsdl")
-
         Dim clientCegid As SaleDocumentServiceClient
 
         binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
@@ -386,16 +385,87 @@ Public Class Form1
 
         ' Obtener items de la orden
         Dim orderItems As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", orden.Item("orderId").ToString)
+        Dim deliveryAddress As New WSorden.Address
+        Dim createHeader As New WSorden.Create_Header
+        Dim omniChannel As New OmniChannel
+        Dim createLine As Create_Line() = New Create_Line() {}
 
-        For Each item As DataRow In orderItems.Rows
+
+        Try
+            deliveryAddress.City = orden.Item("DeliveryAddress_City")
+            deliveryAddress.CountryId = "ARS"
+            deliveryAddress.CountryIdType = WSorden.CountryIdType.Internal
+            deliveryAddress.FirstName = orden.Item("DeliveryAddress_FirstName")
+            deliveryAddress.LastName = orden.Item("DeliveryAddress_LastName")
+            deliveryAddress.Line1 = orden.Item("DeliveryAddress_Line1")
+            deliveryAddress.ZipCode = orden.Item("DeliveryAddress_ZipCode")
+
+            createHeader.Active = True
+            createHeader.Comment = orden.Item("Header_Comment")
+            createHeader.CustomerId = orden.Item("Header_CustomerId")
+            createHeader.CurrencyId = orden.Item("Header_CurrencyId")
+            createHeader.Date = orden.Item("Header_Date")
+            createHeader.InternalReference = orden.Item("Header_InternalReference")
+
+            omniChannel.BillingStatus = orden.Item("Header_BillingStatus")
+            omniChannel.DeliveryType = orden.Item("Header_DeliveryType")
+            omniChannel.FollowUpStatus = orden.Item("Header_FollowUpStatus")
+            omniChannel.GiftMessageType = orden.Item("Header_GiftMessageType")
+            omniChannel.PaymentStatus = orden.Item("Header_PaymentStatus")
+            omniChannel.ReturnStatus = orden.Item("Header_ReturnStatus")
+            omniChannel.ShippingStatus = orden.Item("Header_ShippingStatus")
+            omniChannel.Transporter = orden.Item("Header_Transporter")
+
+            createHeader.Origin = orden.Item("Header_Origin")
+
+            createHeader.OmniChannel = omniChannel
+
+            createHeader.StoreId = orden.Item("Header_StoreId")
+            createHeader.WarehouseId = orden.Item("Header_WarehouseId")
+            createHeader.SalesPersonId = orden.Item("Header_SalesPersonId")
+            createHeader.Type = orden.Item("Header_Type")
 
 
-            Try
-                'createRequest.DeliveryAddress
-            Catch ex As Exception
+            Dim index As Integer = 0
+            For Each item As DataRow In orderItems.Rows
+                ' por cada item consulto stock y lo agrego a la orden
 
-            End Try
-        Next
+                Dim newCreateLine As New Create_Line
+                Dim itemIdentifier As New WSorden.ItemIdentifier
+                Dim omniChannelLine As New WSorden.OmniChannelLine
+
+                itemIdentifier.Reference = item.Item("Reference")
+
+                newCreateLine.Label = item.Item("Label")
+                newCreateLine.Origin = item.Item("Origin")
+                newCreateLine.DeliveryDate = item.Item("DeliveryDate")
+                newCreateLine.Quantity = item.Item("Quantity")
+                newCreateLine.NetUnitPrice = item.Item("NetUnitPrice")
+
+                omniChannelLine.WarehouseId = item.Item("WarehouseId")
+
+                newCreateLine.SalesPersonId = item.Item("SalesPersonId")
+
+                newCreateLine.ItemIdentifier = itemIdentifier
+                newCreateLine.OmniChannel = omniChannelLine
+
+
+                ' agrego el item al array de items de la orden
+                createLine(index) = newCreateLine
+
+                index += 1
+            Next
+
+            createRequest.DeliveryAddress = deliveryAddress
+            createRequest.Header = createHeader
+            createRequest.Lines = createLine
+
+
+
+        Catch ex As Exception
+
+        End Try
+
 
 
 
@@ -403,7 +473,7 @@ Public Class Form1
 
         clientCegid.Create(createRequest, retailContext)
 
-    End Function
+    End Sub
 
     Sub crearCliente(ByVal orden As Object)
 
