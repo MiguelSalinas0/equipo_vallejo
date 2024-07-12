@@ -342,13 +342,21 @@ Public Class Form1
 
     End Function
 
-    Function procesarOrdenes()
+    Async Sub procesarOrdenes()
         Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
         dgvDetalles.DataSource = dtCab
 
         For Each orden As DataRow In dtCab.Rows
             Dim dni As String = orden.Item("CustomerId").ToString
             Dim ordenId = orden.Item("Header_InternalReference").ToString
+
+            'Consulto ordenes
+            tokenML = getToken()
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
+            Dim urlGetInfoBuy = apiMLBase & "shops/cda/customers?order_id=" + ordenId
+
+            ' Dim resp As HttpResponseMessage = Await httpClient.GetAsync(urlGetInfoBuy) ---- sin autorizacion :(
+
 
             'CREAR CLIENTE Y ORDEN
             If Not ConsultaClienteCegid(dni) Then
@@ -365,7 +373,7 @@ Public Class Form1
 
         Next
 
-    End Function
+    End Sub
 
     Sub crearOrden(ByVal orden As DataRow)
 
@@ -404,7 +412,7 @@ Public Class Form1
             createHeader.Comment = orden.Item("Header_Comment")
             createHeader.CustomerId = orden.Item("Header_CustomerId")
             createHeader.CurrencyId = orden.Item("Header_CurrencyId")
-            'createHeader.Date = DateTime.ParseExact(orden.Item("Header_Date"), "dd/MM/yyyy", )
+            createHeader.Date = DateTime.Parse(orden.Item("Header_Date").ToString).ToString("dd/MM/yyyy")
             createHeader.InternalReference = orden.Item("Header_InternalReference")
 
             omniChannel.BillingStatus = BillingStatus.Pending
@@ -438,7 +446,7 @@ Public Class Form1
 
                 newCreateLine.Label = item.Item("Label")
                 newCreateLine.Origin = DocumentOrigin.ECommerce
-                newCreateLine.DeliveryDate = DateTime.Parse(item.Item("DeliveryDate"))
+                newCreateLine.DeliveryDate = DateTime.Parse(item.Item("DeliveryDate").ToString).ToString("dd/MM/yyyy")
                 newCreateLine.Quantity = item.Item("Quantity")
                 newCreateLine.NetUnitPrice = item.Item("NetUnitPrice")
 
