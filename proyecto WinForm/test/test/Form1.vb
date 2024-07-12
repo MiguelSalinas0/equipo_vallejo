@@ -356,7 +356,7 @@ Public Class Form1
                 crearCliente(orden)
             End If
 
-            'crearOrden(orden)
+            crearOrden(orden)
 
             ' Obtener items a partir de una orden
 
@@ -384,11 +384,11 @@ Public Class Form1
         retailContext.DatabaseId = "VATEST"
 
         ' Obtener items de la orden
-        Dim orderItems As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", orden.Item("orderId").ToString)
+        Dim orderItems As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", orden.Item("Header_InternalReference").ToString)
         Dim deliveryAddress As New WSorden.Address
         Dim createHeader As New WSorden.Create_Header
         Dim omniChannel As New OmniChannel
-        Dim createLine As Create_Line() = New Create_Line() {}
+        Dim createLine() As Create_Line = {}
 
 
         Try
@@ -404,26 +404,26 @@ Public Class Form1
             createHeader.Comment = orden.Item("Header_Comment")
             createHeader.CustomerId = orden.Item("Header_CustomerId")
             createHeader.CurrencyId = orden.Item("Header_CurrencyId")
-            createHeader.Date = orden.Item("Header_Date")
+            'createHeader.Date = DateTime.ParseExact(orden.Item("Header_Date"), "dd/MM/yyyy", )
             createHeader.InternalReference = orden.Item("Header_InternalReference")
 
-            omniChannel.BillingStatus = orden.Item("Header_BillingStatus")
-            omniChannel.DeliveryType = orden.Item("Header_DeliveryType")
-            omniChannel.FollowUpStatus = orden.Item("Header_FollowUpStatus")
-            omniChannel.GiftMessageType = orden.Item("Header_GiftMessageType")
-            omniChannel.PaymentStatus = orden.Item("Header_PaymentStatus")
-            omniChannel.ReturnStatus = orden.Item("Header_ReturnStatus")
-            omniChannel.ShippingStatus = orden.Item("Header_ShippingStatus")
-            omniChannel.Transporter = orden.Item("Header_Transporter")
+            omniChannel.BillingStatus = BillingStatus.Pending
+            omniChannel.DeliveryType = DeliveryType.ShipByCentral
+            omniChannel.FollowUpStatus = FollowUpStatus.WaitingCommodity
+            omniChannel.GiftMessageType = GiftMessageType.None
+            omniChannel.PaymentStatus = PaymentStatus.Totally
+            omniChannel.ReturnStatus = OrderReturnStatus.NotReturned
+            omniChannel.ShippingStatus = ShippingStatus.Pending
+            omniChannel.Transporter = "MELI VALLEJO"
 
-            createHeader.Origin = orden.Item("Header_Origin")
+            createHeader.Origin = DocumentOrigin.ECommerce
 
             createHeader.OmniChannel = omniChannel
 
             createHeader.StoreId = orden.Item("Header_StoreId")
             createHeader.WarehouseId = orden.Item("Header_WarehouseId")
             createHeader.SalesPersonId = orden.Item("Header_SalesPersonId")
-            createHeader.Type = orden.Item("Header_Type")
+            createHeader.Type = SaleDocumentType.CustomerOrder
 
 
             Dim index As Integer = 0
@@ -437,8 +437,8 @@ Public Class Form1
                 itemIdentifier.Reference = item.Item("Reference")
 
                 newCreateLine.Label = item.Item("Label")
-                newCreateLine.Origin = item.Item("Origin")
-                newCreateLine.DeliveryDate = item.Item("DeliveryDate")
+                newCreateLine.Origin = DocumentOrigin.ECommerce
+                newCreateLine.DeliveryDate = DateTime.Parse(item.Item("DeliveryDate"))
                 newCreateLine.Quantity = item.Item("Quantity")
                 newCreateLine.NetUnitPrice = item.Item("NetUnitPrice")
 
@@ -451,6 +451,7 @@ Public Class Form1
 
 
                 ' agrego el item al array de items de la orden
+                ReDim createLine(index)
                 createLine(index) = newCreateLine
 
                 index += 1
@@ -460,18 +461,12 @@ Public Class Form1
             createRequest.Header = createHeader
             createRequest.Lines = createLine
 
-
+            createRequest.ToString()
+            'clientCegid.Create(createRequest, retailContext)
 
         Catch ex As Exception
 
         End Try
-
-
-
-
-
-
-        clientCegid.Create(createRequest, retailContext)
 
     End Sub
 
@@ -525,7 +520,7 @@ Public Class Form1
             End If
             customerInsert.VATSystem = "TAX"
 
-            clientCegid.AddNewCustomer(customerInsert, retailContext)
+            'clientCegid.AddNewCustomer(customerInsert, retailContext)
 
         Catch ex As Exception
 
