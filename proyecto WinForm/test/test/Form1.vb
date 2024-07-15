@@ -69,13 +69,13 @@ Public Class Form1
 
     End Function
 
-    Private Async Sub consultasMLAsync()
+    Private Async Function consultasMLAsync() As Task
 
         'Consulto ordenes
         tokenML = getToken()
         httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
-        respuestaOrdenes = Await httpClient.GetAsync(urlGetOrdenes)
+        respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes)
         bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync
         jsonDoc = JsonDocument.Parse(bodyOrdenes)
         root = jsonDoc.RootElement
@@ -121,7 +121,7 @@ Public Class Form1
 
         MostrarDatos()
 
-    End Sub
+    End Function
 
     Sub insertarCabecera(ByVal ordenId As Long, ByVal buy As ClienteMl, ByVal ord As Producto, ByVal rootS As JsonElement)
 
@@ -294,12 +294,10 @@ Public Class Form1
     End Function
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        procesarOrdenes()
-        'consultasMLAsync()
-        'Dim d As String = "31366430"
-        'Dim d2 As String = "23545062"
+        'Await consultasMLAsync()
 
-        'ConsultaClienteCegid(d)
+        Await procesarOrdenes()
+
 
     End Sub
 
@@ -342,40 +340,30 @@ Public Class Form1
 
     End Function
 
-    Async Sub procesarOrdenes()
+    Private Async Function procesarOrdenes() As Task
         Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
-        dgvDetalles.DataSource = dtCab
 
-        For Each orden As DataRow In dtCab.Rows
-            Dim dni As String = orden.Item("CustomerId").ToString
-            Dim ordenId = orden.Item("Header_InternalReference").ToString
+        If dtCab IsNot Nothing AndAlso dtCab.Rows.Count > 0 Then
+            For Each orden As DataRow In dtCab.Rows
+                Dim dni As String = orden.Item("CustomerId").ToString
 
-            'Consulto ordenes
-            tokenML = getToken()
-            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
-            Dim urlGetInfoBuy = apiMLBase & "shops/cda/customers?order_id=" + ordenId
+                'CREAR CLIENTE Y ORDEN
+                If Not ConsultaClienteCegid(dni) Then
+                    'creo cliente
+                    CrearCliente(orden)
+                End If
 
-            ' Dim resp As HttpResponseMessage = Await httpClient.GetAsync(urlGetInfoBuy) ---- sin autorizacion :(
+                Await CrearOrden(orden)
 
+                ' Obtener items a partir de una orden
 
-            'CREAR CLIENTE Y ORDEN
-            If Not ConsultaClienteCegid(dni) Then
-                'creo cliente
-                crearCliente(orden)
-            End If
+            Next
+        End If
 
-            crearOrden(orden)
+        MostrarDatos()
+    End Function
 
-            ' Obtener items a partir de una orden
-
-
-
-
-        Next
-
-    End Sub
-
-    Sub crearOrden(ByVal orden As DataRow)
+    Async Function CrearOrden(ByVal orden As DataRow) As Task
 
         Dim retailContext As New WSorden.RetailContext
         Dim createRequest As New Create_Request
@@ -395,8 +383,9 @@ Public Class Form1
         Dim orderItems As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", orden.Item("Header_InternalReference").ToString)
         Dim deliveryAddress As New WSorden.Address
         Dim createHeader As New WSorden.Create_Header
-        Dim omniChannel As New OmniChannel
-        Dim createLine() As Create_Line = {}
+        Dim omniChannel As New WSorden.OmniChannel
+        Dim payments() As WSorden.Create_Payment = {New Create_Payment()}
+        Dim createLine() As WSorden.Create_Line = {}
 
 
         Try
@@ -412,7 +401,7 @@ Public Class Form1
             createHeader.Comment = orden.Item("Header_Comment")
             createHeader.CustomerId = orden.Item("Header_CustomerId")
             createHeader.CurrencyId = orden.Item("Header_CurrencyId")
-            createHeader.Date = DateTime.Parse(orden.Item("Header_Date").ToString).ToString("dd/MM/yyyy")
+            createHeader.Date = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
             createHeader.InternalReference = orden.Item("Header_InternalReference")
 
             omniChannel.BillingStatus = BillingStatus.Pending
@@ -438,7 +427,7 @@ Public Class Form1
             For Each item As DataRow In orderItems.Rows
                 ' por cada item consulto stock y lo agrego a la orden
 
-                Dim newCreateLine As New Create_Line
+                Dim newCreateLine As New WSorden.Create_Line
                 Dim itemIdentifier As New WSorden.ItemIdentifier
                 Dim omniChannelLine As New WSorden.OmniChannelLine
 
@@ -446,7 +435,7 @@ Public Class Form1
 
                 newCreateLine.Label = item.Item("Label")
                 newCreateLine.Origin = DocumentOrigin.ECommerce
-                newCreateLine.DeliveryDate = DateTime.Parse(item.Item("DeliveryDate").ToString).ToString("dd/MM/yyyy")
+                newCreateLine.DeliveryDate = Date.Parse(item.Item("DeliveryDate").ToString).ToString("dd-MM-yyyy")
                 newCreateLine.Quantity = item.Item("Quantity")
                 newCreateLine.NetUnitPrice = item.Item("NetUnitPrice")
 
@@ -459,27 +448,37 @@ Public Class Form1
 
 
                 ' agrego el item al array de items de la orden
-                ReDim createLine(index)
+                ReDim Preserve createLine(index)
                 createLine(index) = newCreateLine
 
                 index += 1
             Next
 
+            payments(0).Amount = 0
+            payments(0).MethodId = "ECO"
+            payments(0).Id = 20
+            payments(0).DueDate = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
+            payments(0).IsReceivedPayment = False
+            payments(0).CurrencyId = "ARG"
+
+
+
             createRequest.DeliveryAddress = deliveryAddress
             createRequest.Header = createHeader
             createRequest.Lines = createLine
+            createRequest.Payments = payments
 
             createRequest.ToString()
-            'clientCegid.Create(createRequest, retailContext)
-
+            Dim resp = clientCegid.Create(createRequest, retailContext)
+            ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_MELI_CABECERA", orden.Item("id"))
         Catch ex As Exception
 
         End Try
 
-    End Sub
+        Return
+    End Function
 
-    Sub crearCliente(ByVal orden As Object)
-
+    Async Sub CrearCliente(ByVal orden As Object)
         Dim retailContext As New WSClientes.RetailContext
         Dim searchData As New CustomerSearchDataType
 
@@ -527,8 +526,7 @@ Public Class Form1
                 customerInsert.CompanyIdNumber = orden.Item("CompanyIdNumber").ToString
             End If
             customerInsert.VATSystem = "TAX"
-
-            'clientCegid.AddNewCustomer(customerInsert, retailContext)
+            clientCegid.AddNewCustomer(customerInsert, retailContext)
 
         Catch ex As Exception
 
