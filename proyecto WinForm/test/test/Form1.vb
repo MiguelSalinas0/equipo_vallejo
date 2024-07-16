@@ -105,25 +105,25 @@ Public Class Form1
             rootS = jsonShip.RootElement
 
             ' Insertar en cabecera
-            insertarCabecera(ordenId, buy, ord, rootS)
+            If insertarCabecera(ordenId, buy, ord, rootS) = 1 Then
+                ' Iteracion de articulos dentro de la orden
+                orderItems = ord.OrderItems
+                Dim headerDate As DateTime = rootS.GetProperty("date_created").ToString
 
-            ' Iteracion de articulos dentro de la orden
-            orderItems = ord.OrderItems
-            Dim headerDate As DateTime = rootS.GetProperty("date_created").ToString
+                For Each item In orderItems
 
-            For Each item In orderItems
+                    insertarDetalle(ordenId, item, headerDate)
 
-                insertarDetalle(ordenId, item, headerDate)
+                Next
 
-            Next
+            End If
+
 
         Next
 
-        MostrarDatos()
-
     End Function
 
-    Sub insertarCabecera(ByVal ordenId As Long, ByVal buy As ClienteMl, ByVal ord As Producto, ByVal rootS As JsonElement)
+    Private Function insertarCabecera(ByVal ordenId As Long, ByVal buy As ClienteMl, ByVal ord As Producto, ByVal rootS As JsonElement)
 
         Dim CompanyIdNumer As String
         Dim homePhoneNumber As String = ""
@@ -173,7 +173,8 @@ Public Class Form1
         End If
 
         ' insercion de datos de cabecera
-        Dim dtMLCabecera As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_CABECERA",
+        Try
+            Dim dtMLCabecera As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_CABECERA",
             "VALLEJO",
             dniOrCuit,
             firstName,
@@ -213,9 +214,15 @@ Public Class Form1
             dueDate,
             isReceivedPayment,
             currencyId
-        )
+            )
 
-    End Sub
+            Return dtMLCabecera.Rows(0).Item(0)
+
+        Catch ex As Exception
+
+        End Try
+
+    End Function
 
     Sub insertarDetalle(ByVal ordenId As Long, ByVal item As OrderItem, ByVal headerDate As Date)
 
@@ -272,10 +279,8 @@ Public Class Form1
 
         Try
             For Each wh In warehouseId
-                If wh <> warehouseId.Last Then
-                    Dim resp As AvailableQtyReturn = clientCegid.GetAvailableQty(item.Item.SellerCustomField, itemIdentifier, storeId.ToString, wh.ToString, retailContext)
-                    cantidad = resp.AvailableQty
-                End If
+                Dim resp As AvailableQtyReturn = clientCegid.GetAvailableQty(item.Item.SellerCustomField, itemIdentifier, storeId.ToString, wh.ToString, retailContext)
+                cantidad = resp.AvailableQty
 
                 If (cantidad >= 1 And cantidad >= item.Quantity) Then
                     warehouse = wh
@@ -387,6 +392,7 @@ Public Class Form1
         Dim payments() As WSorden.Create_Payment = {New Create_Payment()}
         Dim createLine() As WSorden.Create_Line = {}
 
+        Dim esSplit As Boolean = IIf(orden.Item("Header_InternalReference").ToString().Contains("SPLIT"), True, False)
 
         Try
             deliveryAddress.City = orden.Item("DeliveryAddress_City")
@@ -406,7 +412,7 @@ Public Class Form1
 
             omniChannel.BillingStatus = BillingStatus.Pending
             omniChannel.DeliveryType = DeliveryType.ShipByCentral
-            omniChannel.FollowUpStatus = FollowUpStatus.WaitingCommodity
+            ' omniChannel.FollowUpStatus = FollowUpStatus.WaitingCommodity
             omniChannel.GiftMessageType = GiftMessageType.None
             omniChannel.PaymentStatus = PaymentStatus.Totally
             omniChannel.ReturnStatus = OrderReturnStatus.NotReturned
@@ -417,10 +423,19 @@ Public Class Form1
 
             createHeader.OmniChannel = omniChannel
 
+            ' Evaluar si una orden viene con -SPLIT
             createHeader.StoreId = orden.Item("Header_StoreId")
-            createHeader.WarehouseId = orden.Item("Header_WarehouseId")
+            If esSplit Then
+                createHeader.WarehouseId = "000198"
+                'createHeader.OmniChannel.FollowUpStatus = FollowUpStatus.Validated --------- AQUI EL ERROR, CON VALIDATED NO FUNCA
+            Else
+                createHeader.WarehouseId = orden.Item("Header_WarehouseId")
+            End If
+
             createHeader.SalesPersonId = orden.Item("Header_SalesPersonId")
             createHeader.Type = SaleDocumentType.CustomerOrder
+
+
 
 
             Dim index As Integer = 0
@@ -470,6 +485,7 @@ Public Class Form1
 
             createRequest.ToString()
             Dim resp = clientCegid.Create(createRequest, retailContext)
+
             ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_MELI_CABECERA", orden.Item("id"))
         Catch ex As Exception
 
