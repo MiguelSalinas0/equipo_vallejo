@@ -412,7 +412,7 @@ Public Class Form1
 
             omniChannel.BillingStatus = BillingStatus.Pending
             omniChannel.DeliveryType = DeliveryType.ShipByCentral
-            ' omniChannel.FollowUpStatus = FollowUpStatus.WaitingCommodity
+            omniChannel.FollowUpStatus = FollowUpStatus.WaitingCommodity
             omniChannel.GiftMessageType = GiftMessageType.None
             omniChannel.PaymentStatus = PaymentStatus.Totally
             omniChannel.ReturnStatus = OrderReturnStatus.NotReturned
@@ -427,7 +427,7 @@ Public Class Form1
             createHeader.StoreId = orden.Item("Header_StoreId")
             If esSplit Then
                 createHeader.WarehouseId = "000198"
-                'createHeader.OmniChannel.FollowUpStatus = FollowUpStatus.Validated --------- AQUI EL ERROR, CON VALIDATED NO FUNCA
+                createHeader.OmniChannel.FollowUpStatus = FollowUpStatus.Validated
             Else
                 createHeader.WarehouseId = orden.Item("Header_WarehouseId")
             End If
@@ -454,7 +454,9 @@ Public Class Form1
                 newCreateLine.Quantity = item.Item("Quantity")
                 newCreateLine.NetUnitPrice = item.Item("NetUnitPrice")
 
-                omniChannelLine.WarehouseId = item.Item("WarehouseId")
+                If item.Item("WarehouseId") <> "000198" Then
+                    omniChannelLine.WarehouseId = item.Item("WarehouseId")
+                End If
 
                 newCreateLine.SalesPersonId = item.Item("SalesPersonId")
 
