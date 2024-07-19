@@ -501,8 +501,6 @@ Public Class Form1
             Next
         End If
 
-        ' Mostrar datos al finalizar el procesamiento
-        MostrarDatos()
     End Function
 
 
@@ -604,23 +602,22 @@ Public Class Form1
     Private Async Function CrearOrden(ByVal orden As DataRow) As Task
         ' Declaración de variables
         Dim retailContext As New WSorden.RetailContext
-        Dim binding As New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc")
+        Dim createRequest As New Create_Request
+        Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?singleWsdl")
+        Dim clientCegid As SaleDocumentServiceClient
 
-        ' Configuración del cliente del servicio
-        Dim clientCegid As SaleDocumentServiceClient = New SaleDocumentServiceClient(binding, endpoint)
-
-        ' Configuración de las credenciales del cliente
+        binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
+        binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
+        clientCegid = New SaleDocumentServiceClient(binding, endpoint)
         clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
         clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
-
         retailContext.DatabaseId = "VATEST"
 
         ' Obtención de los items de la orden desde la base de datos
         Dim orderItems As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", orden.Field(Of String)("Header_InternalReference"))
 
         ' Creación de objetos para la orden
-        Dim createRequest As New Create_Request()
         Dim deliveryAddress As New WSorden.Address()
         Dim createHeader As New WSorden.Create_Header()
         Dim omniChannel As New WSorden.OmniChannel()
@@ -641,7 +638,7 @@ Public Class Form1
         createHeader.Comment = orden.Field(Of String)("Header_Comment")
         createHeader.CustomerId = orden.Field(Of String)("Header_CustomerId")
         createHeader.CurrencyId = orden.Field(Of String)("Header_CurrencyId")
-        createHeader.Date = Date.Parse(orden.Field(Of DateTime)("Header_Date")).ToString("dd-MM-yyyy")
+        createHeader.Date = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
         createHeader.InternalReference = orden.Field(Of String)("Header_InternalReference")
         createHeader.Origin = WSorden.DocumentOrigin.ECommerce
 
@@ -674,7 +671,7 @@ Public Class Form1
         payments(0).Amount = 0
         payments(0).MethodId = "ECO"
         payments(0).Id = 20
-        payments(0).DueDate = Date.Parse(orden.Field(Of DateTime)("Header_Date")).ToString("dd-MM-yyyy")
+        payments(0).DueDate = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
         payments(0).IsReceivedPayment = False
         payments(0).CurrencyId = "ARG"
 
@@ -688,9 +685,9 @@ Public Class Form1
 
             newCreateLine.Label = item.Field(Of String)("Label")
             newCreateLine.Origin = WSorden.DocumentOrigin.ECommerce
-            newCreateLine.DeliveryDate = Date.Parse(item.Field(Of DateTime)("DeliveryDate")).ToString("dd-MM-yyyy")
-            newCreateLine.Quantity = item.Field(Of Decimal)("Quantity")
-            newCreateLine.NetUnitPrice = item.Field(Of Decimal)("NetUnitPrice")
+            newCreateLine.DeliveryDate = Date.Parse(item.Item("DeliveryDate").ToString).ToString("dd-MM-yyyy")
+            newCreateLine.Quantity = Integer.Parse(item.Item("Quantity"))
+            newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
 
             If item.Field(Of String)("WarehouseId") <> "000198" Then
                 omniChannelLine.WarehouseId = item.Field(Of String)("WarehouseId")
@@ -719,6 +716,7 @@ Public Class Form1
         Catch ex As Exception
             ' Manejar cualquier excepción que pueda ocurrir durante la creación de la orden
             Console.WriteLine($"Error al crear la orden: {ex.Message}")
+
         End Try
     End Function
 
@@ -835,7 +833,6 @@ Public Class Form1
             Console.WriteLine($"Error al crear cliente: {ex.Message}")
         End Try
     End Sub
-
 
 
 End Class
