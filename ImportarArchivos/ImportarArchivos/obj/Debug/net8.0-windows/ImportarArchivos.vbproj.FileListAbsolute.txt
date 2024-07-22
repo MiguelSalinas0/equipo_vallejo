@@ -1,0 +1,17 @@
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.exe
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.deps.json
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.runtimeconfig.json
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.pdb
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.Form1.resources
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.vbproj.GenerateResource.cache
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.GeneratedMSBuildEditorConfig.editorconfig
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.AssemblyInfoInputs.cache
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.AssemblyInfo.vb
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.vbproj.CoreCompileInputs.cache
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.sourcelink.json
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\refint\ImportarArchivos.dll
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.pdb
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.genruntimeconfig.cache
+C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ref\ImportarArchivos.dll
