@@ -1,0 +1,17 @@
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\bin\Debug\net8.0-windows\EscribirADestinos.exe
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\bin\Debug\net8.0-windows\EscribirADestinos.deps.json
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\bin\Debug\net8.0-windows\EscribirADestinos.runtimeconfig.json
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\bin\Debug\net8.0-windows\EscribirADestinos.dll
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\bin\Debug\net8.0-windows\EscribirADestinos.pdb
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.Form1.resources
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.vbproj.GenerateResource.cache
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.GeneratedMSBuildEditorConfig.editorconfig
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.AssemblyInfoInputs.cache
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.AssemblyInfo.vb
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.vbproj.CoreCompileInputs.cache
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.sourcelink.json
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.dll
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\refint\EscribirADestinos.dll
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.pdb
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\EscribirADestinos.genruntimeconfig.cache
+C:\xampp\htdocs\scripts_php\EscribirADestinos\EscribirADestinos\obj\Debug\net8.0-windows\ref\EscribirADestinos.dll

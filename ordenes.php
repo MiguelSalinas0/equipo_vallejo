@@ -1145,6 +1145,7 @@ $request2->createRequest->Lines = array();
 $resu199=0;
 $resu198=0;
 
+<<<<<<< Updated upstream
 foreach ($k2->order_items as $items) { 
     $it = $items->item;
   
@@ -1160,6 +1161,171 @@ foreach ($k2->order_items as $items) {
         echo "reemplaza sku: " . $it->seller_sku . " por sku: " . $ss['skuReferenceCode'];
         echo "<br>";
         $it->seller_sku = $ss['skuReferenceCode'];
+=======
+    // foreach ($k2->order_items as $items) {
+    //   $it = $items->item;
+
+    //   if (strlen($it->seller_sku) < 6) {
+    //     $sql1 = "SELECT [skuReferenceCode] FROM [W1_Pueblo].[dbo].[TBL_SKU_CODBARRA] where [skuId] =" . $it->seller_sku;
+    //     $sku = sqlsrv_query($conn, $sql1);
+    //     if ($sku === false) {
+    //       die(print_r(sqlsrv_errors(), true));
+    //     } else {
+    //       $ss = sqlsrv_fetch_array($sku, SQLSRV_FETCH_ASSOC);
+    //     }
+    //     echo "<br>";
+    //     echo "reemplaza sku: " . $it->seller_sku . " por sku: " . $ss['skuReferenceCode'];
+    //     echo "<br>";
+    //     $it->seller_sku = $ss['skuReferenceCode'];
+    //   }
+
+    //   if (isset($_POST['badsku']) && isset($_POST['goodsku']) && $_POST['badsku'] !== "" && $_POST['goodsku'] !== "") {
+    //     if ($it->seller_sku == $_POST['badsku']) {
+    //       $it->seller_sku = $_POST['goodsku'];
+    //       echo "<br>";
+    //       echo "reemplaza sku: " . $_POST['badsku'] . " por sku: " . $_POST['goodsku'];
+    //       echo "<br>";
+    //     } else {
+    //       echo "<br> El sku incorrecto no es el que venia la orden.<br>";
+    //     }
+    //   }
+
+
+      $urlS = "http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc";
+
+      $clientS = new SoapClient(
+        $urlS . "?singleWsdl",
+        array(
+          "location" => $urlS,
+          "login" => $log,
+          "password" => "MATIAS2020",
+          "trace" => true
+        )
+      );
+
+      $requestS = new StdClass();
+      $requestS->clientContext = new StdClass();
+      $requestS->clientContext->DatabaseId = "VATEST";
+
+      $requestS->itemIdentifier = new StdClass();
+      $requestS->itemIdentifier->Reference = $it->seller_sku;
+      $requestS->storeId = '000199';
+      $resu199 = $clientS->GetAvailableQty($requestS);
+      echo ('STOCK DE LA 199: ' . $resu199->GetAvailableQtyResult->AvailableQty);
+      if ($resu199->GetAvailableQtyResult->AvailableQty >= $items->quantity) {
+        echo ('saco stock de la 199');
+        $Create_Line = new StdClass();
+        $Create_Line->ItemIdentifier = new StdClass();
+        $Create_Line->ItemIdentifier->Reference = isset($it->seller_sku) ? $it->seller_sku : $it->seller_custom_field;
+
+        $Create_Line->Label = $it->title;
+        $Create_Line->Origin = 'ECommerce';
+        $Create_Line->DeliveryDate = substr($k2->date_created, 0, 10);
+        $Create_Line->Quantity = $items->quantity;
+        $Create_Line->NetUnitPrice = $items->unit_price;
+        $Create_Line->OmniChannel = new StdClass();
+        $Create_Line->OmniChannel->WarehouseId = '000199';
+        $Create_Line->SalesPersonId = 'MELI';
+        array_push($request->createRequest->Lines, $Create_Line);
+
+        //var_dump($request);
+        //$client->Create($request);
+
+        // $r = 0;
+      } else {
+        $urlS = "http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc";
+
+        $clientS = new SoapClient(
+          $urlS . "?singleWsdl",
+          array(
+            "location" => $urlS,
+            "login" => $log,
+            "password" => "MATIAS2020",
+            "trace" => true
+          )
+        );
+
+        $requestS = new StdClass();
+        $requestS->clientContext = new StdClass();
+        $requestS->clientContext->DatabaseId = "VATEST";
+
+        $requestS->itemIdentifier = new StdClass();
+        $requestS->itemIdentifier->Reference = $it->seller_sku;
+        $requestS->storeId = '000198';
+        $resu198 = $clientS->GetAvailableQty($requestS);
+        echo ('STOCK DE LA 198: ' . $resu198->GetAvailableQtyResult->AvailableQty);
+        if ($resu198->GetAvailableQtyResult->AvailableQty >=  $items->quantity) {
+          echo ('saco stock de la 198');
+          $Create_Line = new StdClass();
+          $Create_Line->ItemIdentifier = new StdClass();
+          $Create_Line->ItemIdentifier->Reference = isset($it->seller_sku) ? $it->seller_sku : $it->seller_custom_field;
+
+          $Create_Line->Label = $it->title;
+          $Create_Line->Origin = 'ECommerce';
+          $Create_Line->DeliveryDate = substr($k2->date_created, 0, 10);
+          $Create_Line->Quantity = $items->quantity;
+          $Create_Line->NetUnitPrice = $items->unit_price;
+
+          if ($k2->logistic_type == 'cross_docking') {
+            $Create_Line->OmniChannel = new StdClass();
+            //  $Create_Line->OmniChannel->WarehouseId = '000198';
+            $Create_Line->SalesPersonId = 'MELI';
+          } elseif ($k2->logistic_type == 'fulfillment') {
+            $Create_Line->SalesPersonId = 'FULL';
+          }
+          array_push($request2->createRequest->Lines, $Create_Line);
+        } elseif ($resu198->GetAvailableQtyResult->AvailableQty + $resu199->GetAvailableQtyResult->AvailableQty == $items->quantity) {
+          echo ('saco stock de la 199 y de la 198');
+          $Create_Line = new StdClass();
+          $Create_Line->ItemIdentifier = new StdClass();
+          $Create_Line->ItemIdentifier->Reference = isset($it->seller_sku) ? $it->seller_sku : $it->seller_custom_field;
+
+          $Create_Line->Label = $it->title;
+          $Create_Line->Origin = 'ECommerce';
+          $Create_Line->DeliveryDate = substr($k2->date_created, 0, 10);
+          $Create_Line->Quantity = $resu199->GetAvailableQtyResult->AvailableQty;
+          $Create_Line->NetUnitPrice = $items->unit_price;
+          $Create_Line->OmniChannel = new StdClass();
+          $Create_Line->OmniChannel->WarehouseId = '000199';
+          $Create_Line->SalesPersonId = 'MELI';
+          array_push($request->createRequest->Lines, $Create_Line);
+
+          $Create_Line = new StdClass();
+          $Create_Line->ItemIdentifier = new StdClass();
+          $Create_Line->ItemIdentifier->Reference = isset($it->seller_sku) ? $it->seller_sku : $it->seller_custom_field;
+
+          $Create_Line->Label = $it->title;
+          $Create_Line->Origin = 'ECommerce';
+          $Create_Line->DeliveryDate = substr($k2->date_created, 0, 10);
+          $Create_Line->Quantity = $items->quantity - $resu199->GetAvailableQtyResult->AvailableQty;
+          $Create_Line->NetUnitPrice = $items->unit_price;
+
+          if ($k2->logistic_type == 'cross_docking') {
+            $Create_Line->OmniChannel = new StdClass();
+            //  $Create_Line->OmniChannel->WarehouseId = '000198';
+            $Create_Line->SalesPersonId = 'MELI';
+          } elseif ($k2->logistic_type == 'fulfillment') {
+            $Create_Line->SalesPersonId = 'FULL';
+          }
+          array_push($request2->createRequest->Lines, $Create_Line);
+        } else {
+          echo "No hay stock saca todo de la 199";
+          $Create_Line = new StdClass();
+          $Create_Line->ItemIdentifier = new StdClass();
+          $Create_Line->ItemIdentifier->Reference = isset($it->seller_sku) ? $it->seller_sku : $it->seller_custom_field;
+
+          $Create_Line->Label = $it->title;
+          $Create_Line->Origin = 'ECommerce';
+          $Create_Line->DeliveryDate = substr($k2->date_created, 0, 10);
+          $Create_Line->Quantity = $items->quantity;
+          $Create_Line->NetUnitPrice = $items->unit_price;
+          $Create_Line->OmniChannel = new StdClass();
+          $Create_Line->OmniChannel->WarehouseId = '000199';
+          $Create_Line->SalesPersonId = 'MELI';
+          array_push($request->createRequest->Lines, $Create_Line);
+        }
+      }
+>>>>>>> Stashed changes
     }
 
     if (isset($_POST['badsku']) && isset($_POST['goodsku']) && $_POST['badsku'] !== "" && $_POST['goodsku'] !== "") {
