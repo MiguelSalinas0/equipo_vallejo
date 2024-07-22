@@ -8,19 +8,19 @@
     "net8.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
+    "C:\\Users\\julia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj",
+      "projectUniqueName": "C:\\Users\\julia\\OneDrive\\Documentos\\PROYECTOS\\Proyectos con VB .NET\\primera app\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj",
       "projectName": "ImportarArchivos",
-      "projectPath": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj",
-      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\obj\\",
+      "projectPath": "C:\\Users\\julia\\OneDrive\\Documentos\\PROYECTOS\\Proyectos con VB .NET\\primera app\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj",
+      "packagesPath": "C:\\Users\\julia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\julia\\OneDrive\\Documentos\\PROYECTOS\\Proyectos con VB .NET\\primera app\\ImportarArchivos\\ImportarArchivos\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\julia\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -70,7 +70,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

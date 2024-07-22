@@ -29,6 +29,9 @@ Partial Class Form1
         btnAgregarArchivo = New Button()
         lvOrigen = New ListView()
         btnCopiar = New Button()
+        Label1 = New Label()
+        Label2 = New Label()
+        lbEstado = New Label()
         SuspendLayout()
         ' 
         ' lvDestino
@@ -44,7 +47,7 @@ Partial Class Form1
         ' 
         btnAgregarDestino.Location = New Point(575, 441)
         btnAgregarDestino.Name = "btnAgregarDestino"
-        btnAgregarDestino.Size = New Size(109, 65)
+        btnAgregarDestino.Size = New Size(123, 65)
         btnAgregarDestino.TabIndex = 1
         btnAgregarDestino.Text = "Agregar destino"
         btnAgregarDestino.UseVisualStyleBackColor = True
@@ -53,7 +56,7 @@ Partial Class Form1
         ' 
         btnEliminarDestino.Location = New Point(717, 441)
         btnEliminarDestino.Name = "btnEliminarDestino"
-        btnEliminarDestino.Size = New Size(103, 65)
+        btnEliminarDestino.Size = New Size(117, 65)
         btnEliminarDestino.TabIndex = 2
         btnEliminarDestino.Text = "Eliminar destino"
         btnEliminarDestino.UseVisualStyleBackColor = True
@@ -62,18 +65,18 @@ Partial Class Form1
         ' 
         btnEliminarArchivo.Location = New Point(179, 441)
         btnEliminarArchivo.Name = "btnEliminarArchivo"
-        btnEliminarArchivo.Size = New Size(103, 65)
+        btnEliminarArchivo.Size = New Size(117, 65)
         btnEliminarArchivo.TabIndex = 5
-        btnEliminarArchivo.Text = "Eliminar Archivo"
+        btnEliminarArchivo.Text = "Eliminar directorio"
         btnEliminarArchivo.UseVisualStyleBackColor = True
         ' 
         ' btnAgregarArchivo
         ' 
         btnAgregarArchivo.Location = New Point(37, 441)
         btnAgregarArchivo.Name = "btnAgregarArchivo"
-        btnAgregarArchivo.Size = New Size(109, 65)
+        btnAgregarArchivo.Size = New Size(123, 65)
         btnAgregarArchivo.TabIndex = 4
-        btnAgregarArchivo.Text = "Agregar archivo"
+        btnAgregarArchivo.Text = "Agregar directorio"
         btnAgregarArchivo.UseVisualStyleBackColor = True
         ' 
         ' lvOrigen
@@ -94,11 +97,44 @@ Partial Class Form1
         btnCopiar.Text = "Copiar"
         btnCopiar.UseVisualStyleBackColor = True
         ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold)
+        Label1.Location = New Point(36, 44)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(154, 25)
+        Label1.TabIndex = 7
+        Label1.Text = "Origen de datos"
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold)
+        Label2.Location = New Point(575, 44)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(161, 25)
+        Label2.TabIndex = 8
+        Label2.Text = "Destino de datos"
+        ' 
+        ' lbEstado
+        ' 
+        lbEstado.AutoSize = True
+        lbEstado.Font = New Font("Segoe UI", 14.25F, FontStyle.Italic, GraphicsUnit.Point, CByte(0))
+        lbEstado.Location = New Point(604, 574)
+        lbEstado.Name = "lbEstado"
+        lbEstado.Size = New Size(0, 25)
+        lbEstado.TabIndex = 9
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        AutoSize = True
         ClientSize = New Size(1111, 634)
+        Controls.Add(lbEstado)
+        Controls.Add(Label2)
+        Controls.Add(Label1)
         Controls.Add(btnCopiar)
         Controls.Add(btnEliminarArchivo)
         Controls.Add(btnAgregarArchivo)
@@ -109,6 +145,7 @@ Partial Class Form1
         Name = "Form1"
         Text = "Form1"
         ResumeLayout(False)
+        PerformLayout()
     End Sub
 
     Friend WithEvents lvDestino As ListView
@@ -118,5 +155,8 @@ Partial Class Form1
     Friend WithEvents btnAgregarArchivo As Button
     Friend WithEvents lvOrigen As ListView
     Friend WithEvents btnCopiar As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents lbEstado As Label
 
 End Class

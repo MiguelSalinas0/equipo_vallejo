@@ -15,3 +15,20 @@ C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Deb
 C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.pdb
 C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.genruntimeconfig.cache
 C:\xampp\htdocs\scripts\equipo_vallejo\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ref\ImportarArchivos.dll
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.exe
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.deps.json
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.runtimeconfig.json
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.dll
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\bin\Debug\net8.0-windows\ImportarArchivos.pdb
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.Form1.resources
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.vbproj.GenerateResource.cache
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.AssemblyInfoInputs.cache
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.AssemblyInfo.vb
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.vbproj.CoreCompileInputs.cache
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.sourcelink.json
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.dll
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\refint\ImportarArchivos.dll
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.pdb
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ImportarArchivos.genruntimeconfig.cache
+C:\Users\julia\OneDrive\Documentos\PROYECTOS\Proyectos con VB .NET\primera app\ImportarArchivos\ImportarArchivos\obj\Debug\net8.0-windows\ref\ImportarArchivos.dll
