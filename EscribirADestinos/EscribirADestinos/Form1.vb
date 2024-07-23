@@ -6,10 +6,13 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         lvOrigen.View = View.Details
-        lvOrigen.Columns.Add("Path", 100)
-
+        lvOrigen.Columns.Add("Path", 150)
         lvOrigen.Columns.Add("Nombre Carpeta", 100)
         lvOrigen.Columns.Add("Tamaño (MB)", 100)
+
+        lvDestino.View = View.Details
+        lvDestino.Columns.Add("Path", 150)
+        lvDestino.Columns.Add("Nombre Carpeta", 100)
 
     End Sub
 
@@ -61,13 +64,59 @@ Public Class Form1
 
     Private Sub btnCopiar_Click(sender As Object, e As EventArgs) Handles btnCopiar.Click
 
+        Dim itemDestino As ListViewItem = lvDestino.Items.Item(0)
+
         For Each item As ListViewItem In lvOrigen.Items
-            ' Verificamos si el checkbox está marcado para este elemento
             If item.Checked Then
-                ' Agregamos el texto del elemento a alguna estructura de datos o hacemos algo con él
-                MsgBox(item.Text) ' Por ejemplo, mostrar en un MessageBox
+                CopyFolder(item.Text, itemDestino.Text)
+                MsgBox($"Carpeta '{item.Text}' copiada exitosamente a '{itemDestino.Text}'.")
             End If
         Next
 
     End Sub
+
+    Private Sub btnDestino_Click(sender As Object, e As EventArgs) Handles btnDestino.Click
+
+        Dim fbdDestino As New FolderBrowserDialog
+        Dim destino As String
+
+        If fbdDestino.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            destino = fbdDestino.SelectedPath
+
+            Dim item As New ListViewItem(destino)
+            item.SubItems.Add(IO.Path.GetFileName(destino))
+            lvDestino.Items.Add(item)
+
+        End If
+
+    End Sub
+
+    Private Sub CopyFolder(ByVal origen As String, ByVal destino As String)
+        ' Obtenemos la información del directorio origen
+        Dim directorioOrigen As New DirectoryInfo(origen)
+
+        ' Verificamos si el directorio origen existe
+        If Not directorioOrigen.Exists Then
+            Throw New DirectoryNotFoundException($"Directorio origen no encontrado: {origen}")
+        End If
+
+        ' Creamos el directorio destino si no existe
+        If Not Directory.Exists(destino) Then
+            Directory.CreateDirectory(destino)
+        End If
+
+        ' Obtenemos todos los archivos del directorio actual
+        For Each archivo As FileInfo In directorioOrigen.GetFiles()
+            Dim nuevoArchivo As String = Path.Combine(destino, archivo.Name)
+            archivo.CopyTo(nuevoArchivo, True)
+        Next
+
+        ' Obtenemos todos los subdirectorios del directorio actual
+        For Each subDirectorio As DirectoryInfo In directorioOrigen.GetDirectories()
+            Dim nuevoDirectorio As String = Path.Combine(destino, subDirectorio.Name)
+            ' Llamamos recursivamente a la función para copiar los subdirectorios
+            CopyFolder(subDirectorio.FullName, nuevoDirectorio)
+        Next
+    End Sub
+
 End Class
