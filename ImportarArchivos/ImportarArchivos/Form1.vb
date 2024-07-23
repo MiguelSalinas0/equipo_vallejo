@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Threading
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Form1
@@ -16,7 +17,6 @@ Public Class Form1
         lvDestino.Columns.Add("", 40)
         lvDestino.Columns.Add("Directorio", 129, HorizontalAlignment.Left)
         lvDestino.Columns.Add("Path", 120, HorizontalAlignment.Left)
-
         VerificarOrigenesYDestinos()
     End Sub
 
@@ -73,42 +73,36 @@ Public Class Form1
     End Function
 
     Public Sub CopiarDatos(origenes As List(Of String), destinos As List(Of String))
-
-        ActualizarEstado("Verificando origenes y destinos...", Color.Orange)
-
-        ' Check if each source directory exists
-        For Each orgPath In origenes
-            If Not Directory.Exists(orgPath) Then
-                Throw New DirectoryNotFoundException("Source directory does not exist: " & orgPath)
-            End If
-        Next
-
-        ' Create the directories in the destination paths if they do not exist
-        For Each destPath In destinos
-            If Not Directory.Exists(destPath) Then
-                Directory.CreateDirectory(destPath)
-            End If
-        Next
-
-
-        ActualizarEstado("Realizando copia de archivos...", Color.Orange)
-
-        ' Process each source path
-        For Each orgPath In origenes
-            ' Get the subdirectories and files in the current source directory
-            Dim directories As String() = Directory.GetDirectories(orgPath, "*", SearchOption.AllDirectories)
-            Dim files As String() = Directory.GetFiles(orgPath, "*", SearchOption.AllDirectories)
-
-            ' Create subdirectories in the destination paths
-            For Each directorio In directories
-                Dim relativePath As String = directorio.Substring(orgPath.Length + 1)
-                For Each destPath In destinos
-                    Directory.CreateDirectory(Path.Combine(destPath, relativePath))
-                Next
+        Try
+            ' Check if each source directory exists
+            For Each orgPath In origenes
+                If Not Directory.Exists(orgPath) Then
+                    Throw New DirectoryNotFoundException("Source directory does not exist: " & orgPath)
+                End If
             Next
 
-            ' Copy files to the destination paths
-            Try
+            ' Create the directories in the destination paths if they do not exist
+            For Each destPath In destinos
+                If Not Directory.Exists(destPath) Then
+                    Directory.CreateDirectory(destPath)
+                End If
+            Next
+
+            ' Process each source path
+            For Each orgPath In origenes
+                ' Get the subdirectories and files in the current source directory
+                Dim directories As String() = Directory.GetDirectories(orgPath, "*", SearchOption.AllDirectories)
+                Dim files As String() = Directory.GetFiles(orgPath, "*", SearchOption.AllDirectories)
+
+                ' Create subdirectories in the destination paths
+                For Each directorio In directories
+                    Dim relativePath As String = directorio.Substring(orgPath.Length + 1)
+                    For Each destPath In destinos
+                        Directory.CreateDirectory(Path.Combine(destPath, relativePath))
+                    Next
+                Next
+
+                ' Copy files to the destination paths
                 For Each file In files
                     Dim relativePath As String = file.Substring(orgPath.Length + 1)
                     For Each destPath In destinos
@@ -117,11 +111,16 @@ Public Class Form1
                 Next
 
                 ActualizarEstado("Copia finalizada", Color.Green)
-            Catch ex As Exception
-                ActualizarEstado("Ocurrió un error al copiar los archivos", Color.Red)
-            End Try
-        Next
+            Next
+        Catch ex As DirectoryNotFoundException
+            ' Manejar excepción de directorio no encontrado
+            ActualizarEstado("No se encontró uno de los directorios de origen.", Color.Red)
+        Catch ex As Exception
+            ' Manejar cualquier otra excepción
+            ActualizarEstado("Ocurrió un error al copiar los archivos.", Color.Red)
+        End Try
     End Sub
+
 
     Private Sub btnAgregarDestino_Click(sender As Object, e As EventArgs) Handles btnAgregarDestino.Click
         Dim fbdDirectorio As New FolderBrowserDialog
@@ -151,6 +150,8 @@ Public Class Form1
                 listView.Items.RemoveAt(i)
             End If
         Next
+
+        VerificarOrigenesYDestinos()
     End Sub
 
     Private Sub btnEliminarArchivo_Click(sender As Object, e As EventArgs) Handles btnEliminarArchivo.Click

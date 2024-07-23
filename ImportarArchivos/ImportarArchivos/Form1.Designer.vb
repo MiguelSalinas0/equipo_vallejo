@@ -22,26 +22,15 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        lvDestino = New ListView()
         btnAgregarDestino = New Button()
         btnEliminarDestino = New Button()
         btnEliminarArchivo = New Button()
         btnAgregarArchivo = New Button()
-        lvOrigen = New ListView()
         btnCopiar = New Button()
         Label1 = New Label()
         Label2 = New Label()
         lbEstado = New Label()
         SuspendLayout()
-        ' 
-        ' lvDestino
-        ' 
-        lvDestino.CheckBoxes = True
-        lvDestino.Location = New Point(575, 86)
-        lvDestino.Name = "lvDestino"
-        lvDestino.Size = New Size(471, 329)
-        lvDestino.TabIndex = 0
-        lvDestino.UseCompatibleStateImageBehavior = False
         ' 
         ' btnAgregarDestino
         ' 
@@ -79,18 +68,9 @@ Partial Class Form1
         btnAgregarArchivo.Text = "Agregar directorio"
         btnAgregarArchivo.UseVisualStyleBackColor = True
         ' 
-        ' lvOrigen
-        ' 
-        lvOrigen.CheckBoxes = True
-        lvOrigen.Location = New Point(36, 86)
-        lvOrigen.Name = "lvOrigen"
-        lvOrigen.Size = New Size(471, 329)
-        lvOrigen.TabIndex = 3
-        lvOrigen.UseCompatibleStateImageBehavior = False
-        ' 
         ' btnCopiar
         ' 
-        btnCopiar.Location = New Point(36, 557)
+        btnCopiar.Location = New Point(37, 557)
         btnCopiar.Name = "btnCopiar"
         btnCopiar.Size = New Size(109, 65)
         btnCopiar.TabIndex = 6
@@ -121,7 +101,7 @@ Partial Class Form1
         ' 
         lbEstado.AutoSize = True
         lbEstado.Font = New Font("Segoe UI", 14.25F, FontStyle.Italic, GraphicsUnit.Point, CByte(0))
-        lbEstado.Location = New Point(604, 574)
+        lbEstado.Location = New Point(190, 574)
         lbEstado.Name = "lbEstado"
         lbEstado.Size = New Size(0, 25)
         lbEstado.TabIndex = 9
@@ -138,22 +118,17 @@ Partial Class Form1
         Controls.Add(btnCopiar)
         Controls.Add(btnEliminarArchivo)
         Controls.Add(btnAgregarArchivo)
-        Controls.Add(lvOrigen)
         Controls.Add(btnEliminarDestino)
         Controls.Add(btnAgregarDestino)
-        Controls.Add(lvDestino)
         Name = "Form1"
         Text = "Form1"
         ResumeLayout(False)
         PerformLayout()
     End Sub
-
-    Friend WithEvents lvDestino As ListView
     Friend WithEvents btnAgregarDestino As Button
     Friend WithEvents btnEliminarDestino As Button
     Friend WithEvents btnEliminarArchivo As Button
     Friend WithEvents btnAgregarArchivo As Button
-    Friend WithEvents lvOrigen As ListView
     Friend WithEvents btnCopiar As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
