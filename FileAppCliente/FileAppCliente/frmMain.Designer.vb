@@ -57,7 +57,7 @@ Partial Class frmMain
         '
         'btnRefresh
         '
-        Me.btnRefresh.Location = New System.Drawing.Point(12, 620)
+        Me.btnRefresh.Location = New System.Drawing.Point(12, 703)
         Me.btnRefresh.Name = "btnRefresh"
         Me.btnRefresh.Size = New System.Drawing.Size(80, 30)
         Me.btnRefresh.TabIndex = 2
@@ -96,7 +96,7 @@ Partial Class frmMain
         '
         'btnDeleteOrigen
         '
-        Me.btnDeleteOrigen.Location = New System.Drawing.Point(164, 495)
+        Me.btnDeleteOrigen.Location = New System.Drawing.Point(174, 495)
         Me.btnDeleteOrigen.Name = "btnDeleteOrigen"
         Me.btnDeleteOrigen.Size = New System.Drawing.Size(125, 30)
         Me.btnDeleteOrigen.TabIndex = 5

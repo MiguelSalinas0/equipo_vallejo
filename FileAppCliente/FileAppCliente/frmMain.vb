@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports DevExpress.XtraGrid.Views.Base
 Imports DevExpress.XtraGrid.Views.Grid
 
 Public Class frmMain
@@ -67,6 +68,7 @@ Public Class frmMain
 
         ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_EliminarDestino", GridViewDestino.GetFocusedRowCellValue("ID"))
 
+
     End Sub
 
     Private Sub btnDeleteOrigen_Click(sender As Object, e As EventArgs) Handles btnDeleteOrigen.Click
@@ -75,4 +77,75 @@ Public Class frmMain
 
     End Sub
 
+    Private Sub btnAddOrigen_Click(sender As Object, e As EventArgs) Handles btnAddOrigen.Click
+
+        'Defino Variables
+        Dim fbdSeleccionarOrigen As New FolderBrowserDialog
+        Dim strPath As String
+        Dim strNombre As String
+
+        'Obtengo Path
+        If fbdSeleccionarOrigen.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+
+            'Path Ingresado
+
+            'Asigno Variables
+            strPath = fbdSeleccionarOrigen.SelectedPath
+
+            'Obtengo Nombre
+FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
+
+            'Valido Nombre Ingresado
+            If ValidarNombre(strNombre) Then
+
+                'Nombre Validado
+
+
+
+            Else
+
+                'Fallo Validacion
+                If MsgBox("El nombre ingresado es invalido, ¿Deséa continuar?", MsgBoxStyle.RetryCancel) = MsgBoxResult.Retry Then
+
+                    GoTo FlagNom
+
+                Else
+
+                    'nO DESEO cONTINUAR
+
+
+                End If
+
+            End If
+
+
+        Else
+
+            'Path No Ingresado
+
+        End If
+
+    End Sub
+
+    Function ValidarNombre(ByVal nombre As String) As Boolean
+
+        'Valido nombre
+        If Trim(nombre) = vbNullString Then
+
+            'Fallo Validacion
+            Return False
+
+        Else
+
+            'Devolver OK' 
+            Return True
+
+        End If
+
+    End Function
+
+
+    Private Sub GridViewOrigen_FocusedRowChanged(sender As Object, e As FocusedRowChangedEventArgs) Handles GridViewOrigen.FocusedRowChanged
+        ActualizarDestinos()
+    End Sub
 End Class
