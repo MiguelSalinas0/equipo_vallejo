@@ -40,7 +40,7 @@ Public Class frmMain
         GridViewOrigen.BestFitColumns()
 
     End Sub
-    Sub ActualziarDestinos()
+    Sub ActualizarDestinos()
 
         dtDestinos = ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_ObtenerDestinosXOrigen", GridViewOrigen.GetFocusedRowCellValue("ID"))
         dgcDestino.DataSource = dtDestinos
@@ -59,7 +59,19 @@ Public Class frmMain
     End Sub
     Private Sub dgcOrigen_Click(sender As Object, e As EventArgs) Handles dgcOrigen.Click
 
-        ActualziarDestinos()
+        ActualizarDestinos()
+
+    End Sub
+
+    Private Sub btnDeleteDestino_Click(sender As Object, e As EventArgs) Handles btnDeleteDestino.Click
+
+        ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_EliminarDestino", GridViewDestino.GetFocusedRowCellValue("ID"))
+
+    End Sub
+
+    Private Sub btnDeleteOrigen_Click(sender As Object, e As EventArgs) Handles btnDeleteOrigen.Click
+
+        ConexionBBDD.ConexionSQL.EjecutarSP("", GridViewOrigen.GetFocusedRowCellValue("ID"))
 
     End Sub
 
