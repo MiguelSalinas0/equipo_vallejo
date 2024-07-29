@@ -13,3 +13,8 @@ DOCUMENTACION ML: https://developers.mercadolibre.com.ar/es_ar/
     - CLASE CLIENTE (DENTRO DE CLASE ORDEN)
     
 3 - INSERTAR EN LA DB MEDIANTE EL SP
+
+
+http://vmapp.sportotal.com.ar/Y2_VAL/Doc/WebService/en/CustomerService.html#op.CreateContact
+
+http://vmapp.sportotal.com.ar/Y2_VAL/Doc/WebService/en/SaleDocumentService.html#op.ID1E1IAC --- 3 create

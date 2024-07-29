@@ -24,6 +24,8 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.cmbSucursales = New System.Windows.Forms.ComboBox()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.dgvDetalles = New System.Windows.Forms.DataGridView()
+        CType(Me.dgvDetalles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'cmbSucursales
@@ -43,19 +45,31 @@ Partial Class Form1
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'dgvDetalles
+        '
+        Me.dgvDetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvDetalles.Location = New System.Drawing.Point(38, 146)
+        Me.dgvDetalles.Name = "dgvDetalles"
+        Me.dgvDetalles.ReadOnly = True
+        Me.dgvDetalles.Size = New System.Drawing.Size(713, 266)
+        Me.dgvDetalles.TabIndex = 2
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.dgvDetalles)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.cmbSucursales)
         Me.Name = "Form1"
         Me.Text = "Form1"
+        CType(Me.dgvDetalles, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents cmbSucursales As ComboBox
     Friend WithEvents Button1 As Button
+    Friend WithEvents dgvDetalles As DataGridView
 End Class
