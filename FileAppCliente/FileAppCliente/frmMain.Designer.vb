@@ -28,6 +28,11 @@ Partial Class frmMain
         Me.WaitFormManager = New DevExpress.XtraSplashScreen.SplashScreenManager(Me, GetType(Global.FileAppCliente.WaitForm), True, True)
         Me.dgcDestino = New DevExpress.XtraGrid.GridControl()
         Me.GridViewDestino = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.btnAddOrigen = New System.Windows.Forms.Button()
+        Me.btnDeleteOrigen = New System.Windows.Forms.Button()
+        Me.btnAddDestino = New System.Windows.Forms.Button()
+        Me.btnDeleteDestino = New System.Windows.Forms.Button()
+        Me.btnCopy = New System.Windows.Forms.Button()
         CType(Me.dgcOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgcDestino, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -53,9 +58,9 @@ Partial Class frmMain
         '
         'btnRefresh
         '
-        Me.btnRefresh.Location = New System.Drawing.Point(235, 504)
+        Me.btnRefresh.Location = New System.Drawing.Point(12, 703)
         Me.btnRefresh.Name = "btnRefresh"
-        Me.btnRefresh.Size = New System.Drawing.Size(75, 23)
+        Me.btnRefresh.Size = New System.Drawing.Size(80, 30)
         Me.btnRefresh.TabIndex = 2
         Me.btnRefresh.Text = "Actualizar"
         Me.btnRefresh.UseVisualStyleBackColor = True
@@ -81,11 +86,61 @@ Partial Class frmMain
         Me.GridViewDestino.OptionsBehavior.Editable = False
         Me.GridViewDestino.OptionsView.ShowGroupPanel = False
         '
+        'btnAddOrigen
+        '
+        Me.btnAddOrigen.Location = New System.Drawing.Point(12, 495)
+        Me.btnAddOrigen.Name = "btnAddOrigen"
+        Me.btnAddOrigen.Size = New System.Drawing.Size(125, 30)
+        Me.btnAddOrigen.TabIndex = 4
+        Me.btnAddOrigen.Text = "Agregar Origen"
+        Me.btnAddOrigen.UseVisualStyleBackColor = True
+        '
+        'btnDeleteOrigen
+        '
+        Me.btnDeleteOrigen.Location = New System.Drawing.Point(174, 495)
+        Me.btnDeleteOrigen.Name = "btnDeleteOrigen"
+        Me.btnDeleteOrigen.Size = New System.Drawing.Size(125, 30)
+        Me.btnDeleteOrigen.TabIndex = 5
+        Me.btnDeleteOrigen.Text = "Eliminar Origen"
+        Me.btnDeleteOrigen.UseVisualStyleBackColor = True
+        '
+        'btnAddDestino
+        '
+        Me.btnAddDestino.Location = New System.Drawing.Point(654, 495)
+        Me.btnAddDestino.Name = "btnAddDestino"
+        Me.btnAddDestino.Size = New System.Drawing.Size(125, 30)
+        Me.btnAddDestino.TabIndex = 6
+        Me.btnAddDestino.Text = "Agregar Destino"
+        Me.btnAddDestino.UseVisualStyleBackColor = True
+        '
+        'btnDeleteDestino
+        '
+        Me.btnDeleteDestino.Location = New System.Drawing.Point(809, 495)
+        Me.btnDeleteDestino.Name = "btnDeleteDestino"
+        Me.btnDeleteDestino.Size = New System.Drawing.Size(125, 30)
+        Me.btnDeleteDestino.TabIndex = 7
+        Me.btnDeleteDestino.Text = "Eliminar Destino"
+        Me.btnDeleteDestino.UseVisualStyleBackColor = True
+        '
+        'btnCopy
+        '
+        Me.btnCopy.Location = New System.Drawing.Point(221, 602)
+        Me.btnCopy.Name = "btnCopy"
+        Me.btnCopy.Size = New System.Drawing.Size(80, 30)
+        Me.btnCopy.TabIndex = 8
+        Me.btnCopy.Text = "Copiar"
+        Me.btnCopy.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1387, 745)
+        Me.Controls.Add(Me.btnCopy)
+        Me.Controls.Add(Me.btnDeleteDestino)
+        Me.Controls.Add(Me.btnAddDestino)
+        Me.Controls.Add(Me.btnDeleteOrigen)
+        Me.Controls.Add(Me.btnAddOrigen)
         Me.Controls.Add(Me.dgcDestino)
         Me.Controls.Add(Me.btnRefresh)
         Me.Controls.Add(Me.dgcOrigen)
@@ -105,4 +160,9 @@ Partial Class frmMain
     Friend WithEvents WaitFormManager As DevExpress.XtraSplashScreen.SplashScreenManager
     Friend WithEvents dgcDestino As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridViewDestino As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents btnAddOrigen As Button
+    Friend WithEvents btnDeleteOrigen As Button
+    Friend WithEvents btnAddDestino As Button
+    Friend WithEvents btnDeleteDestino As Button
+    Friend WithEvents btnCopy As Button
 End Class
