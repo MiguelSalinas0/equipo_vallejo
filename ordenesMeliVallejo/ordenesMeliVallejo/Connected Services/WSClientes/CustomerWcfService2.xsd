@@ -1,0 +1,1167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://www.cegid.fr/Retail/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:element name="HelloWorld">
+    <xs:annotation>
+      <xs:documentation>HelloWorld method to validate the access to Web Services from every very light HTTP client via Javascript for example</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="text" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Text to pass to test consumption.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element xmlns:q1="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="clientContext" nillable="true" type="q1:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="RetailContext">
+    <xs:annotation>
+      <xs:documentation>Application context.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DatabaseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Identifier of the database to use in this execution context.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q2="http://www.cegid.fr/Retail/1.0" name="RetailContext" nillable="true" type="q2:RetailContext" />
+  <xs:element name="HelloWorldResponse">
+    <xs:annotation>
+      <xs:documentation>HelloWorld method to validate the access to Web Services from every very light HTTP client via Javascript for example</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="HelloWorldResult" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Returns the text typed upon entry, concatenated with phrase 'Hello You'</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerIdByReference">
+    <xs:annotation>
+      <xs:documentation>Returns the identifier of the customer matching a given customer reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Reference enabling the identification of the customer.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element xmlns:q3="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="clientContext" nillable="true" type="q3:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerIdByReferenceResponse">
+    <xs:annotation>
+      <xs:documentation>Returns the identifier of the customer matching a given customer reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCustomerIdByReferenceResult" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Returns the identifier of the customer found.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerDetail">
+    <xs:annotation>
+      <xs:documentation>Returns information that can be viewed from the customer record.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerId" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Customer identifier.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element xmlns:q4="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="clientContext" nillable="true" type="q4:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomerDetailResponse">
+    <xs:annotation>
+      <xs:documentation>Returns information that can be viewed from the customer record.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="GetCustomerDetailResult" nillable="true" type="q5:CustomerQueryData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CustomerQueryData">
+    <xs:annotation>
+      <xs:documentation>Viewable data of a customer record.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://www.cegid.fr/Retail/1.0" base="q6:CustomerData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Closed" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2014/02 - V1105] [Beta] - Customer closed. - Related to column [TIERS.T_FERME].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CreationStoreId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identifier of the store where the customer was created. - Related to column [TIERS.T_ETABCREATION].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer identifier. - Related to column [TIERS.T_TIERS].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="InvoiceCustomerId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identifier of the invoiced customer associated with the customer. - Related to column [TIERS.T_TIERSFACTURE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IsProspect" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/11 - V1201] - Property specifying if the customer is a prospect. - Related to column [TIERS.T_NATUREAUXI].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IsVirtual" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Property specifying if the customer is fictitious or unknown. - Related to column [TIERS.T_TIERSFICTIF].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LastDateUpdate" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/04 - V1110] [Beta] - Date of the latest change of the customer - Related to column [TIERS.T_DTSVLASTCHANGE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Notepad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2018/02 - V1400] [Optional] - Notepad - Related to column [TIERS.T_BLOCNOTE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:q7="http://www.cegid.fr/Retail/1.0" name="CustomerQueryData" nillable="true" type="q7:CustomerQueryData" />
+  <xs:complexType name="CustomerData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://www.cegid.fr/Retail/1.0" base="q8:CustomerDataBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActivityCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identifier of the customer's sales division. - Related to column [TIERS.T_APE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Barcode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer barcode. - Related to column [TIERS.T_EAN].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="BirthDateData" nillable="true" type="q8:BirthDateDataType">
+            <xs:annotation>
+              <xs:documentation>[Optional].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CompanyIdNumber" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer's Company Registration Number. - Related to column [TIERS.T_SIRET].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CompanyTitleId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Company's legal form. - Related to column [TIERS.T_FORMEJURIDIQUE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer currency ID. - Related to column [TIERS.T_DEVISE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DirectMail" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2017/03 - V1110] [Optional] - Mail merge - Related to column [TIERS.T_PUBLIPOSTAGE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FiscalId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer TIN or VAT identification number. - Related to column [TIERS.T_NIF].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ItalianFiscalId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer fiscal identifier for Italian tax administration. - Related to column [TIERSCOMPL.YTC_CODEFISCIT].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LanguageId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer's language ID. - Related to column [TIERS.T_LANGUE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LongDescription" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Comment - Related to column [TIERS.T_COMMENTAIRE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="NationalityId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer's nationality ID. - Related to column [TIERS.T_NATIONALITE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OptinAlternativeEmail" nillable="true" type="q8:CustomerInformationType">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - Info E-mail 2 - Related to column [TIERSCOMPL.YTC_INFOEMAIL2].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OptinEmail" nillable="true" type="q8:CustomerInformationType">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - E-mail Info - Related to column [TIERSCOMPL.YTC_INFOEMAIL1].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OptinHomePhone" nillable="true" type="q8:CustomerInformationType">
+            <xs:annotation>
+              <xs:documentation>[Added 2015/05 - V1201] [Optional] - Phone Info - Home - Related to column [TIERSCOMPL.YTC_INFOTEL1].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OptinMobile" nillable="true" type="q8:CustomerInformationType">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - Phone Info - Related to column [TIERSCOMPL.YTC_INFOTEL3].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OptinOfficePhone" nillable="true" type="q8:CustomerInformationType">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - Phone Info - Office - Related to column [TIERSCOMPL.YTC_INFOTEL2].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OptinPostal" nillable="true" type="q8:CustomerInformationType">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - Address Info - Related to column [TIERSCOMPL.YTC_INFOADRESSE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PassportNumber" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer's passport. - Related to column [TIERS.T_PASSEPORT].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Sex" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer's gender. - Related to column [TIERS.T_SEXE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Comment - Related to column [TIERS.T_ABREGE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="UserFields" nillable="true" type="q8:ArrayOfUserField">
+            <xs:annotation>
+              <xs:documentation>[Added 2014/10 - V1105] [Optional] - User fields.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="VATSystem" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2014/08 - V1105] [Beta] [Optional] - VAT system - Related to column [TIERS.T_REGIMETVA].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ValidAlternativeEmail" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - E-mail 2: valid - Related to column [TIERSCOMPL.YTC_EMAIL2VALIDE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ValidEmail" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - E-mail: valid - Related to column [TIERSCOMPL.YTC_EMAIL1VALIDE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ValidHomePhone" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1201] [Optional] - Phone Home: valid - Related to column [TIERSCOMPL.YTC_TEL1VALIDE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ValidMobile" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - Mobile phone: valid - Related to column [TIERSCOMPL.YTC_TEL3VALIDE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ValidOfficePhone" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2013/11 - V1105] [Optional] - Phone Office: valid - Related to column [TIERSCOMPL.YTC_TEL2VALIDE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:q9="http://www.cegid.fr/Retail/1.0" name="CustomerData" nillable="true" type="q9:CustomerData" />
+  <xs:complexType name="CustomerDataBase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivitySectorCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/03 - V1201] [Optional] - Code of the customer's activity sector - Related to column [TIERS.T_SECTEUR].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q10="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="AddressData" nillable="true" type="q10:AddressDataType">
+        <xs:annotation>
+          <xs:documentation>[Optional].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AlternateFirstName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's middle name. - Related to column [TIERS.T_PRENOM2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AlternateLastName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's alternate last name. - Related to column [TIERS.T_NOM2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BusinessAreaCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/03 - V1201] [Optional] - Code of the customer's business area - Related to column [TIERS.T_ZONECOM].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CpfCnpjCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/03 - V1201] [Optional] - Customer's CPF/CNPJ code - Related to column [TIERSCOMPL.YTC_CODECPFCNPJ].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q11="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="EmailData" nillable="true" type="q11:EmailDataType">
+        <xs:annotation>
+          <xs:documentation>[Optional].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's First name. - Related to column [TIERS.T_PRENOM].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IsCompany" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Property specifying if the customer is a company. - Related to column [TIERS.T_PARTICULIER].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LastModificationDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/02 - V1400] [Optional] - Date of last change, only available in read-only mode - Related to column [TIERS.T_DATEMODIF].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's last name. - Related to column [TIERS.T_LIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MunicipalRegistration" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/03 - V1201] [Optional] - Customer's municipal registration - Related to column [TIERSCOMPL.YTC_INSCMUNICIPALE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OriginCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/02 - V1400] [Optional] - Customer origin code - Related to column [TIERS.T_ORIGINETIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q12="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="PhoneData" nillable="true" type="q12:PhoneDataType">
+        <xs:annotation>
+          <xs:documentation>[Optional].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PriceListCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/02 - V1400] [Optional] - Customer price list code - Related to column [TIERS.T_TARIFTIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RegionalRegistration" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/03 - V1201] [Optional] - Customer's regional registration - Related to column [TIERSCOMPL.YTC_INSCFEDERALE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RiskLevel" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/02 - V1400] [Optional] - Customer risk level - Related to column [TIERS.T_ETATRISQUE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPerson2Id" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/09 - V1201] [Optional] - Identifier of seller #2 - Related to column [TIERSCOMPL.YTC_REPRESENTANT2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPerson3Id" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/09 - V1201] [Optional] - Identifier of seller #3 - Related to column [TIERSCOMPL.YTC_REPRESENTANT3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/09 - V1201] [Optional] - Identifier of main seller - Related to column [TIERS.T_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TitleId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's title. - Related to column [TIERS.T_JURIDIQUE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q13="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="UserDefinedBooleans" nillable="true" type="q13:ArrayOfUserDefinedBoolean">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/07] [Alpha] - Customer's user-defined Booleans. - Related to column [TIERSCOMPL.YTC_BOOLLIBRE1..3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q14="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="UserDefinedData" nillable="true" type="q14:UserDefinedDataType">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS1..A].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q15="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="UserDefinedDates" nillable="true" type="q15:ArrayOfUserDefinedDate">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/07] [Optional] - Customer's user-defined dates. - Related to column [TIERSCOMPL.YTC_DATELIBRE1..3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q16="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="UserDefinedTexts" nillable="true" type="q16:ArrayOfUserDefinedText">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/07] [Optional] - Customer's user-defines tables. - Related to column [TIERSCOMPL.YTC_TEXTELIBRE1..3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q17="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="UserDefinedValues" nillable="true" type="q17:ArrayOfUserDefinedValue">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/07] [Optional] - Customer's user-defined numerical values. - Related to column [TIERSCOMPL.YTC_VALLIBRE1..3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UsualStoreId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's usual store ID. - Related to column [TIERS.T_ETABLISSEMENT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q18="http://www.cegid.fr/Retail/1.0" name="CustomerDataBase" nillable="true" type="q18:CustomerDataBase" />
+  <xs:complexType name="AddressDataType">
+    <xs:annotation>
+      <xs:documentation>Object used to store the customer's address.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer address - 1st line. - Related to column [TIERS.T_ADRESSE1].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer address - 2nd line. - Related to column [TIERS.T_ADRESSE2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer address - 3rd line. - Related to column [TIERS.T_ADRESSE3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BrandName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Brand name of customer's address. - Related to column [TIERS.T_ENSEIGNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>City of customer address. - Related to column [TIERS.T_VILLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CountryId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Country ID of customer address. - Related to column [TIERS.T_PAYS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q19="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="CountryIdType" type="q19:CountryIdType">
+        <xs:annotation>
+          <xs:documentation>Country identifier type. - Related to column [TIERS.T_PAYS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Nata" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Specifies if the customer still uses this address (NPAI in France). - Related to column [TIERS.T_NPAI].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RegionId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Region ID of customer address. - Related to column [TIERS.T_REGION].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Zip code of customer address. - Related to column [TIERS.T_CODEPOSTAL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q20="http://www.cegid.fr/Retail/1.0" name="AddressDataType" nillable="true" type="q20:AddressDataType" />
+  <xs:simpleType name="CountryIdType">
+    <xs:annotation>
+      <xs:documentation>Country code type identifier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Internal">
+        <xs:annotation>
+          <xs:documentation>Internal code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ISO2">
+        <xs:annotation>
+          <xs:documentation>ISO2 code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ISO3">
+        <xs:annotation>
+          <xs:documentation>ISO3 code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ISO3Numeric">
+        <xs:annotation>
+          <xs:documentation>ISO3 numerical code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element xmlns:q21="http://www.cegid.fr/Retail/1.0" name="CountryIdType" nillable="true" type="q21:CountryIdType" />
+  <xs:complexType name="EmailDataType">
+    <xs:annotation>
+      <xs:documentation>Customer's E-mails.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AlternativeEmail" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's alternate E-mail. - Related to column [TIERS.T_EMAIL2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's E-mail. - Related to column [TIERS.T_EMAIL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EmailingAccepted" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Property specifying whether the customer accepts e-mailing. - Related to column [TIERS.T_EMAILING].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SendReceiptByMail" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Customer's agreement for e-mailing sales receipts - Related to column [TIERSCOMPL.YTC_ENVTICKEMAIL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q22="http://www.cegid.fr/Retail/1.0" name="EmailDataType" nillable="true" type="q22:EmailDataType" />
+  <xs:complexType name="PhoneDataType">
+    <xs:annotation>
+      <xs:documentation>Customer's phones.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AlternativePhoneNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's second phone number. - Related to column [TIERS.T_TELEPHONE2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CellularPhoneNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's mobile phone. - Related to column [TIERS.T_TELEX].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="HomePhoneNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's Home phone. - Related to column [TIERS.T_TELEPHONE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OfficePhoneNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer's Office phone. - Related to column [TIERS.T_FAX].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q23="http://www.cegid.fr/Retail/1.0" name="PhoneDataType" nillable="true" type="q23:PhoneDataType" />
+  <xs:complexType name="ArrayOfUserDefinedBoolean">
+    <xs:sequence>
+      <xs:element xmlns:q24="http://www.cegid.fr/Retail/1.0" minOccurs="0" maxOccurs="unbounded" name="UserDefinedBoolean" nillable="true" type="q24:UserDefinedBoolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q25="http://www.cegid.fr/Retail/1.0" name="ArrayOfUserDefinedBoolean" nillable="true" type="q25:ArrayOfUserDefinedBoolean" />
+  <xs:complexType name="UserDefinedBoolean">
+    <xs:annotation>
+      <xs:documentation>User-defined Boolean.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element xmlns:q26="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="Id" type="q26:UserDefinedId">
+        <xs:annotation>
+          <xs:documentation>Identifier.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Value" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Associated value.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q27="http://www.cegid.fr/Retail/1.0" name="UserDefinedBoolean" nillable="true" type="q27:UserDefinedBoolean" />
+  <xs:simpleType name="UserDefinedId">
+    <xs:annotation>
+      <xs:documentation>User-defined data ID (Date/Table/Text/Boolean/Number)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Date/Table/Text/Boolean/Number) #1.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Date/Table/Text/Boolean/Number) #2.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Date/Table/Text/Boolean/Number) #3.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element xmlns:q28="http://www.cegid.fr/Retail/1.0" name="UserDefinedId" nillable="true" type="q28:UserDefinedId" />
+  <xs:complexType name="UserDefinedDataType">
+    <xs:annotation>
+      <xs:documentation>Customizable user-defined customer data.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserDefinedTable0Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>1st customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS1].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable1Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>2nd customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable2Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>3rd customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable3Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>4th customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS4].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable4Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>5th customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS5].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable5Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>6th customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS6].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable6Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>7th customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS7].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable7Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>8th customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS8].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable8Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>9th customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERS9].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTable9Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>10th customer user-defined data. - Related to column [TIERSCOMPL.YTC_TABLELIBRETIERSA].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q29="http://www.cegid.fr/Retail/1.0" name="UserDefinedDataType" nillable="true" type="q29:UserDefinedDataType" />
+  <xs:complexType name="ArrayOfUserDefinedDate">
+    <xs:sequence>
+      <xs:element xmlns:q30="http://www.cegid.fr/Retail/1.0" minOccurs="0" maxOccurs="unbounded" name="UserDefinedDate" nillable="true" type="q30:UserDefinedDate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q31="http://www.cegid.fr/Retail/1.0" name="ArrayOfUserDefinedDate" nillable="true" type="q31:ArrayOfUserDefinedDate" />
+  <xs:complexType name="UserDefinedDate">
+    <xs:annotation>
+      <xs:documentation>Data in user-defined date</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element xmlns:q32="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="Id" type="q32:UserDefinedId">
+        <xs:annotation>
+          <xs:documentation>User-defined date ID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Value" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>User-defined date value. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q33="http://www.cegid.fr/Retail/1.0" name="UserDefinedDate" nillable="true" type="q33:UserDefinedDate" />
+  <xs:complexType name="ArrayOfUserDefinedText">
+    <xs:sequence>
+      <xs:element xmlns:q34="http://www.cegid.fr/Retail/1.0" minOccurs="0" maxOccurs="unbounded" name="UserDefinedText" nillable="true" type="q34:UserDefinedText" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q35="http://www.cegid.fr/Retail/1.0" name="ArrayOfUserDefinedText" nillable="true" type="q35:ArrayOfUserDefinedText" />
+  <xs:complexType name="UserDefinedText">
+    <xs:annotation>
+      <xs:documentation>User-defined text.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element xmlns:q36="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="Id" type="q36:UserDefinedId">
+        <xs:annotation>
+          <xs:documentation>Identifier.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Associated value.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q37="http://www.cegid.fr/Retail/1.0" name="UserDefinedText" nillable="true" type="q37:UserDefinedText" />
+  <xs:complexType name="ArrayOfUserDefinedValue">
+    <xs:sequence>
+      <xs:element xmlns:q38="http://www.cegid.fr/Retail/1.0" minOccurs="0" maxOccurs="unbounded" name="UserDefinedValue" nillable="true" type="q38:UserDefinedValue" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q39="http://www.cegid.fr/Retail/1.0" name="ArrayOfUserDefinedValue" nillable="true" type="q39:ArrayOfUserDefinedValue" />
+  <xs:complexType name="UserDefinedValue">
+    <xs:annotation>
+      <xs:documentation>User-defined numerical value.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element xmlns:q40="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="Id" type="q40:UserDefinedId">
+        <xs:annotation>
+          <xs:documentation>Identifier.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Value" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Associated value. - Related to column [TIERSCOMPL.YTC_VALLIBRE1..3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q41="http://www.cegid.fr/Retail/1.0" name="UserDefinedValue" nillable="true" type="q41:UserDefinedValue" />
+  <xs:complexType name="BirthDateDataType">
+    <xs:annotation>
+      <xs:documentation>Elements of the customer's birth date.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BirthDateDay" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Day of birth. - Related to column [TIERS.T_JOURNAISSANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BirthDateMonth" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Month of birth. - Related to column [TIERS.T_MOISNAISSANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BirthDateYear" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Year of birth. - Related to column [TIERS.T_ANNEENAISSANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q42="http://www.cegid.fr/Retail/1.0" name="BirthDateDataType" nillable="true" type="q42:BirthDateDataType" />
+  <xs:simpleType name="CustomerInformationType">
+    <xs:annotation>
+      <xs:documentation>Customer information</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AskCustomer">
+        <xs:annotation>
+          <xs:documentation>Information to ask the customer.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BrandOnly">
+        <xs:annotation>
+          <xs:documentation>Information usable only by the brand.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ForPartners">
+        <xs:annotation>
+          <xs:documentation>Information usable by partners.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DoNotUse">
+        <xs:annotation>
+          <xs:documentation>Do not use this information.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element xmlns:q43="http://www.cegid.fr/Retail/1.0" name="CustomerInformationType" nillable="true" type="q43:CustomerInformationType" />
+  <xs:complexType name="ArrayOfUserField">
+    <xs:sequence>
+      <xs:element xmlns:q44="http://www.cegid.fr/Retail/1.0" minOccurs="0" maxOccurs="unbounded" name="UserField" nillable="true" type="q44:UserField" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q45="http://www.cegid.fr/Retail/1.0" name="ArrayOfUserField" nillable="true" type="q45:ArrayOfUserField" />
+  <xs:complexType name="UserField">
+    <xs:annotation>
+      <xs:documentation>Data in a user field. Specify the data value in the appropriate xxValue property (TextValue, NumberValue...), then specify in the ValueType property, the xxValue property type (TextValueKind, NumberValueKind...).</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BooleanValue" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Value of type Boolean defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DateValue" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Value of type date defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Id" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>User field identifier - Related to column [MCHPSUTILISAT.MUD_IDCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ListElementValue" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Value of type list element defined by the user  - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NumberValue" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Value of type number defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TextValue" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Value of type text defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q46="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="ValueType" type="q46:UserFieldKind">
+        <xs:annotation>
+          <xs:documentation>Data type of user field - Related to column [MCHPSUTILISAT.MUC_TYPESAISIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q47="http://www.cegid.fr/Retail/1.0" name="UserField" nillable="true" type="q47:UserField" />
+  <xs:simpleType name="UserFieldKind">
+    <xs:annotation>
+      <xs:documentation>User-defined field type</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BooleanValueKind">
+        <xs:annotation>
+          <xs:documentation>Boolean.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TextValueKind">
+        <xs:annotation>
+          <xs:documentation>String.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DateValueKind">
+        <xs:annotation>
+          <xs:documentation>Date.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ListElementValueKind">
+        <xs:annotation>
+          <xs:documentation>Selection list.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NumberValueKind">
+        <xs:annotation>
+          <xs:documentation>Numerical.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element xmlns:q48="http://www.cegid.fr/Retail/1.0" name="UserFieldKind" nillable="true" type="q48:UserFieldKind" />
+  <xs:element name="SearchCustomerIds">
+    <xs:annotation>
+      <xs:documentation>Returns the list of customers who meet the search criteria present in the object passed as input parameter.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q49="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="searchData" nillable="true" type="q49:CustomerSearchDataType" />
+        <xs:element xmlns:q50="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="clientContext" nillable="true" type="q50:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CustomerSearchDataType">
+    <xs:annotation>
+      <xs:documentation>Possible customer search criteria.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q51="http://www.cegid.fr/Retail/1.0" base="q51:CustomerDataBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActivityCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/03 - V1201] [Optional] - Identifier of the customer's sales division. - Related to column [TIERS.T_APE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Barcode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/03 - V1201] [Optional] - Customer barcode. - Related to column [TIERS.T_EAN].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="BirthDateData" nillable="true" type="q51:BirthDateDataType">
+            <xs:annotation>
+              <xs:documentation>Elements of the customer's birth date.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Closed" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Optional] - Customer closed. - Related to column [TIERS.T_FERME].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CompanyIdNumber" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/03 - V1201] [Optional] - Customer's Company Registration Number. - Related to column [TIERS.T_SIRET].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CreationStoreId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identifier of the store where the customer was created. - Related to column [TIERS.T_ETABCREATION].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer identifier. - Related to column [TIERS.T_TIERS].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CustomerReference" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Search identifier based customer search priorities.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DirectMail" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2017/03 - V1110] [Optional] - Mail merge - Related to column [TIERS.T_PUBLIPOSTAGE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FiscalId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer TIN or VAT identification number. - Related to column [TIERS.T_NIF].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="InvoiceCustomerId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/03 - V1201] [Optional] - Identifier of the invoiced customer associated with the customer. - Related to column [TIERS.T_FACTURE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IsCustomer" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/11 - V1201] [Optional] - Customer. - Related to column [TIERS.T_NATUREAUXI].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IsProspect" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/11 - V1201] [Optional] - Prospect. - Related to column [TIERS.T_NATUREAUXI].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ItalianFiscalId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/03 - V1201] [Optional] - Customer fiscal identifier for Italian tax administration. - Related to column [TIERSCOMPL.YTC_CODEFISCIT].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MaxNumberOfCustomers" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>[Added 2014/08 - V1105] [Optional] - Maximum number of customers returned. If not specified, maximum 5 customers are returned.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="NationalityData" nillable="true" type="q51:NationalityDataType">
+            <xs:annotation>
+              <xs:documentation>Customer's nationality data.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PassportNumber" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Customer's passport. - Related to column [TIERS.T_PASSEPORT].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:q52="http://www.cegid.fr/Retail/1.0" name="CustomerSearchDataType" nillable="true" type="q52:CustomerSearchDataType" />
+  <xs:complexType name="NationalityDataType">
+    <xs:annotation>
+      <xs:documentation>Information about nationality.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ISO2" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ISO2 nationality code. - Related to column [PAYS.PY_CODEISO2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ISO3" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ISO3 nationality code. - Related to column [PAYS.PY_CODEINSEE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ISO3Num" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Numerical ISO3 nationality code. - Related to column [PAYS.PY_CODEBANCAIRE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Nationality ID. - Related to column [TIERS.T_NATIONALITE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Label" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Nationality description - Related to column [PAYS.PY_LIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q53="http://www.cegid.fr/Retail/1.0" name="NationalityDataType" nillable="true" type="q53:NationalityDataType" />
+  <xs:element name="SearchCustomerIdsResponse">
+    <xs:annotation>
+      <xs:documentation>Returns the list of customers who meet the search criteria present in the object passed as input parameter.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q54="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="SearchCustomerIdsResult" nillable="true" type="q54:ArrayOfCustomerQueryData">
+          <xs:annotation>
+            <xs:documentation>Returns the list of customer records with viewable information.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfCustomerQueryData">
+    <xs:sequence>
+      <xs:element xmlns:q55="http://www.cegid.fr/Retail/1.0" minOccurs="0" maxOccurs="unbounded" name="CustomerQueryData" nillable="true" type="q55:CustomerQueryData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q56="http://www.cegid.fr/Retail/1.0" name="ArrayOfCustomerQueryData" nillable="true" type="q56:ArrayOfCustomerQueryData" />
+  <xs:element name="AddNewCustomer">
+    <xs:annotation>
+      <xs:documentation>Enables customer creation. Their number will be allocated automatically (requires to activate the automatic numbering in the user's store.)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q57="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="customerData" nillable="true" type="q57:CustomerInsertData" />
+        <xs:element xmlns:q58="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="clientContext" nillable="true" type="q58:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CustomerInsertData">
+    <xs:annotation>
+      <xs:documentation>Data for creating a new customer record .</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q59="http://www.cegid.fr/Retail/1.0" base="q59:CustomerInputData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CustomerGuid" nillable="true" type="q59:InternalGuid">
+            <xs:annotation>
+              <xs:documentation>[Added 2015/11 - V1300] [Optional].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2014/09 - V1105] [Optional] - Identifier of the customer to create. If not specified, it will be assigned automatically if the 'Automatic assignment of the customer code' option is ticked in the default store settings of the user account used to log in. - Related to column [TIERS.T_TIERS].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:q60="http://www.cegid.fr/Retail/1.0" name="CustomerInsertData" nillable="true" type="q60:CustomerInsertData" />
+  <xs:complexType name="CustomerInputData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q61="http://www.cegid.fr/Retail/1.0" base="q61:CustomerData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Closed" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2018/02 - V1400] [Optional] - Customer closed. - Related to column [TIERS.T_FERME].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="InvoiceCustomerId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/03 - V1201] [Optional] - Identifier of the invoiced customer associated with the customer. - Related to column [TIERS.T_FACTURE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IsProspect" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>[Added 2016/11 - V1201] [Optional] - Property specifying if the customer is a prospect. - Related to column [TIERS.T_NATUREAUXI].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Notepad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>[Added 2018/02 - V1400] [Optional] - Notepad - Related to column [TIERS.T_BLOCNOTE].</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns:q62="http://www.cegid.fr/Retail/1.0" name="CustomerInputData" nillable="true" type="q62:CustomerInputData" />
+  <xs:complexType name="InternalGuid">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CheckGuid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Guid" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q63="http://www.cegid.fr/Retail/1.0" name="InternalGuid" nillable="true" type="q63:InternalGuid" />
+  <xs:element name="AddNewCustomerResponse">
+    <xs:annotation>
+      <xs:documentation>Enables customer creation. Their number will be allocated automatically (requires to activate the automatic numbering in the user's store.)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddNewCustomerResult" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Returns the identifier of the customer created.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateCustomer">
+    <xs:annotation>
+      <xs:documentation>Enables the update of an existent customer.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customerId" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Identifier of the customer to update.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element xmlns:q64="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="modifiedData" nillable="true" type="q64:CustomerInputData" />
+        <xs:element xmlns:q65="http://www.cegid.fr/Retail/1.0" minOccurs="0" name="clientContext" nillable="true" type="q65:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateCustomerResponse">
+    <xs:annotation>
+      <xs:documentation>Enables the update of an existent customer.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateCustomerResult" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Returns the identifier of the updated customer.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

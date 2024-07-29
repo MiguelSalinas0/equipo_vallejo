@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="87c88022-ece7-482a-ac9e-29d4d76ffb9d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ItemInventoryWcfService.xsd" MetadataType="Schema" ID="b266ed8a-692d-423c-a24a-f708c5818f84" SourceId="1" SourceUrl="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ItemInventoryWcfService.disco" MetadataType="Disco" ID="3385e38a-1335-43d1-8b44-f32638afbc45" SourceId="1" SourceUrl="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?disco" />
+    <MetadataFile FileName="ItemInventoryWcfService.wsdl" MetadataType="Wsdl" ID="8ce25f7d-1aac-49b0-9318-f6e11c6fda86" SourceId="1" SourceUrl="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?wsdl" />
+    <MetadataFile FileName="ItemInventoryWcfService1.wsdl" MetadataType="Wsdl" ID="f0b99100-5b3d-416d-908f-afb0cf0762c7" SourceId="1" SourceUrl="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ItemInventoryWcfService1.xsd" MetadataType="Schema" ID="1754b0e8-d10f-43d4-9651-829a1f477584" SourceId="1" SourceUrl="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ItemInventoryWcfService2.xsd" MetadataType="Schema" ID="468947e1-1609-4c04-9f2a-2e12fb801eee" SourceId="1" SourceUrl="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ItemInventoryWcfService3.xsd" MetadataType="Schema" ID="2aaceb9d-62de-41a2-b7dd-43905faacfda" SourceId="1" SourceUrl="http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
