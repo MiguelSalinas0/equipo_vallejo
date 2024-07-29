@@ -8,25 +8,26 @@ Public Class Form1
     Dim destinosDeDatos As New List(Of String)
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        lvOrigen.View = View.Details
-        lvOrigen.Columns.Add("", 40)
-        lvOrigen.Columns.Add("Directorio", 129, HorizontalAlignment.Left)
-        lvOrigen.Columns.Add("Path", 120, HorizontalAlignment.Left)
+        'lvOrigen.View = View.Details
+        'lvOrigen.Columns.Add("", 40)
+        'lvOrigen.Columns.Add("Directorio", 129, HorizontalAlignment.Left)
+        'lvOrigen.Columns.Add("Path", 120, HorizontalAlignment.Left)
 
-        lvDestino.View = View.Details
-        lvDestino.Columns.Add("", 40)
-        lvDestino.Columns.Add("Directorio", 129, HorizontalAlignment.Left)
-        lvDestino.Columns.Add("Path", 120, HorizontalAlignment.Left)
+        'lvDestino.View = View.Details
+        'lvDestino.Columns.Add("", 40)
+        'lvDestino.Columns.Add("Directorio", 129, HorizontalAlignment.Left)
+        'lvDestino.Columns.Add("Path", 120, HorizontalAlignment.Left)
         VerificarOrigenesYDestinos()
     End Sub
 
     Private Sub btnAgregarArchivo_Click(sender As Object, e As EventArgs) Handles btnAgregarArchivo.Click
-        Dim fbdDirectorio As New FolderBrowserDialog
 
-        If fbdDirectorio.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-            AgregarDirectorio(fbdDirectorio.SelectedPath)
-            VerificarOrigenesYDestinos()
-        End If
+        'Dim fbdDirectorio As New FolderBrowserDialog
+
+        'If fbdDirectorio.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+        '    AgregarDirectorio(fbdDirectorio.SelectedPath)
+        '    VerificarOrigenesYDestinos()
+        'End If
     End Sub
 
     Private Sub VerificarOrigenesYDestinos()
@@ -42,7 +43,7 @@ Public Class Form1
             lvItem.SubItems.Add(IO.Path.GetFileName(path))
             lvItem.SubItems.Add(path)
 
-            lvOrigen.Items.Add(lvItem)
+            'lvOrigen.Items.Add(lvItem)
 
             origenesDeDatos.Add(path)
 
@@ -61,7 +62,7 @@ Public Class Form1
             lvItem.SubItems.Add(IO.Path.GetFileName(path))
             lvItem.SubItems.Add(path)
 
-            lvDestino.Items.Add(lvItem)
+            'lvDestino.Items.Add(lvItem)
 
             destinosDeDatos.Add(path)
 
@@ -155,10 +156,10 @@ Public Class Form1
     End Sub
 
     Private Sub btnEliminarArchivo_Click(sender As Object, e As EventArgs) Handles btnEliminarArchivo.Click
-        EliminarElementosMarcados(lvOrigen, origenesDeDatos)
+        'EliminarElementosMarcados(lvOrigen, origenesDeDatos)
     End Sub
 
     Private Sub btnEliminarDestino_Click(sender As Object, e As EventArgs) Handles btnEliminarDestino.Click
-        EliminarElementosMarcados(lvDestino, destinosDeDatos)
+        'EliminarElementosMarcados(lvDestino, destinosDeDatos)
     End Sub
 End Class

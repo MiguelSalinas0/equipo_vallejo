@@ -62,7 +62,7 @@ Public Class Form1
 
     End Sub
 
-    Function getToken() As String
+    Function GetToken() As String
 
         Dim dtToken As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP_SAP("SP_OBTENER_TOKEN", 1)
         Dim token As String = dtToken.Rows(0).Item(0)
@@ -70,47 +70,10 @@ Public Class Form1
 
     End Function
 
-    'Private Async Function consultasMLAsync() As Task
-    '    'Consulto ordenes
-    '    tokenML = getToken()
-    '    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
-    '    respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes)
-    '    bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync
-    '    jsonDoc = JsonDocument.Parse(bodyOrdenes)
-    '    root = jsonDoc.RootElement
-    '    ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString)
-    '    httpClient.DefaultRequestHeaders.Add("x-version", 2)
-    '    'iteracion de ordenes
-    '    For Each ord In ordenes
-    '        ordenId = ord.Id
-    '        urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
-    '        ' Peticion para traer detalles del cliente a partir de una orden
-    '        respuestaBuy = Await httpClient.GetAsync(urlGetBuy)
-    '        bodyBuy = Await respuestaBuy.Content.ReadAsStringAsync
-    '        jsonClient = JsonDocument.Parse(bodyBuy)
-    '        rootC = jsonClient.RootElement
-    '        buy = JsonConvert.DeserializeObject(Of ClienteMl)(rootC.ToString)
-    '        ' Peticion para traer datos del envio a partir de una orden
-    '        urlGetshipment = apiMLBase & "orders/" & ordenId & "/shipments"
-    '        respuestaShip = Await httpClient.GetAsync(urlGetshipment)
-    '        bodyShip = Await respuestaShip.Content.ReadAsStringAsync
-    '        jsonShip = JsonDocument.Parse(bodyShip)
-    '        rootS = jsonShip.RootElement
-    '        ' Insertar en cabecera
-    '        If insertarCabecera(ordenId, buy, ord, rootS) = 1 Then
-    '            ' Iteracion de articulos dentro de la orden
-    '            orderItems = ord.OrderItems
-    '            Dim headerDate As DateTime = rootS.GetProperty("date_created").ToString
-    '            For Each item In orderItems
-    '                insertarDetalle(ordenId, item, headerDate)
-    '            Next
-    '        End If
-    '    Next
-    'End Function
 
     Private Async Function ConsultasMLAsync() As Task
         ' Consulto órdenes
-        tokenML = getToken()
+        tokenML = GetToken()
         httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
         respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes)
@@ -148,7 +111,7 @@ Public Class Form1
                 Dim headerDate As DateTime = DateTime.Parse(rootS.GetProperty("date_created").ToString())
 
                 For Each item In orderItems
-                    insertarDetalle(ordenId, item, headerDate)
+                    InsertarDetalle(ordenId, item, headerDate)
                 Next
             End If
         Next
@@ -256,34 +219,9 @@ Public Class Form1
 
     End Function
 
-    'Sub insertarDetalle(ByVal ordenId As Long, ByVal item As OrderItem, ByVal headerDate As Date)
 
-    '    Dim reference As String = item.Item.SellerCustomField
-    '    Dim storeId As String = "000102"
-    '    Dim label As String = item.Item.Title.ToString
-    '    Dim deliveryDate As String = headerDate.ToString("dd-MM-yyyy")
-    '    Dim quantity As Integer = item.Quantity
-    '    Dim netUnitPrice As Double = item.UnitPrice
-    '    Dim warehouseId As New List(Of String) From {"000199", "000198"}
 
-    '    Dim warehouse As String = cegid(item, storeId, warehouseId)
-
-    '    If warehouse <> "error" Then
-    '        Dim dtMLDetalle As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_DETALLE",
-    '        ordenId,
-    '        reference,
-    '        storeId,
-    '        label,
-    '        deliveryDate,
-    '        quantity,
-    '        netUnitPrice,
-    '        warehouse
-    '    )
-    '    End If
-
-    'End Sub
-
-    Sub insertarDetalle(ByVal ordenId As Long, ByVal item As OrderItem, ByVal headerDate As Date)
+    Sub InsertarDetalle(ByVal ordenId As Long, ByVal item As OrderItem, ByVal headerDate As Date)
         ' Datos del ítem
         Dim reference As String = item.Item.SellerCustomField
         Dim storeId As String = "000102"
@@ -312,39 +250,6 @@ Public Class Form1
     End Sub
 
 
-    'Function cegid(ByVal item As OrderItem, ByVal storeId As String, ByVal warehouseId As List(Of String)) As String
-    '    Dim itemIdentifier As New WSProductos.ItemIdentifier
-    '    Dim retailContext As New WSProductos.RetailContext
-    '    ' Crear una instancia del cliente del servicio
-    '    Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-    '    binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
-    '    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
-    '    Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/ItemInventoryWcfService.svc?singleWsdl")
-    '    Dim clientCegid As New ItemInventoryWcfServiceClient(binding, endpoint)
-    '    Dim cantidad As Decimal = 0
-    '    Dim warehouse As String = ""
-    '    ' Establecer las credenciales
-    '    clientCegid.ClientCredentials.UserName.UserName = "VAPRODC\MATIAS"
-    '    clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
-    '    retailContext.DatabaseId = "VAPRODC"
-    '    '  itemIdentifier.Id = item.Item.SellerCustomField
-    '    itemIdentifier.Reference = item.Item.SellerCustomField
-    '    Try
-    '        For Each wh In warehouseId
-    '            Dim resp As AvailableQtyReturn = clientCegid.GetAvailableQty(item.Item.SellerCustomField, itemIdentifier, storeId.ToString, wh.ToString, retailContext)
-    '            cantidad = resp.AvailableQty
-    '            If (cantidad >= 1 And cantidad >= item.Quantity) Then
-    '                warehouse = wh
-    '                Exit For
-    '            ElseIf cantidad = 0 And wh = warehouseId.Last Then
-    '                warehouse = warehouseId.First
-    '            End If
-    '        Next
-    '        Return warehouse
-    '    Catch ex As Exception
-    '        Return "error"
-    '    End Try
-    'End Function
 
     Function Cegid(ByVal item As OrderItem, ByVal storeId As String, ByVal warehouseId As List(Of String)) As String
         Dim itemIdentifier As New WSProductos.ItemIdentifier
@@ -387,7 +292,7 @@ Public Class Form1
 
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        'Await consultasMLAsync()
+        Await ConsultasMLAsync()
 
         Await procesarOrdenes()
 
@@ -400,30 +305,7 @@ Public Class Form1
 
     End Sub
 
-    'Function ConsultaClienteCegid(ByVal cliente As String) As Boolean
-    '    Dim retailContext As New WSClientes.RetailContext
-    '    Dim searchData As New CustomerSearchDataType
-    '    'Dim respuesta As CustomerQueryData
-    '    ' Crear una instancia del cliente del servicio
-    '    Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-    '    Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?singleWsdl")
-    '    Dim clientCegid As CustomerWcfServiceClient
-    '    ' Establecer configuraciones
-    '    binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
-    '    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
-    '    ' Establecer las credenciales
-    '    clientCegid = New CustomerWcfServiceClient(binding, endpoint)
-    '    clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
-    '    clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
-    '    retailContext.DatabaseId = "VATEST"
-    '    ' Establecer parametros de busqueda
-    '    'searchData.FiscalId = cliente.Buyer.BillingInfo.Identification.Number.ToString
-    '    searchData.FiscalId = cliente
-    '    Dim resp = clientCegid.SearchCustomerIds(searchData, retailContext)
-    '    Dim comp As Boolean = resp.Count <> 0
-    '    Return comp
 
-    'End Function
 
     Function ConsultaClienteCegid(ByVal cliente As String) As Boolean
         Dim retailContext As New WSClientes.RetailContext
@@ -461,22 +343,6 @@ Public Class Form1
         End Try
     End Function
 
-    'Private Async Function procesarOrdenes() As Task
-    '    Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
-    '    If dtCab IsNot Nothing AndAlso dtCab.Rows.Count > 0 Then
-    '        For Each orden As DataRow In dtCab.Rows
-    '            Dim dni As String = orden.Item("CustomerId").ToString
-    '            'CREAR CLIENTE Y ORDEN
-    '            If Not ConsultaClienteCegid(dni) Then
-    '                'creo cliente
-    '                CrearCliente(orden)
-    '            End If
-    '            Await CrearOrden(orden)
-    '            ' Obtener items a partir de una orden
-    '        Next
-    '    End If
-    '    MostrarDatos()
-    'End Function
 
     Private Async Function ProcesarOrdenes() As Task
         ' Obtener las órdenes de la base de datos
@@ -503,101 +369,6 @@ Public Class Form1
 
     End Function
 
-
-    'Async Function CrearOrden(ByVal orden As DataRow) As Task
-    '    Dim retailContext As New WSorden.RetailContext
-    '    Dim createRequest As New Create_Request
-    '    Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-    '    Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?singleWsdl")
-    '    Dim clientCegid As SaleDocumentServiceClient
-    '    binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
-    '    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
-    '    clientCegid = New SaleDocumentServiceClient(binding, endpoint)
-    '    clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
-    '    clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
-    '    retailContext.DatabaseId = "VATEST"
-    '    ' Obtener items de la orden
-    '    Dim orderItems As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_DETALLE", orden.Item("Header_InternalReference").ToString)
-    '    Dim deliveryAddress As New WSorden.Address
-    '    Dim createHeader As New WSorden.Create_Header
-    '    Dim omniChannel As New WSorden.OmniChannel
-    '    Dim payments() As WSorden.Create_Payment = {New Create_Payment()}
-    '    Dim createLine() As WSorden.Create_Line = {}
-    '    Dim esSplit As Boolean = IIf(orden.Item("Header_InternalReference").ToString().Contains("SPLIT"), True, False)
-    '    Try
-    '        deliveryAddress.City = orden.Item("DeliveryAddress_City")
-    '        deliveryAddress.CountryId = "ARS"
-    '        deliveryAddress.CountryIdType = WSorden.CountryIdType.Internal
-    '        deliveryAddress.FirstName = orden.Item("DeliveryAddress_FirstName")
-    '        deliveryAddress.LastName = orden.Item("DeliveryAddress_LastName")
-    '        deliveryAddress.Line1 = orden.Item("DeliveryAddress_Line1")
-    '        deliveryAddress.ZipCode = orden.Item("DeliveryAddress_ZipCode")
-    '        createHeader.Active = True
-    '        createHeader.Comment = orden.Item("Header_Comment")
-    '        createHeader.CustomerId = orden.Item("Header_CustomerId")
-    '        createHeader.CurrencyId = orden.Item("Header_CurrencyId")
-    '        createHeader.Date = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
-    '        createHeader.InternalReference = orden.Item("Header_InternalReference")
-    '        omniChannel.BillingStatus = BillingStatus.Pending
-    '        omniChannel.DeliveryType = DeliveryType.ShipByCentral
-    '        omniChannel.FollowUpStatus = FollowUpStatus.WaitingCommodity
-    '        omniChannel.GiftMessageType = GiftMessageType.None
-    '        omniChannel.PaymentStatus = PaymentStatus.Totally
-    '        omniChannel.ReturnStatus = OrderReturnStatus.NotReturned
-    '        omniChannel.ShippingStatus = ShippingStatus.Pending
-    '        omniChannel.Transporter = "MELI VALLEJO"
-    '        createHeader.Origin = DocumentOrigin.ECommerce
-    '        createHeader.OmniChannel = omniChannel
-    '        ' Evaluar si una orden viene con -SPLIT
-    '        createHeader.StoreId = orden.Item("Header_StoreId")
-    '        If esSplit Then
-    '            createHeader.WarehouseId = "000198"
-    '            createHeader.OmniChannel.FollowUpStatus = FollowUpStatus.Validated
-    '        Else
-    '            createHeader.WarehouseId = orden.Item("Header_WarehouseId")
-    '        End If
-    '        createHeader.SalesPersonId = orden.Item("Header_SalesPersonId")
-    '        createHeader.Type = SaleDocumentType.CustomerOrder
-    '        Dim index As Integer = 0
-    '        For Each item As DataRow In orderItems.Rows
-    '            ' por cada item consulto stock y lo agrego a la orden
-    '            Dim newCreateLine As New WSorden.Create_Line
-    '            Dim itemIdentifier As New WSorden.ItemIdentifier
-    '            Dim omniChannelLine As New WSorden.OmniChannelLine
-    '            itemIdentifier.Reference = item.Item("Reference")
-    '            newCreateLine.Label = item.Item("Label")
-    '            newCreateLine.Origin = DocumentOrigin.ECommerce
-    '            newCreateLine.DeliveryDate = Date.Parse(item.Item("DeliveryDate").ToString).ToString("dd-MM-yyyy")
-    '            newCreateLine.Quantity = item.Item("Quantity")
-    '            newCreateLine.NetUnitPrice = item.Item("NetUnitPrice")
-    '            If item.Item("WarehouseId") <> "000198" Then
-    '                omniChannelLine.WarehouseId = item.Item("WarehouseId")
-    '            End If
-    '            newCreateLine.SalesPersonId = item.Item("SalesPersonId")
-    '            newCreateLine.ItemIdentifier = itemIdentifier
-    '            newCreateLine.OmniChannel = omniChannelLine
-    '            ' agrego el item al array de items de la orden
-    '            ReDim Preserve createLine(index)
-    '            createLine(index) = newCreateLine
-    '            index += 1
-    '        Next
-    '        payments(0).Amount = 0
-    '        payments(0).MethodId = "ECO"
-    '        payments(0).Id = 20
-    '        payments(0).DueDate = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
-    '        payments(0).IsReceivedPayment = False
-    '        payments(0).CurrencyId = "ARG"
-    '        createRequest.DeliveryAddress = deliveryAddress
-    '        createRequest.Header = createHeader
-    '        createRequest.Lines = createLine
-    '        createRequest.Payments = payments
-    '        createRequest.ToString()
-    '        Dim resp = clientCegid.Create(createRequest, retailContext)
-    '        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_MELI_CABECERA", orden.Item("id"))
-    '    Catch ex As Exception
-    '    End Try
-    '    Return
-    'End Function
 
     Private Async Function CrearOrden(ByVal orden As DataRow) As Task
         ' Declaración de variables
@@ -720,62 +491,6 @@ Public Class Form1
         End Try
     End Function
 
-
-    'Async Sub CrearCliente(ByVal orden As Object)
-    '    Dim retailContext As New WSClientes.RetailContext
-    '    Dim searchData As New CustomerSearchDataType
-
-    '    Dim customerInsert As New CustomerInsertData
-
-    '    ' Crear una instancia del Web Service
-    '    Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-    '    Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?singleWsdl")
-    '    Dim clientCegid As CustomerWcfServiceClient
-
-    '    ' Establecer configuraciones
-    '    binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
-    '    binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
-
-    '    ' Establecer las credenciales
-    '    clientCegid = New CustomerWcfServiceClient(binding, endpoint)
-    '    clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
-    '    clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
-    '    retailContext.DatabaseId = "VATEST"
-
-    '    ' Extraer datos desde la orden del sp
-    '    Dim addresData As New AddressDataType
-    '    Dim phoneData As New PhoneDataType
-
-    '    Try
-    '        customerInsert.CustomerId = orden.Item("CustomerId").ToString
-    '        customerInsert.FirstName = IIf(orden.Item("FirstName").ToString = "", "", orden.Item("FirstName").ToString) ' el NN no tiene sentido si se cambia luego de nuevo
-    '        customerInsert.IsCompany = IIf(orden.Item("IsCompany").ToString = "True", True, False)
-    '        customerInsert.LastName = orden.Item("LastName").ToString
-
-    '        addresData.AddressLine1 = orden.Item("AddressLine1").ToString
-    '        addresData.City = orden.Item("City").ToString
-    '        addresData.CountryId = "ARS" ' viene el countryid 
-    '        addresData.CountryIdType = WSClientes.CountryIdType.Internal
-    '        addresData.ZipCode = orden.Item("ZipCode").ToString
-    '        customerInsert.AddressData = addresData
-
-    '        phoneData.HomePhoneNumber = orden.Item("HomePhoneNumber").ToString
-    '        customerInsert.PhoneData = phoneData
-    '        customerInsert.UsualStoreId = "000102" ' viene de cegid
-    '        customerInsert.FiscalId = orden.Item("FiscalId").ToString
-
-    '        If customerInsert.IsCompany Then
-    '            customerInsert.LastName = orden.Item("FirstName").ToString + orden.Item("LastName").ToString 'no tiene sentido
-    '            customerInsert.CompanyIdNumber = orden.Item("CompanyIdNumber").ToString
-    '        End If
-    '        customerInsert.VATSystem = "TAX"
-    '        clientCegid.AddNewCustomer(customerInsert, retailContext)
-
-    '    Catch ex As Exception
-
-    '    End Try
-
-    'End Sub
 
     Async Sub CrearCliente(ByVal orden As Object)
         ' Declaración de variables
