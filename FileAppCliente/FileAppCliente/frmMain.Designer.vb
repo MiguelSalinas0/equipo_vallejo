@@ -32,6 +32,7 @@ Partial Class frmMain
         Me.btnDeleteOrigen = New System.Windows.Forms.Button()
         Me.btnAddDestino = New System.Windows.Forms.Button()
         Me.btnDeleteDestino = New System.Windows.Forms.Button()
+        Me.btnCopy = New System.Windows.Forms.Button()
         CType(Me.dgcOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgcDestino, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -121,11 +122,21 @@ Partial Class frmMain
         Me.btnDeleteDestino.Text = "Eliminar Destino"
         Me.btnDeleteDestino.UseVisualStyleBackColor = True
         '
+        'btnCopy
+        '
+        Me.btnCopy.Location = New System.Drawing.Point(221, 602)
+        Me.btnCopy.Name = "btnCopy"
+        Me.btnCopy.Size = New System.Drawing.Size(80, 30)
+        Me.btnCopy.TabIndex = 8
+        Me.btnCopy.Text = "Copiar"
+        Me.btnCopy.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1387, 745)
+        Me.Controls.Add(Me.btnCopy)
         Me.Controls.Add(Me.btnDeleteDestino)
         Me.Controls.Add(Me.btnAddDestino)
         Me.Controls.Add(Me.btnDeleteOrigen)
@@ -153,4 +164,5 @@ Partial Class frmMain
     Friend WithEvents btnDeleteOrigen As Button
     Friend WithEvents btnAddDestino As Button
     Friend WithEvents btnDeleteDestino As Button
+    Friend WithEvents btnCopy As Button
 End Class
