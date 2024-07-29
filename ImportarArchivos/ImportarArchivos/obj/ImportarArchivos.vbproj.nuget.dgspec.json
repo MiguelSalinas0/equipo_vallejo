@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\xampp\\htdocs\\scripts_php\\proyecto api rest\\WinForms y api rest\\WinForms y api rest\\WinForms y api rest.vbproj": {}
+    "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj": {}
   },
   "projects": {
-    "C:\\xampp\\htdocs\\scripts_php\\proyecto api rest\\WinForms y api rest\\WinForms y api rest\\WinForms y api rest.vbproj": {
+    "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\xampp\\htdocs\\scripts_php\\proyecto api rest\\WinForms y api rest\\WinForms y api rest\\WinForms y api rest.vbproj",
-        "projectName": "WinForms y api rest",
-        "projectPath": "C:\\xampp\\htdocs\\scripts_php\\proyecto api rest\\WinForms y api rest\\WinForms y api rest\\WinForms y api rest.vbproj",
+        "projectUniqueName": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj",
+        "projectName": "ImportarArchivos",
+        "projectPath": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\ImportarArchivos.vbproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\xampp\\htdocs\\scripts_php\\proyecto api rest\\WinForms y api rest\\WinForms y api rest\\obj\\",
+        "outputPath": "C:\\xampp\\htdocs\\scripts\\equipo_vallejo\\ImportarArchivos\\ImportarArchivos\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages"
+        ],
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -46,9 +51,9 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
-            "Newtonsoft.Json": {
+            "DevExpress.Win.Design": {
               "target": "Package",
-              "version": "[13.0.3, )"
+              "version": "[21.2.6, )"
             }
           },
           "imports": [
@@ -66,7 +71,7 @@
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             },
-            "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "Microsoft.WindowsDesktop.App": {
               "privateAssets": "none"
             }
           },

@@ -2,3 +2,4 @@
 vendor/
 **/.vs
 soapDebug.php
+bin/
