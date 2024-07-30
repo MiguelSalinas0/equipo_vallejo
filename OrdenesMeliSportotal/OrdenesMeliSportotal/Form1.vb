@@ -16,7 +16,7 @@ Public Class Form1
 
     'Datos ML
     Dim apiMLBase As String = "https://api.mercadolibre.com/"
-    Dim userId As Integer = 257128833
+    Dim userId As Integer = 209369664
     Dim clientId As String = "5038796649356510"
     Dim clientSecret As String = "SSP5q4xPndDRru0ut4FelVTg5BrUXRu7"
     Dim dateFrom As String = Date.Now.AddDays(-2).Date.ToString("yyyy-MM-dd") + "T00:00:00"
@@ -51,12 +51,12 @@ Public Class Form1
     ' Items
     Dim orderItems As List(Of OrderItem)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        GetToken()
+
     End Sub
 
     Function GetToken() As String
 
-        Dim dtToken As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP_SAP("SP_OBTENER_TOKEN", 1)
+        Dim dtToken As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP_SAP("SP_OBTENER_TOKEN", 2)
         Dim token As String = dtToken.Rows(0).Item(0)
         Return token
 
@@ -95,7 +95,7 @@ Public Class Form1
             jsonShip = JsonDocument.Parse(bodyShip)
             rootS = jsonShip.RootElement
 
-            ' Insertar en cabecera
+            'Insertar en cabecera
             If insertarCabecera(ordenId, buy, ord, rootS) = 1 Then
                 ' Iteración de artículos dentro de la orden
                 orderItems = ord.OrderItems
@@ -138,9 +138,9 @@ Public Class Form1
         Dim headerPaymentStatus As String = "Totally"
         Dim headerReturnStatus As String = rootS.GetProperty("return_details").ToString
         Dim headerShippingStatus As String = "Pending"
-        Dim headerTransporter As String = "MELI VALLEJO"
-        Dim headerStoreId As String = "000102"
-        Dim headerWareHouseId As String = "000102"
+        Dim headerTransporter As String = "MELI SPT"
+        Dim headerStoreId As String = "000111"
+        Dim headerWareHouseId As String = "000111"
         Dim headerSalesPersonId As String = "MELI"
         Dim headerType As String = "CustomerOrder"
         Dim amount As String = "0"
@@ -160,7 +160,7 @@ Public Class Form1
         ' insercion de datos de cabecera
         Try
             Dim dtMLCabecera As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_INSERTAR_ORDENES_MERCADOLIBRE_CABECERA",
-            "VALLEJO",
+            "SPORTOTAL",
             dniOrCuit,
             firstName,
             iscompany,
@@ -273,7 +273,7 @@ Public Class Form1
 
     Private Async Function ProcesarOrdenes() As Task
         ' Obtener las órdenes de la base de datos
-        Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
+        Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA", "SPORTOTAL")
 
         If dtCab IsNot Nothing AndAlso dtCab.Rows.Count > 0 Then
             For Each orden As DataRow In dtCab.Rows
@@ -287,9 +287,6 @@ Public Class Form1
 
                 ' Crear la orden
                 Await CrearOrden(orden)
-
-                ' Obtener los ítems de la orden si es necesario
-                ' (aquí se puede implementar según la lógica específica)
 
             Next
         End If
@@ -351,17 +348,8 @@ Public Class Form1
         omniChannel.Transporter = "MELI TESI"
 
         createHeader.OmniChannel = omniChannel
-
-        '' Configuración adicional según la condición SPLIT
-        'If orden.Field(Of String)("Header_InternalReference").Contains("SPLIT") Then
-        'createHeader.StoreId = orden.Field(Of String)("Header_StoreId")
-        'createHeader.WarehouseId = "000198"
-        '    createHeader.OmniChannel.FollowUpStatus = WSOrden.FollowUpStatus.Validated
-        'Else
         createHeader.StoreId = orden.Field(Of String)("Header_StoreId")
         createHeader.WarehouseId = orden.Field(Of String)("Header_WarehouseId")
-        'End If
-
         createHeader.SalesPersonId = orden.Field(Of String)("Header_SalesPersonId")
         createHeader.Type = WSOrden.SaleDocumentType.CustomerOrder
 
@@ -386,14 +374,10 @@ Public Class Form1
             newCreateLine.DeliveryDate = Date.Parse(item.Item("DeliveryDate").ToString).ToString("dd-MM-yyyy")
             newCreateLine.Quantity = Integer.Parse(item.Item("Quantity"))
             newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
-
-            'If item.Field(Of String)("WarehouseId") <> "000198" Then
-            '    omniChannelLine.WarehouseId = item.Field(Of String)("WarehouseId")
-            'End If Consultar
-
             newCreateLine.SalesPersonId = item.Field(Of String)("SalesPersonId")
-
             newCreateLine.ItemIdentifier = itemIdentifier
+            omniChannelLine.WarehouseId = item.Field(Of String)("WarehouseId") '
+
             newCreateLine.OmniChannel = omniChannelLine
 
             createLineList.Add(newCreateLine)
@@ -475,4 +459,8 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        'Await ConsultasMLAsync()
+        Await ProcesarOrdenes()
+    End Sub
 End Class
