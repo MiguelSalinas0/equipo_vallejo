@@ -21,7 +21,7 @@ Public Class Form1
     Dim urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString + "&order.status=paid&order.date_created.from=" + dateFrom + ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
     Dim httpClient As New HttpClient()
 
-    'Variables para la consulta de ordenes
+    'Variables para la consulta de ordenesxfvbh
     Dim ordenes As List(Of Producto)
     Dim respuestaOrdenes As HttpResponseMessage
     Dim bodyOrdenes As String
@@ -55,7 +55,7 @@ Public Class Form1
         Await ConsultasMLAsync()
 
         Await procesarOrdenes()
-
+        Dispose()
     End Sub
 
     Function GetToken() As String
@@ -318,7 +318,7 @@ Public Class Form1
 
     Private Async Function ProcesarOrdenes() As Task
         ' Obtener las órdenes de la base de datos
-        Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA")
+        Dim dtCab As DataTable = ConexionBBDD.ConexionSQL.EjecutarSP("SP_OBTENER_ORDENES_MELI_CABECERA", "VALLEJO")
 
         If dtCab IsNot Nothing AndAlso dtCab.Rows.Count > 0 Then
             For Each orden As DataRow In dtCab.Rows

@@ -22,3 +22,15 @@ C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\Micr
 C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\Newtonsoft.Json.xml
 C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Buffers.dll
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Memory.dll
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Numerics.Vectors.dll
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Text.Encodings.Web.dll
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Text.Json.dll
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.ValueTuple.dll
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Buffers.xml
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Memory.xml
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Numerics.Vectors.xml
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Text.Encodings.Web.xml
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.Text.Json.xml
+C:\xampp\htdocs\scripts_php\ordenesMeliVallejo\ordenesMeliVallejo\bin\Debug\System.ValueTuple.xml
