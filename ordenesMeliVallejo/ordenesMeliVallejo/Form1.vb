@@ -50,12 +50,12 @@ Public Class Form1
 
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        GetToken()
-
         Await ConsultasMLAsync()
 
-        Await procesarOrdenes()
+        Await ProcesarOrdenes()
+
         Dispose()
+
     End Sub
 
     Function GetToken() As String
