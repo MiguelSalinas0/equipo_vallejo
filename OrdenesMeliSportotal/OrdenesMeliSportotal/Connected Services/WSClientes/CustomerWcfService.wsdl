@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.cegid.fr/Retail/1.0" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" targetNamespace="http://www.cegid.fr/Retail/1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.cegid.fr/Retail/1.0/Imports">
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?xsd=xsd0" namespace="http://www.cegid.fr/Retail/1.0" />
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?xsd=xsd2" namespace="http://www.cegid.fr/fault" />
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://cegid.sportotal.com.ar/Y2_VAL/CustomerWcfService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICustomerWcfService_HelloWorld_InputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_HelloWorld_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_HelloWorld_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://www.cegid.fr/fault" name="detail" element="q1:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_HelloWorld_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://www.cegid.fr/fault" name="detail" element="q2:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_HelloWorld_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q3="http://www.cegid.fr/fault" name="detail" element="q3:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_HelloWorld_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q4="http://www.cegid.fr/fault" name="detail" element="q4:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerIdByReference_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerIdByReference" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerIdByReference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerIdByReferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerIdByReference_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://www.cegid.fr/fault" name="detail" element="q5:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerIdByReference_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://www.cegid.fr/fault" name="detail" element="q6:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerIdByReference_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q7="http://www.cegid.fr/fault" name="detail" element="q7:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerIdByReference_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q8="http://www.cegid.fr/fault" name="detail" element="q8:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerDetail_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://www.cegid.fr/fault" name="detail" element="q9:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerDetail_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://www.cegid.fr/fault" name="detail" element="q10:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerDetail_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q11="http://www.cegid.fr/fault" name="detail" element="q11:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_GetCustomerDetail_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q12="http://www.cegid.fr/fault" name="detail" element="q12:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_SearchCustomerIds_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchCustomerIds" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_SearchCustomerIds_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchCustomerIdsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_SearchCustomerIds_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://www.cegid.fr/fault" name="detail" element="q13:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_SearchCustomerIds_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://www.cegid.fr/fault" name="detail" element="q14:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_SearchCustomerIds_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q15="http://www.cegid.fr/fault" name="detail" element="q15:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_SearchCustomerIds_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q16="http://www.cegid.fr/fault" name="detail" element="q16:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_AddNewCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_AddNewCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_AddNewCustomer_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://www.cegid.fr/fault" name="detail" element="q17:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_AddNewCustomer_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://www.cegid.fr/fault" name="detail" element="q18:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_AddNewCustomer_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q19="http://www.cegid.fr/fault" name="detail" element="q19:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_AddNewCustomer_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q20="http://www.cegid.fr/fault" name="detail" element="q20:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_UpdateCustomer_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_UpdateCustomer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_UpdateCustomer_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://www.cegid.fr/fault" name="detail" element="q21:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_UpdateCustomer_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://www.cegid.fr/fault" name="detail" element="q22:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_UpdateCustomer_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q23="http://www.cegid.fr/fault" name="detail" element="q23:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerWcfService_UpdateCustomer_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q24="http://www.cegid.fr/fault" name="detail" element="q24:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:portType name="ICustomerWcfService">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorld" message="tns:ICustomerWcfService_HelloWorld_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldResponse" message="tns:ICustomerWcfService_HelloWorld_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ICustomerWcfService_HelloWorld_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ICustomerWcfService_HelloWorld_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldExceptionDetailFault" name="ExceptionDetail" message="tns:ICustomerWcfService_HelloWorld_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ICustomerWcfService_HelloWorld_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerIdByReference">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerIdByReference" message="tns:ICustomerWcfService_GetCustomerIdByReference_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerIdByReferenceResponse" message="tns:ICustomerWcfService_GetCustomerIdByReference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerIdByReferenceCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ICustomerWcfService_GetCustomerIdByReference_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerIdByReferenceBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ICustomerWcfService_GetCustomerIdByReference_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerIdByReferenceExceptionDetailFault" name="ExceptionDetail" message="tns:ICustomerWcfService_GetCustomerIdByReference_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerIdByReferenceCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ICustomerWcfService_GetCustomerIdByReference_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerDetail">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerDetail" message="tns:ICustomerWcfService_GetCustomerDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerDetailResponse" message="tns:ICustomerWcfService_GetCustomerDetail_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerDetailCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ICustomerWcfService_GetCustomerDetail_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerDetailBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ICustomerWcfService_GetCustomerDetail_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerDetailExceptionDetailFault" name="ExceptionDetail" message="tns:ICustomerWcfService_GetCustomerDetail_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/GetCustomerDetailCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ICustomerWcfService_GetCustomerDetail_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchCustomerIds">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/SearchCustomerIds" message="tns:ICustomerWcfService_SearchCustomerIds_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/SearchCustomerIdsResponse" message="tns:ICustomerWcfService_SearchCustomerIds_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/SearchCustomerIdsCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ICustomerWcfService_SearchCustomerIds_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/SearchCustomerIdsBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ICustomerWcfService_SearchCustomerIds_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/SearchCustomerIdsExceptionDetailFault" name="ExceptionDetail" message="tns:ICustomerWcfService_SearchCustomerIds_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/SearchCustomerIdsCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ICustomerWcfService_SearchCustomerIds_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewCustomer">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/AddNewCustomer" message="tns:ICustomerWcfService_AddNewCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/AddNewCustomerResponse" message="tns:ICustomerWcfService_AddNewCustomer_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/AddNewCustomerCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ICustomerWcfService_AddNewCustomer_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/AddNewCustomerBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ICustomerWcfService_AddNewCustomer_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/AddNewCustomerExceptionDetailFault" name="ExceptionDetail" message="tns:ICustomerWcfService_AddNewCustomer_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/AddNewCustomerCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ICustomerWcfService_AddNewCustomer_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCustomer">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/UpdateCustomer" message="tns:ICustomerWcfService_UpdateCustomer_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/UpdateCustomerResponse" message="tns:ICustomerWcfService_UpdateCustomer_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/UpdateCustomerCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ICustomerWcfService_UpdateCustomer_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/UpdateCustomerBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ICustomerWcfService_UpdateCustomer_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/UpdateCustomerExceptionDetailFault" name="ExceptionDetail" message="tns:ICustomerWcfService_UpdateCustomer_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICustomerWcfService/UpdateCustomerCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ICustomerWcfService_UpdateCustomer_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

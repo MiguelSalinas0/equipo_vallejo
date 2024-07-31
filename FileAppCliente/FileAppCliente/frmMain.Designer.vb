@@ -25,7 +25,6 @@ Partial Class frmMain
         Me.dgcOrigen = New DevExpress.XtraGrid.GridControl()
         Me.GridViewOrigen = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.btnRefresh = New System.Windows.Forms.Button()
-        Me.WaitFormManager = New DevExpress.XtraSplashScreen.SplashScreenManager(Me, GetType(Global.FileAppCliente.WaitForm), True, True)
         Me.dgcDestino = New DevExpress.XtraGrid.GridControl()
         Me.GridViewDestino = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.btnAddOrigen = New System.Windows.Forms.Button()
@@ -33,6 +32,7 @@ Partial Class frmMain
         Me.btnAddDestino = New System.Windows.Forms.Button()
         Me.btnDeleteDestino = New System.Windows.Forms.Button()
         Me.btnCopy = New System.Windows.Forms.Button()
+        Me.WaitFormManager = New DevExpress.XtraSplashScreen.SplashScreenManager(Me, GetType(Global.FileAppCliente.WaitForm), True, True)
         CType(Me.dgcOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgcDestino, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,10 +64,6 @@ Partial Class frmMain
         Me.btnRefresh.TabIndex = 2
         Me.btnRefresh.Text = "Actualizar"
         Me.btnRefresh.UseVisualStyleBackColor = True
-        '
-        'WaitFormManager
-        '
-        Me.WaitFormManager.ClosingDelay = 500
         '
         'dgcDestino
         '
@@ -131,6 +127,10 @@ Partial Class frmMain
         Me.btnCopy.Text = "Copiar"
         Me.btnCopy.UseVisualStyleBackColor = True
         '
+        'WaitFormManager
+        '
+        Me.WaitFormManager.ClosingDelay = 500
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -157,7 +157,6 @@ Partial Class frmMain
     Friend WithEvents dgcOrigen As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridViewOrigen As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents btnRefresh As Button
-    Friend WithEvents WaitFormManager As DevExpress.XtraSplashScreen.SplashScreenManager
     Friend WithEvents dgcDestino As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridViewDestino As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents btnAddOrigen As Button
@@ -165,4 +164,5 @@ Partial Class frmMain
     Friend WithEvents btnAddDestino As Button
     Friend WithEvents btnDeleteDestino As Button
     Friend WithEvents btnCopy As Button
+    Friend WithEvents WaitFormManager As DevExpress.XtraSplashScreen.SplashScreenManager
 End Class
