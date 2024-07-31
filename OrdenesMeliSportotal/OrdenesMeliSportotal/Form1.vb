@@ -50,8 +50,10 @@ Public Class Form1
 
     ' Items
     Dim orderItems As List(Of OrderItem)
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+    Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Await ConsultasMLAsync()
+        Await ProcesarOrdenes()
+        Dispose()
     End Sub
 
     Function GetToken() As String
@@ -96,7 +98,7 @@ Public Class Form1
             rootS = jsonShip.RootElement
 
             'Insertar en cabecera
-            If insertarCabecera(ordenId, buy, ord, rootS) = 1 Then
+            If InsertarCabecera(ordenId, buy, ord, rootS) = 1 Then
                 ' Iteración de artículos dentro de la orden
                 orderItems = ord.OrderItems
                 Dim headerDate As DateTime = DateTime.Parse(rootS.GetProperty("date_created").ToString())
@@ -108,7 +110,7 @@ Public Class Form1
         Next
     End Function
 
-    Private Function insertarCabecera(ByVal ordenId As Long, ByVal buy As ClienteML, ByVal ord As Producto, ByVal rootS As JsonElement)
+    Private Function InsertarCabecera(ByVal ordenId As Long, ByVal buy As ClienteML, ByVal ord As Producto, ByVal rootS As JsonElement)
 
         Dim CompanyIdNumer As String
         Dim homePhoneNumber As String = ""
@@ -204,7 +206,7 @@ Public Class Form1
             Return dtMLCabecera.Rows(0).Item(0)
 
         Catch ex As Exception
-
+            Return 0
         End Try
 
     End Function
@@ -459,8 +461,4 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        'Await ConsultasMLAsync()
-        Await ProcesarOrdenes()
-    End Sub
 End Class
