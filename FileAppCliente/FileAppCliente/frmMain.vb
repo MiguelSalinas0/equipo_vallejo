@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿
+Imports System.IO
 Imports System.Threading
 Imports DevExpress.Utils.CommonDialogs
 Imports DevExpress.XtraEditors
@@ -8,10 +9,14 @@ Imports Microsoft.VisualBasic.Devices
 
 Public Class frmMain
 
+    Dim Usuario As String
+    Dim idUsuario As Integer
+    Dim dtUsuario As DataTable
     Dim dtOrigenes As DataTable
     Dim dtDestinos As DataTable
+
     Dim gvOrigen As String
-    Dim gvDestino As String
+    Dim gvDestino As String = ""
 
 
     Private Sub AbrirEspera(ByVal Descripcion As String)
@@ -38,12 +43,19 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         'Cargo Origenes
+
+        Me.Usuario = frmLogin.Usuario
+        dtUsuario = ConexionBBDD.ConexionSQL.EjecutarSP("[sp_FileAppCliente_ObtenerDatosUsuario]", Usuario)
+        idUsuario = dtUsuario.Rows(0).Item("idUsuario")
+
+        Me.Text += " Usuario: " & Usuario
+
         ActualizarOrigenes()
 
     End Sub
     Sub ActualizarOrigenes()
 
-        dtOrigenes = ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_ObtenerOrigenes")
+        dtOrigenes = ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_ObtenerOrigenes", idUsuario)
         dgcOrigen.DataSource = dtOrigenes
         GridViewOrigen.BestFitColumns()
 
@@ -68,21 +80,45 @@ Public Class frmMain
     End Sub
     Private Sub dgcOrigen_Click(sender As Object, e As EventArgs) Handles dgcOrigen.Click
 
-        ActualizarDestinos(GridViewOrigen.GetFocusedRowCellValue("ID"))
+        gvOrigen = GridViewOrigen.GetFocusedRowCellValue("idOrigen")
+
+        If Not gvOrigen Is vbNullString Then
+
+            ActualizarDestinos(GridViewOrigen.GetFocusedRowCellValue("idOrigen"))
+
+        End If
 
     End Sub
 
     Private Sub btnDeleteDestino_Click(sender As Object, e As EventArgs) Handles btnDeleteDestino.Click
 
-        gvDestino = GridViewDestino.GetFocusedRowCellValue("ID")
 
-        ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_EliminarDestino", gvDestino)
+        gvDestino = GridViewDestino.GetFocusedRowCellValue("idDestino")
+
+        If Not gvDestino Is Nothing Then
+
+            ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_EliminarDestino", gvDestino)
+
+        End If
+
+        If Not gvOrigen Is vbNullString Then
+
+            ActualizarDestinos(gvOrigen)
+
+        End If
 
     End Sub
 
     Private Sub btnDeleteOrigen_Click(sender As Object, e As EventArgs) Handles btnDeleteOrigen.Click
 
-        ConexionBBDD.ConexionSQL.EjecutarSP("", gvOrigen)
+        gvOrigen = GridViewOrigen.GetFocusedRowCellValue("idOrigen")
+
+        If Not gvOrigen Is vbNullString Then
+
+            ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_EliminarOrigen", gvOrigen)
+            ActualizarOrigenes()
+
+        End If
 
     End Sub
 
@@ -111,7 +147,7 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
             If ValidarNombre(strNombre) Then
 
                 'Nombre Validado
-                ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarOrigen", strNombre, strPath)
+                ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarOrigen", strNombre, strPath, idUsuario)
 
 
             Else
@@ -138,7 +174,6 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
         End If
         ActualizarOrigenes()
     End Sub
-
     Function ValidarNombre(ByVal nombre As String) As Boolean
 
         'Valido nombre
@@ -155,47 +190,20 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
         End If
 
     End Function
-
     Private Sub GridViewOrigen_FocusedRowChanged(sender As Object, e As FocusedRowChangedEventArgs) Handles GridViewOrigen.FocusedRowChanged
-        ActualizarDestinos(GridViewOrigen.GetFocusedRowCellValue("ID"))
+
+        gvOrigen = GridViewOrigen.GetFocusedRowCellValue("idOrigen")
+
+        If Not gvOrigen Is vbNullString Then
+
+            ActualizarDestinos(GridViewOrigen.GetFocusedRowCellValue("idOrigen"))
+
+        End If
+
+
     End Sub
-
-
-
-    'Private Sub CopyFolder(ByVal origen As String, ByVal destino As String)
-    '    'Try
-    '    ' Obtenemos la información del directorio origen
-    '    Dim directorioOrigen As New DirectoryInfo(origen)
-    '        Dim directorioDestino As New DirectoryInfo(destino)
-
-    '        ' Verificamos si el directorio origen existe
-    '        If Not directorioOrigen.Exists Then
-    '            Throw New DirectoryNotFoundException($"Directorio origen no encontrado: {origen}")
-    '        End If
-
-    '        '' Creamos el directorio destino si no existe
-    '        'If Not Directory.Exists(destino) Then
-    '        '    Directory.CreateDirectory(destino)
-    '        'End If
-
-    '        ' Obtenemos todos los archivos del directorio actual
-    '        For Each archivo As FileInfo In directorioOrigen.GetFiles()
-    '            Dim nuevoArchivo As String = Path.Combine(destino, archivo.Name)
-    '            archivo.CopyTo(nuevoArchivo, True)
-    '        Next
-
-    '        ' Obtenemos todos los subdirectorios del directorio actual
-    '        For Each subDirectorio As DirectoryInfo In directorioOrigen.GetDirectories()
-    '            Dim nuevoDirectorio As String = Path.Combine(destino, subDirectorio.Name)
-    '            ' Llamamos recursivamente a la función para copiar los subdirectorios
-    '            CopyFolder(subDirectorio.FullName, nuevoDirectorio)
-    '        Next
-    '    'Catch ex As Exception
-
-    '    'End Try
-    'End Sub
-
     Public Sub CopiarDatos(origen As String, destino As String)
+
         Try
             ' Verificar si el directorio de origen existe
             If Not Directory.Exists(origen) Then
@@ -242,23 +250,24 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
             ' Manejar cualquier otra excepción que pueda ocurrir
             MsgBox("Ocurrió un error al copiar los archivos: " & ex.Message)
         End Try
+
     End Sub
-
-
-
     Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
-
-        'contador
 
         Try
 
             If dtOrigenes IsNot Nothing AndAlso dtOrigenes.Rows.Count > 0 Then
+
                 For Each rowOrigen As DataRow In dtOrigenes.Rows
 
                     Dim strPrimerDestino As String = vbNullString
 
+                    If Not gvOrigen Is vbNullString Then
 
-                    ActualizarDestinos(rowOrigen("ID"))
+                        ActualizarDestinos(rowOrigen("idOrigen"))
+
+                    End If
+
                     If dtDestinos IsNot Nothing AndAlso dtDestinos.Rows.Count > 0 Then
 
                         For Each rowDestino As DataRow In dtDestinos.Rows
@@ -290,7 +299,6 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
             MsgBox("Ocurrio un error")
         End Try
 
-
     End Sub
 
     Private Sub btnAddDestino_Click(sender As Object, e As EventArgs) Handles btnAddDestino.Click
@@ -302,7 +310,15 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
         Dim strNombre As String
         Dim idOrigen As Integer
 
-        idOrigen = GridViewOrigen.GetFocusedRowCellValue("ID")
+        If Not gvOrigen Is vbNullString Then
+
+            idOrigen = GridViewOrigen.GetFocusedRowCellValue("idOrigen")
+
+        Else
+
+            Exit Sub
+
+        End If
 
         'Obtengo Path
         If fbdSeleccionarDestino.ShowDialog = System.Windows.Forms.DialogResult.OK Then
@@ -317,18 +333,23 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
 
                 'Nombre Validado
                 ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarDestinoXOrigen", idOrigen, strNombre, strPath)
-                ActualizarDestinos(idOrigen)
+
+                If Not gvOrigen Is vbNullString Then
+
+                    ActualizarDestinos(idOrigen)
+
+                End If
 
             Else
 
-                'Fallo Validacion
-                If MsgBox("El nombre ingresado es invalido, ¿Deséa continuar?", MsgBoxStyle.RetryCancel) = MsgBoxResult.Retry Then
+                    'Fallo Validacion
+                    If MsgBox("El nombre ingresado es invalido, ¿Deséa continuar?", MsgBoxStyle.RetryCancel) = MsgBoxResult.Retry Then
 
                     GoTo FlagNom
 
                 Else
 
-                    'nO DESEO cONTINUAR
+                    'No continuar
 
 
                 End If
@@ -345,7 +366,4 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
 
     End Sub
 
-    Private Sub XtraFolderBrowserDialog1_HelpRequest(sender As Object, e As EventArgs)
-
-    End Sub
 End Class
