@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.cegid.fr/Retail/1.0" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" targetNamespace="http://www.cegid.fr/Retail/1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.cegid.fr/Retail/1.0/Imports">
+      <xsd:import schemaLocation="http://vmapp.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?xsd=xsd0" namespace="http://www.cegid.fr/Retail/1.0" />
+      <xsd:import schemaLocation="http://vmapp.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?xsd=xsd2" namespace="http://www.cegid.fr/fault" />
+      <xsd:import schemaLocation="http://vmapp.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://vmapp.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISaleDocumentService_HelloWorld_InputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_HelloWorld_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_HelloWorld_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://www.cegid.fr/fault" name="detail" element="q1:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_HelloWorld_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://www.cegid.fr/fault" name="detail" element="q2:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_HelloWorld_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q3="http://www.cegid.fr/fault" name="detail" element="q3:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_HelloWorld_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q4="http://www.cegid.fr/fault" name="detail" element="q4:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetHeaderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHeaderList" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetHeaderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHeaderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetHeaderList_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://www.cegid.fr/fault" name="detail" element="q5:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetHeaderList_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://www.cegid.fr/fault" name="detail" element="q6:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetHeaderList_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q7="http://www.cegid.fr/fault" name="detail" element="q7:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetHeaderList_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q8="http://www.cegid.fr/fault" name="detail" element="q8:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetByKey" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetByKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByKey_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://www.cegid.fr/fault" name="detail" element="q9:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByKey_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://www.cegid.fr/fault" name="detail" element="q10:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByKey_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q11="http://www.cegid.fr/fault" name="detail" element="q11:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByKey_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q12="http://www.cegid.fr/fault" name="detail" element="q12:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByReference_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetByReference" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByReference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetByReferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByReference_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://www.cegid.fr/fault" name="detail" element="q13:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByReference_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://www.cegid.fr/fault" name="detail" element="q14:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByReference_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q15="http://www.cegid.fr/fault" name="detail" element="q15:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByReference_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q16="http://www.cegid.fr/fault" name="detail" element="q16:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Create_InputMessage">
+    <wsdl:part name="parameters" element="tns:Create" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Create_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Create_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://www.cegid.fr/fault" name="detail" element="q17:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Create_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://www.cegid.fr/fault" name="detail" element="q18:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Create_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q19="http://www.cegid.fr/fault" name="detail" element="q19:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Create_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q20="http://www.cegid.fr/fault" name="detail" element="q20:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Cancel_InputMessage">
+    <wsdl:part name="parameters" element="tns:Cancel" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Cancel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Cancel_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://www.cegid.fr/fault" name="detail" element="q21:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Cancel_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://www.cegid.fr/fault" name="detail" element="q22:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Cancel_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q23="http://www.cegid.fr/fault" name="detail" element="q23:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Cancel_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q24="http://www.cegid.fr/fault" name="detail" element="q24:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Close_InputMessage">
+    <wsdl:part name="parameters" element="tns:Close" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Close_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Close_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://www.cegid.fr/fault" name="detail" element="q25:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Close_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://www.cegid.fr/fault" name="detail" element="q26:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Close_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q27="http://www.cegid.fr/fault" name="detail" element="q27:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Close_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q28="http://www.cegid.fr/fault" name="detail" element="q28:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Update_InputMessage">
+    <wsdl:part name="parameters" element="tns:Update" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Update_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Update_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://www.cegid.fr/fault" name="detail" element="q29:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Update_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://www.cegid.fr/fault" name="detail" element="q30:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Update_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q31="http://www.cegid.fr/fault" name="detail" element="q31:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Update_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q32="http://www.cegid.fr/fault" name="detail" element="q32:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdatePayments_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePayments" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdatePayments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePaymentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdatePayments_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://www.cegid.fr/fault" name="detail" element="q33:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdatePayments_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://www.cegid.fr/fault" name="detail" element="q34:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdatePayments_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q35="http://www.cegid.fr/fault" name="detail" element="q35:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdatePayments_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q36="http://www.cegid.fr/fault" name="detail" element="q36:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdateHeader_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateHeader" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdateHeader_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateHeaderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdateHeader_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://www.cegid.fr/fault" name="detail" element="q37:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdateHeader_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://www.cegid.fr/fault" name="detail" element="q38:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdateHeader_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q39="http://www.cegid.fr/fault" name="detail" element="q39:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_UpdateHeader_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q40="http://www.cegid.fr/fault" name="detail" element="q40:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByExternalReference_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetByExternalReference" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByExternalReference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetByExternalReferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByExternalReference_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://www.cegid.fr/fault" name="detail" element="q41:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByExternalReference_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://www.cegid.fr/fault" name="detail" element="q42:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByExternalReference_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q43="http://www.cegid.fr/fault" name="detail" element="q43:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_GetByExternalReference_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q44="http://www.cegid.fr/fault" name="detail" element="q44:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Lock_InputMessage">
+    <wsdl:part name="parameters" element="tns:Lock" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Lock_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LockResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Lock_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://www.cegid.fr/fault" name="detail" element="q45:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Lock_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://www.cegid.fr/fault" name="detail" element="q46:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Lock_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q47="http://www.cegid.fr/fault" name="detail" element="q47:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Lock_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q48="http://www.cegid.fr/fault" name="detail" element="q48:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Unlock_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unlock" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Unlock_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnlockResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Unlock_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://www.cegid.fr/fault" name="detail" element="q49:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Unlock_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://www.cegid.fr/fault" name="detail" element="q50:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Unlock_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q51="http://www.cegid.fr/fault" name="detail" element="q51:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_Unlock_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q52="http://www.cegid.fr/fault" name="detail" element="q52:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_CustomersReservationCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomersReservationCreate" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_CustomersReservationCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomersReservationCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_CustomersReservationCreate_CbpFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://www.cegid.fr/fault" name="detail" element="q53:CbpFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_CustomersReservationCreate_BusinessFaultDetailFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://www.cegid.fr/fault" name="detail" element="q54:BusinessFaultDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_CustomersReservationCreate_ExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q55="http://www.cegid.fr/fault" name="detail" element="q55:ExceptionDetail" />
+  </wsdl:message>
+  <wsdl:message name="ISaleDocumentService_CustomersReservationCreate_CbpExceptionDetail_FaultMessage">
+    <wsdl:part xmlns:q56="http://www.cegid.fr/fault" name="detail" element="q56:CbpExceptionDetail" />
+  </wsdl:message>
+  <wsdl:portType name="ISaleDocumentService">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorld" message="tns:ISaleDocumentService_HelloWorld_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldResponse" message="tns:ISaleDocumentService_HelloWorld_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_HelloWorld_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_HelloWorld_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_HelloWorld_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ICbrBasicWebServiceInterface/HelloWorldCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_HelloWorld_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHeaderList">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetHeaderList" message="tns:ISaleDocumentService_GetHeaderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetHeaderListResponse" message="tns:ISaleDocumentService_GetHeaderList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetHeaderListCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_GetHeaderList_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetHeaderListBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_GetHeaderList_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetHeaderListExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_GetHeaderList_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetHeaderListCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_GetHeaderList_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByKey">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByKey" message="tns:ISaleDocumentService_GetByKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByKeyResponse" message="tns:ISaleDocumentService_GetByKey_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByKeyCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_GetByKey_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByKeyBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_GetByKey_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByKeyExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_GetByKey_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByKeyCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_GetByKey_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByReference">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByReference" message="tns:ISaleDocumentService_GetByReference_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByReferenceResponse" message="tns:ISaleDocumentService_GetByReference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByReferenceCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_GetByReference_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByReferenceBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_GetByReference_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByReferenceExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_GetByReference_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByReferenceCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_GetByReference_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Create">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/Create" message="tns:ISaleDocumentService_Create_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CreateResponse" message="tns:ISaleDocumentService_Create_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CreateCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_Create_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CreateBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_Create_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CreateExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_Create_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CreateCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_Create_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Cancel">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/Cancel" message="tns:ISaleDocumentService_Cancel_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CancelResponse" message="tns:ISaleDocumentService_Cancel_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CancelCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_Cancel_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CancelBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_Cancel_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CancelExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_Cancel_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CancelCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_Cancel_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Close">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/Close" message="tns:ISaleDocumentService_Close_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CloseResponse" message="tns:ISaleDocumentService_Close_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CloseCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_Close_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CloseBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_Close_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CloseExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_Close_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CloseCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_Close_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Update">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/Update" message="tns:ISaleDocumentService_Update_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateResponse" message="tns:ISaleDocumentService_Update_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_Update_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_Update_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_Update_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_Update_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePayments">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdatePayments" message="tns:ISaleDocumentService_UpdatePayments_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdatePaymentsResponse" message="tns:ISaleDocumentService_UpdatePayments_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdatePaymentsCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_UpdatePayments_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdatePaymentsBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_UpdatePayments_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdatePaymentsExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_UpdatePayments_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdatePaymentsCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_UpdatePayments_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateHeader">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateHeader" message="tns:ISaleDocumentService_UpdateHeader_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateHeaderResponse" message="tns:ISaleDocumentService_UpdateHeader_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateHeaderCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_UpdateHeader_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateHeaderBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_UpdateHeader_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateHeaderExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_UpdateHeader_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UpdateHeaderCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_UpdateHeader_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetByExternalReference">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByExternalReference" message="tns:ISaleDocumentService_GetByExternalReference_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByExternalReferenceResponse" message="tns:ISaleDocumentService_GetByExternalReference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByExternalReferenceCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_GetByExternalReference_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByExternalReferenceBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_GetByExternalReference_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByExternalReferenceExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_GetByExternalReference_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/GetByExternalReferenceCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_GetByExternalReference_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Lock">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/Lock" message="tns:ISaleDocumentService_Lock_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/LockResponse" message="tns:ISaleDocumentService_Lock_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/LockCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_Lock_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/LockBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_Lock_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/LockExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_Lock_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/LockCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_Lock_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unlock">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/Unlock" message="tns:ISaleDocumentService_Unlock_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UnlockResponse" message="tns:ISaleDocumentService_Unlock_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UnlockCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_Unlock_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UnlockBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_Unlock_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UnlockExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_Unlock_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/UnlockCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_Unlock_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomersReservationCreate">
+      <wsdl:input wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CustomersReservationCreate" message="tns:ISaleDocumentService_CustomersReservationCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CustomersReservationCreateResponse" message="tns:ISaleDocumentService_CustomersReservationCreate_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CustomersReservationCreateCbpFaultDetailFault" name="CbpFaultDetailFault" message="tns:ISaleDocumentService_CustomersReservationCreate_CbpFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CustomersReservationCreateBusinessFaultDetailFault" name="BusinessFaultDetailFault" message="tns:ISaleDocumentService_CustomersReservationCreate_BusinessFaultDetailFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CustomersReservationCreateExceptionDetailFault" name="ExceptionDetail" message="tns:ISaleDocumentService_CustomersReservationCreate_ExceptionDetail_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.cegid.fr/Retail/1.0/ISaleDocumentService/CustomersReservationCreateCbpExceptionDetailFault" name="CbpExceptionDetail" message="tns:ISaleDocumentService_CustomersReservationCreate_CbpExceptionDetail_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
