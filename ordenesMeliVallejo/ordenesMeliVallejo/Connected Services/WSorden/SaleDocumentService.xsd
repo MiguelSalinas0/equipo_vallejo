@@ -1,0 +1,3031 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.cegid.fr/Retail/1.0" elementFormDefault="qualified" targetNamespace="http://www.cegid.fr/Retail/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://vmapp.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="HelloWorld">
+    <xs:annotation>
+      <xs:documentation>HelloWorld method to validate the access to Web Services from every very light HTTP client via Javascript for example</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="text" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Text to pass to test consumption.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="RetailContext">
+    <xs:annotation>
+      <xs:documentation>Application context.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DatabaseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Identifier of the database to use in this execution context.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetailContext" nillable="true" type="tns:RetailContext" />
+  <xs:element name="HelloWorldResponse">
+    <xs:annotation>
+      <xs:documentation>HelloWorld method to validate the access to Web Services from every very light HTTP client via Javascript for example</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="HelloWorldResult" nillable="true" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Returns the text typed upon entry, concatenated with phrase 'Hello You'</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHeaderList">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets the list of sales history (header) for a customer. The list is sorted by decreasing dates. The 'Customer's sales query' restriction applies to the calculation of this sales history.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="searchRequest" nillable="true" type="tns:GetHeaderList_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GetHeaderList_Request">
+    <xs:annotation>
+      <xs:documentation>Object used to convey data to get a history of sales.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Active sales documents only. - Related to column [PIECE.GP_VIVANTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BeginDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Start date to be used to find sales documents. Limit included. - Related to column [PIECE.GP_DATEPIECE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Identifier of the customer for whom you want to get the sales history. - Related to column [TIERS.T_TIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DocumentTypes" nillable="true" type="tns:ArrayOfSaleDocumentType">
+        <xs:annotation>
+          <xs:documentation>[Optional] - List of sales document types - Related to column [PIECE.GP_NATUREPIECEG].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Optional] - End date to be used to find sales documents. Limit included. - Related to column [PIECE.GP_DATEPIECE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Pager" nillable="true" type="tns:Pager">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Page management object.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="StoreIds" nillable="true" type="q1:ArrayOfstring">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Store list. - Related to column [ETABLISS.ET_ETABLISSEMENT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetHeaderList_Request" nillable="true" type="tns:GetHeaderList_Request" />
+  <xs:complexType name="ArrayOfSaleDocumentType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SaleDocumentType" type="tns:SaleDocumentType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSaleDocumentType" nillable="true" type="tns:ArrayOfSaleDocumentType" />
+  <xs:simpleType name="SaleDocumentType">
+    <xs:annotation>
+      <xs:documentation>Sales document type</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ReturnNotice">
+        <xs:annotation>
+          <xs:documentation>Return notice.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomerDelivery">
+        <xs:annotation>
+          <xs:documentation>Customer delivery.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomerOrder">
+        <xs:annotation>
+          <xs:documentation>Customer order.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AvailableOrder">
+        <xs:annotation>
+          <xs:documentation>Available order.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomerReservationRequest">
+        <xs:annotation>
+          <xs:documentation>Customer reservation requests. Usable only when viewing sales documents.
+    .</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReceiptOnHold">
+        <xs:annotation>
+          <xs:documentation>Receipt on hold.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Receipt">
+        <xs:annotation>
+          <xs:documentation>Receipt.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DeliveryPreparation">
+        <xs:annotation>
+          <xs:documentation>Delivery worksheet.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomersReservation">
+        <xs:annotation>
+          <xs:documentation>Customer reservations. Usable only when viewing sales documents.
+    .</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SaleDocumentType" nillable="true" type="tns:SaleDocumentType" />
+  <xs:complexType name="Pager">
+    <xs:annotation>
+      <xs:documentation>Object for page management. 1st page: PageSize = 50, PageIndex = 1 - 2nd page: PageSize = 50, PageIndex = 2" </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PageIndex" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Page index to return. 1 by default. - Default value: 1.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PageSize" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Maximum number of lines to return per page. - Default value: 20.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Pager" nillable="true" type="tns:Pager" />
+  <xs:element name="GetHeaderListResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets the list of sales history (header) for a customer. The list is sorted by decreasing dates. The 'Customer's sales query' restriction applies to the calculation of this sales history.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetHeaderListResult" nillable="true" type="tns:GetHeaderList_Reply">
+          <xs:annotation>
+            <xs:documentation />
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GetHeaderList_Reply">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Headers" nillable="true" type="tns:ArrayOfGet_Header" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetHeaderList_Reply" nillable="true" type="tns:GetHeaderList_Reply" />
+  <xs:complexType name="ArrayOfGet_Header">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Get_Header" nillable="true" type="tns:Get_Header" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGet_Header" nillable="true" type="tns:ArrayOfGet_Header" />
+  <xs:complexType name="Get_Header">
+    <xs:annotation>
+      <xs:documentation>Sales document header</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Active document. - Related to column [PIECE.GP_VIVANTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Comment on document header that can be in plain text or in RTF format - Related to column [PIECE.GP_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Document currency ID - Related to column [PIECE.GP_DEVISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer identifier of the document - Related to column [PIECE.GP_TIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Document date - Related to column [PIECE.GP_DATEPIECE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Internal reference of document - Related to column [PIECE.GP_REFINTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="tns:SaleDocumentKey">
+        <xs:annotation>
+          <xs:documentation>Document key.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OmniChannel" nillable="true" type="tns:OmniChannel">
+        <xs:annotation>
+          <xs:documentation>Omni-Channel information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Origin" type="tns:DocumentOrigin">
+        <xs:annotation>
+          <xs:documentation>Document origin - Related to column [PIECE.GP_TYPEPROVENANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID. - Related to column [PIECE.GP_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Status" type="tns:DocumentStatus">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/10 - V1105] - Document status. - Related to column [PIECE.GP_STATUTPIECE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StoreId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Document store ID - Related to column [PIECE.GP_ETABLISSEMENT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxExcludedTotalAmount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Document tax-excl. amount - Related to column [PIECE.GP_TOTALHT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxIncludedTotalAmount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Document tax-incl. amount - Related to column [PIECE.GP_TOTALTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TotalQuantity" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Document total quantity - Related to column [PIECE.GP_TOTALQTEFACT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedDates" nillable="true" type="tns:ArrayOfUserDefinedDate">
+        <xs:annotation>
+          <xs:documentation>Document user-defined dates - Related to column [PIECE.GP_DATELIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTables" nillable="true" type="tns:ArrayOfUserDefinedTable">
+        <xs:annotation>
+          <xs:documentation>Document user-defined tables - Related to column [PIECE.GP_LIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserFields" nillable="true" type="tns:ArrayOfUserField">
+        <xs:annotation>
+          <xs:documentation>Document user fields.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WarehouseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/02 - V1201] - Warehouse identifier of the document store - Related to column [PIECE.GP_DEPOT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Get_Header" nillable="true" type="tns:Get_Header" />
+  <xs:complexType name="SaleDocumentKey">
+    <xs:annotation>
+      <xs:documentation>Key identifying the sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Number" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Number - Related to column [PIECE.GP_NUMERO].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Stump" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Stub - Related to column [PIECE.GP_SOUCHE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Type" type="tns:SaleDocumentType">
+        <xs:annotation>
+          <xs:documentation>Document type - Related to column [PIECE.GP_NATUREPIECEG].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SaleDocumentKey" nillable="true" type="tns:SaleDocumentKey" />
+  <xs:complexType name="OmniChannel">
+    <xs:annotation>
+      <xs:documentation>Omni-Channel data</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BillingStatus" nillable="true" type="tns:BillingStatus">
+        <xs:annotation>
+          <xs:documentation>Billing status of the order - Related to column [MPIECEECO.MEJ_CDEECOMFACT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CancelDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Cancellation date. Please note that time is not taken into account. Data can be viewed only. - Related to column [MPIECEECO.MEJ_DATEANNUL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CancelReasonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Identifier of the reason for locking or canceling. Data can be viewed only. - Related to column [MPIECEECO.MEJ_MOTIFANNUL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CancelStatus" nillable="true" type="tns:CancelStatus">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Cancellation data. Data can be viewed only. - Related to column [PIECE.GP_STATUTANNUL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Comment - Related to column [MPIECEECO.MEJ_COMMENTAIRE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryStoreId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Pick-up store ID of the order. - Related to column [MPIECEECO.CDEECOMETAB].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryType" nillable="true" type="tns:DeliveryType">
+        <xs:annotation>
+          <xs:documentation>Delivery type of the order - Related to column [MPIECEECO.MEJ_CDEECOMENVOI].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryWarehouseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/02 - V1201] [Optional] - Delivery warehouse ID of the document - Related to column [MPIECEECO.MEJ_CDEECOMDEPOT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FollowUpStatus" nillable="true" type="tns:FollowUpStatus">
+        <xs:annotation>
+          <xs:documentation>Tracking status of the order - Related to column [MPIECEECO.MEJ_CDEECOMSUIVI].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GiftMessage" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Gift message resumed on a customized card. - Related to column [MPIECEECO.MEJ_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="GiftMessageType" nillable="true" type="tns:GiftMessageType">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Gift card type. - Default value: None - Related to column [MPIECEECO.MEJ_MESSAGECADEAU].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LockingDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Locking date. Data can be viewed only. - Related to column [MPIECEECO.MEJ_DATEBLOCAGE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OriginStoreId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2019/08 - V1400] [Optional] - Identifier of the store where the order is entered - Related to column [MPIECEECO.MEJ_ETABEDIT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OriginalDocument" nillable="true" type="tns:SaleDocumentIdentifier">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/11 - V1105] [Optional] - Original e-Commerce document (e-Commerce return notices.) - Default value: nil.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PaymentMethodId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/11 - V1105] [Optional] - Payment method identifier (e-Commerce return notices). - Default value: AVE/RMB.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PaymentStatus" nillable="true" type="tns:PaymentStatus">
+        <xs:annotation>
+          <xs:documentation>Payment status of the order - Related to column [MPIECEECO.MEJ_CDEECOMREGLT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PreferCustomerDelivery" nillable="true" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Added 2019/12 - V1400] [Optional] - ??? Privilégier la livraison par la boutique. ???.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReturnStatus" nillable="true" type="tns:OrderReturnStatus">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1104] - Return status of the order - Related to column [MPIECEECO.MEJ_CDEECOMRETOUR].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ReturnType" nillable="true" type="tns:ReturnType">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/11 - V1105] [Optional] - Return type (e-Commerce return notices). - Default value: .</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShippingStatus" nillable="true" type="tns:ShippingStatus">
+        <xs:annotation>
+          <xs:documentation>Shipping status of the order - Related to column [MPIECEECO.MEJ_CDEECOMEXPED].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Tracking" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Delivery tracking - Related to column [MPIECEECO.MEJ_TRACKING].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Transporter" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/05 - V1104] [Optional] - Carrier. - Related to column [MPIECEECO.MEJ_TRANSPORT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OmniChannel" nillable="true" type="tns:OmniChannel" />
+  <xs:simpleType name="BillingStatus">
+    <xs:annotation>
+      <xs:documentation>e-Commerce invoicing status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pending">
+        <xs:annotation>
+          <xs:documentation>Not invoiced.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Totally">
+        <xs:annotation>
+          <xs:documentation>invoiced.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Partially">
+        <xs:annotation>
+          <xs:documentation>Partially invoiced.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NotPerformed">
+        <xs:annotation>
+          <xs:documentation>Not realized.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Performed">
+        <xs:annotation>
+          <xs:documentation>Realized.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BillingStatus" nillable="true" type="tns:BillingStatus" />
+  <xs:simpleType name="CancelStatus">
+    <xs:annotation>
+      <xs:documentation>Cancellation or lock status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Locked">
+        <xs:annotation>
+          <xs:documentation>Locked order.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Canceled">
+        <xs:annotation>
+          <xs:documentation>Canceled order.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Unlocked">
+        <xs:annotation>
+          <xs:documentation>Released order.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CancelStatus" nillable="true" type="tns:CancelStatus" />
+  <xs:simpleType name="DeliveryType">
+    <xs:annotation>
+      <xs:documentation>e-Commerce shipment type</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ShipByCentral">
+        <xs:annotation>
+          <xs:documentation>Delivery to the customer.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BookedInStore">
+        <xs:annotation>
+          <xs:documentation>Reservation in store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PickingUpInStore">
+        <xs:annotation>
+          <xs:documentation>Pick-up in store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PickupLocation">
+        <xs:annotation>
+          <xs:documentation>Pick-up point.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DeliveryType" nillable="true" type="tns:DeliveryType" />
+  <xs:simpleType name="FollowUpStatus">
+    <xs:annotation>
+      <xs:documentation>e-Commerce follow-up status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ToBeProcessed">
+        <xs:annotation>
+          <xs:documentation>To process.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Validated">
+        <xs:annotation>
+          <xs:documentation>Validated.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ToSupplyInCentral">
+        <xs:annotation>
+          <xs:documentation>To supply at Headquarters.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ToSupplyInStore">
+        <xs:annotation>
+          <xs:documentation>Requested at Headquarters.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ToBeDeliveredByStore">
+        <xs:annotation>
+          <xs:documentation>To deliver by the store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InPreparation">
+        <xs:annotation>
+          <xs:documentation>Preparation in progress.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Prepared">
+        <xs:annotation>
+          <xs:documentation>Prepared.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ShipByCentral">
+        <xs:annotation>
+          <xs:documentation>Sent.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ShipByLogistic">
+        <xs:annotation>
+          <xs:documentation>Sent by logistician.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ShipByStore">
+        <xs:annotation>
+          <xs:documentation>Sent from store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RequestedStoreBooking">
+        <xs:annotation>
+          <xs:documentation>Requested in store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BookedInStore">
+        <xs:annotation>
+          <xs:documentation>Reserved in store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PickedUpInStore">
+        <xs:annotation>
+          <xs:documentation>Picked up in store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Closed">
+        <xs:annotation>
+          <xs:documentation>Closed.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TransferedInStore">
+        <xs:annotation>
+          <xs:documentation>Transferred to store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AvailableInStore">
+        <xs:annotation>
+          <xs:documentation>Available in store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BookingRefused">
+        <xs:annotation>
+          <xs:documentation>Merchandise request denied.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Ordered">
+        <xs:annotation>
+          <xs:documentation>Ordered.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GoodTakenOut">
+        <xs:annotation>
+          <xs:documentation>Goods picked up.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RecievedByCustomer">
+        <xs:annotation>
+          <xs:documentation>Accepted by the customer.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Booked">
+        <xs:annotation>
+          <xs:documentation>Reserved.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AvailableInWarehouse">
+        <xs:annotation>
+          <xs:documentation>Available in warehouse.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="WaitingForReturn">
+        <xs:annotation>
+          <xs:documentation>Awaiting return.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AcceptedOrder">
+        <xs:annotation>
+          <xs:documentation>Order accepted.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="WaitingCommodity">
+        <xs:annotation>
+          <xs:documentation>Awaiting goods.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FollowUpStatus" nillable="true" type="tns:FollowUpStatus" />
+  <xs:simpleType name="GiftMessageType">
+    <xs:annotation>
+      <xs:documentation>Gift card type</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None">
+        <xs:annotation>
+          <xs:documentation>No card.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BlankCard">
+        <xs:annotation>
+          <xs:documentation>Blank card.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomCard">
+        <xs:annotation>
+          <xs:documentation>Customized card.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GiftMessageType" nillable="true" type="tns:GiftMessageType" />
+  <xs:complexType name="SaleDocumentIdentifier">
+    <xs:annotation>
+      <xs:documentation>Identification criteria of a sales document: provide either 'Key' or 'Reference' to find a document respectively via its key or reference</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="tns:SaleDocumentKey" />
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="tns:SaleDocumentReference">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SaleDocumentIdentifier" nillable="true" type="tns:SaleDocumentIdentifier" />
+  <xs:complexType name="SaleDocumentReference">
+    <xs:annotation>
+      <xs:documentation>Sales document reference</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Customer identifier - Related to column [TIERS.T_TIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Internal reference. - Related to column [PIECE.GP_REFINTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Type" type="tns:SaleDocumentType">
+        <xs:annotation>
+          <xs:documentation>Document type - Related to column [PIECE.GP_NATUREPIECEG].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SaleDocumentReference" nillable="true" type="tns:SaleDocumentReference" />
+  <xs:simpleType name="PaymentStatus">
+    <xs:annotation>
+      <xs:documentation>e-Commerce payment status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pending">
+        <xs:annotation>
+          <xs:documentation>Outstanding payment.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Totally">
+        <xs:annotation>
+          <xs:documentation>Paid.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Partially">
+        <xs:annotation>
+          <xs:documentation>Partially paid.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Debited">
+        <xs:annotation>
+          <xs:documentation>Payment debited.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PartiallyDebited">
+        <xs:annotation>
+          <xs:documentation>Partial payment debited.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CreditIssued">
+        <xs:annotation>
+          <xs:documentation>Generated credit note.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CreditRefused">
+        <xs:annotation>
+          <xs:documentation>Payment refused.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ToRedeem">
+        <xs:annotation>
+          <xs:documentation>To reimburse.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaymentCredited">
+        <xs:annotation>
+          <xs:documentation>Payment credited.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Refunded">
+        <xs:annotation>
+          <xs:documentation>Reimbursed.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PaymentStatus" nillable="true" type="tns:PaymentStatus" />
+  <xs:simpleType name="OrderReturnStatus">
+    <xs:annotation>
+      <xs:documentation>e-Commerce return status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NotReturned">
+        <xs:annotation>
+          <xs:documentation>Not returned.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Returned">
+        <xs:annotation>
+          <xs:documentation>Returned.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PartlyReturned">
+        <xs:annotation>
+          <xs:documentation>Partially returned.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReturnPlanned">
+        <xs:annotation>
+          <xs:documentation>Announced return.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReturnAccepted">
+        <xs:annotation>
+          <xs:documentation>Return accepted.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReturnRefused">
+        <xs:annotation>
+          <xs:documentation>Return refused.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReturnPartlyAccepted">
+        <xs:annotation>
+          <xs:documentation>Return partially accepted.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReturnValidated">
+        <xs:annotation>
+          <xs:documentation>Return validated.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReturnNotValidated">
+        <xs:annotation>
+          <xs:documentation>Return not validated.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReturnPartlyValidated">
+        <xs:annotation>
+          <xs:documentation>Return partially validated.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderReturnStatus" nillable="true" type="tns:OrderReturnStatus" />
+  <xs:simpleType name="ReturnType">
+    <xs:annotation>
+      <xs:documentation>Return type</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Exchange">
+        <xs:annotation>
+          <xs:documentation>Exchange.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Return">
+        <xs:annotation>
+          <xs:documentation>Return.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ReturnType" nillable="true" type="tns:ReturnType" />
+  <xs:simpleType name="ShippingStatus">
+    <xs:annotation>
+      <xs:documentation>e-Commerce shipment status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pending">
+        <xs:annotation>
+          <xs:documentation>Not sent.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Totally">
+        <xs:annotation>
+          <xs:documentation>Sent.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Partially">
+        <xs:annotation>
+          <xs:documentation>Sent partially.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InProgress">
+        <xs:annotation>
+          <xs:documentation>Shipment in progress.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ShippingStatus" nillable="true" type="tns:ShippingStatus" />
+  <xs:simpleType name="DocumentOrigin">
+    <xs:annotation>
+      <xs:documentation>Document origin type</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Shop">
+        <xs:annotation>
+          <xs:documentation>Store.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ECommerce">
+        <xs:annotation>
+          <xs:documentation>e-Commerce.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DocumentOrigin" nillable="true" type="tns:DocumentOrigin" />
+  <xs:simpleType name="DocumentStatus">
+    <xs:annotation>
+      <xs:documentation>Document status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Canceled">
+        <xs:annotation>
+          <xs:documentation>Canceled.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="None">
+        <xs:annotation>
+          <xs:documentation>None.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InProgress">
+        <xs:annotation>
+          <xs:documentation>In progress.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Delivered">
+        <xs:annotation>
+          <xs:documentation>Delivered.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NotRecovered">
+        <xs:annotation>
+          <xs:documentation>Not recovered.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Recovered">
+        <xs:annotation>
+          <xs:documentation>Recovered.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DocumentStatus" nillable="true" type="tns:DocumentStatus" />
+  <xs:complexType name="ArrayOfUserDefinedDate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDefinedDate" nillable="true" type="tns:UserDefinedDate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserDefinedDate" nillable="true" type="tns:ArrayOfUserDefinedDate" />
+  <xs:complexType name="UserDefinedDate">
+    <xs:annotation>
+      <xs:documentation>Data in user-defined date</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="tns:UserDefinedId">
+        <xs:annotation>
+          <xs:documentation>User-defined date ID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Value" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>User-defined date value. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserDefinedDate" nillable="true" type="tns:UserDefinedDate" />
+  <xs:simpleType name="UserDefinedId">
+    <xs:annotation>
+      <xs:documentation>User-defined data ID (Date/Table/Text/Boolean/Number)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Date/Table/Text/Boolean/Number) #1.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Date/Table/Text/Boolean/Number) #2.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Date/Table/Text/Boolean/Number) #3.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UserDefinedId" nillable="true" type="tns:UserDefinedId" />
+  <xs:complexType name="ArrayOfUserDefinedTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDefinedTable" nillable="true" type="tns:UserDefinedTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserDefinedTable" nillable="true" type="tns:ArrayOfUserDefinedTable" />
+  <xs:complexType name="UserDefinedTable">
+    <xs:annotation>
+      <xs:documentation>Data in user-defined table</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="tns:UserDefinedId">
+        <xs:annotation>
+          <xs:documentation>User-defined table ID.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>User-defined table value.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserDefinedTable" nillable="true" type="tns:UserDefinedTable" />
+  <xs:complexType name="ArrayOfUserField">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserField" nillable="true" type="tns:UserField" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserField" nillable="true" type="tns:ArrayOfUserField" />
+  <xs:complexType name="UserField">
+    <xs:annotation>
+      <xs:documentation>Data in a user field. Specify the data value in the appropriate xxValue property (TextValue, NumberValue...), then specify in the ValueType property, the xxValue property type (TextValueKind, NumberValueKind...).</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BooleanValue" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Value of type Boolean defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DateValue" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Value of type date defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Id" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>User field identifier - Related to column [MCHPSUTILISAT.MUD_IDCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ListElementValue" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Value of type list element defined by the user  - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NumberValue" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Value of type number defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TextValue" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Value of type text defined by the user - Related to column [MCHPSUTILISATDATA.MUD_VALCHAMP].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ValueType" type="tns:UserFieldKind">
+        <xs:annotation>
+          <xs:documentation>Data type of user field - Related to column [MCHPSUTILISAT.MUC_TYPESAISIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserField" nillable="true" type="tns:UserField" />
+  <xs:simpleType name="UserFieldKind">
+    <xs:annotation>
+      <xs:documentation>User-defined field type</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BooleanValueKind">
+        <xs:annotation>
+          <xs:documentation>Boolean.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TextValueKind">
+        <xs:annotation>
+          <xs:documentation>String.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DateValueKind">
+        <xs:annotation>
+          <xs:documentation>Date.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ListElementValueKind">
+        <xs:annotation>
+          <xs:documentation>Selection list.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NumberValueKind">
+        <xs:annotation>
+          <xs:documentation>Numerical.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UserFieldKind" nillable="true" type="tns:UserFieldKind" />
+  <xs:element name="GetByKey">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets a sales document based on its unique key.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="searchRequest" nillable="true" type="tns:GetByKey_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GetByKey_Request">
+    <xs:annotation>
+      <xs:documentation>Object used to convey data to get a sales document</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="tns:SaleDocumentKey">
+        <xs:annotation>
+          <xs:documentation>Document key.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetByKey_Request" nillable="true" type="tns:GetByKey_Request" />
+  <xs:element name="GetByKeyResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets a sales document based on its unique key.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetByKeyResult" nillable="true" type="tns:Get_Reply">
+          <xs:annotation>
+            <xs:documentation>Returns the sales document.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Get_Reply">
+    <xs:annotation>
+      <xs:documentation>Sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DeliveryAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Delivery address.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Header" nillable="true" type="tns:Get_Header" />
+      <xs:element minOccurs="0" name="InvoicingAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Billing address.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Lines" nillable="true" type="tns:ArrayOfGet_Line">
+        <xs:annotation>
+          <xs:documentation>Document line list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Payments" nillable="true" type="tns:ArrayOfGet_Payment">
+        <xs:annotation>
+          <xs:documentation>Document payment list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShippingTaxes" nillable="true" type="tns:ArrayOfGet_ShippingTax">
+        <xs:annotation>
+          <xs:documentation>Document shipping fees list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Get_Reply" nillable="true" type="tns:Get_Reply" />
+  <xs:complexType name="Address">
+    <xs:annotation>
+      <xs:documentation>Data of the delivery or billing addresses of a document.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>City of the address. - Related to column [PIECEADRESSE.GPA_VILLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ContactNumber" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/03 - V1201] [Optional] - Contact number. 0 =no contact. - Related to column [PIECEADRESSE.GPA_NUMEROCONTACT ].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CountryId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Country identifier. - Related to column [PIECEADRESSE.GPA_PAYS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CountryIdType" type="tns:CountryIdType">
+        <xs:annotation>
+          <xs:documentation>??? Identifiant du type du pays. ??? - Related to column [PIECEADRESSE.GPA_PAYS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Company name (continued) or individual's first name. - Related to column [PIECEADRESSE.GPA_LIBELLE2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Company name or individual's first name. - Related to column [PIECEADRESSE.GPA_LIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Line1" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>1st address line. - Related to column [PIECEADRESSE.GPA_ADRESSE1].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Line2" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>2nd address line. - Related to column [PIECEADRESSE.GPA_ADRESSE2].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Line3" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>3rd address line. - Related to column [PIECEADRESSE.GPA_ADRESSE3].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Phone defined for this address. - Related to column [PIECEADRESSE.GPA_TELEPHONE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Region - Related to column [PIECEADRESSE.GPA_REGION].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TitleId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Legal form or individual's title. - Related to column [PIECEADRESSE.GPA_JURIDIQUE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Address zip code. - Related to column [PIECEADRESSE.GPA_CODEPOSTAL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Address" nillable="true" type="tns:Address" />
+  <xs:simpleType name="CountryIdType">
+    <xs:annotation>
+      <xs:documentation>Country code type identifier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Internal">
+        <xs:annotation>
+          <xs:documentation>Internal code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ISO2">
+        <xs:annotation>
+          <xs:documentation>ISO2 code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ISO3">
+        <xs:annotation>
+          <xs:documentation>ISO3 code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ISO3Numeric">
+        <xs:annotation>
+          <xs:documentation>ISO3 numerical code.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CountryIdType" nillable="true" type="tns:CountryIdType" />
+  <xs:complexType name="ArrayOfGet_Line">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Get_Line" nillable="true" type="tns:Get_Line" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGet_Line" nillable="true" type="tns:ArrayOfGet_Line" />
+  <xs:complexType name="Get_Line">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CatalogReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/01 - V1400] [Optional] - Catalog reference - Related to column [LIGNESERIE.GLS_IDSERIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Comment on document line that can be in plain text or in RTF format - Related to column [LIGNE.GL_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ComplementaryDescription" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Complementary description for the line - Related to column [LIGNE.GL_LIBCOMPL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Line delivery date - Related to column [LIGNE.GL_DATELIVRAISON].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DiscountTypeId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Discount type ID  - Related to column [LIGNE.GL_TYPEREMISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/02 - V1105] [Optional] - Line external reference. - Related to column [LIGNE.GL_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InitialDeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Initial line delivery date - Related to column [LIGNE.GL_DATELIVINITIALE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ItemCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Item code. - Related to column [LIGNE.GL_CODEARTICLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ItemId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Item identifier. - Related to column [LIGNE.GL_ARTICLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ItemReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Item reference. - Related to column [LIGNE.GL_REFARTBARRE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Label" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Line description. - Related to column [LIGNE.GL_LIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MovementReasonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/02 - V1105] [Optional] - Identifier of the movement reason associated with the line. - Related to column [LIGNE.GL_MOTIFMVT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OmniChannel" nillable="true" type="tns:GetOmniChannelLine">
+        <xs:annotation>
+          <xs:documentation>??? Omni-canal. ???.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Origin" type="tns:DocumentOrigin">
+        <xs:annotation>
+          <xs:documentation>Origin of the document line. - Related to column [LIGNE.GL_TYPEPROVENANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PackageReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Package reference - Related to column [LIGNE.GL_REFCOLIS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Quantity. - Related to column [LIGNE.GL_QTEFACT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Rank" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+          <xs:documentation>[Added 2016/05 - V1300] [Optional] - Order number of the line - Related to column [LIGNE.GL_NUMORDRE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID for the line. - Related to column [LIGNE.GL_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SerialNumberId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/12 - V1300] [Optional] - Item serial number - Related to column [LIGNESERIE.GLS_IDSERIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxExcludedNetUnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Net tax-excl. unit price. - Related to column [LIGNE.GL_PUHTNET].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxExcludedUnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Tax-excl. unit price. - Related to column [LIGNE.GL_PUHT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxIncludedNetUnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Net tax-incl. unit price. - Related to column [LIGNE.GL_PUTTCNET].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxIncludedUnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Tax-incl. unit price. - Related to column [LIGNE.GL_PUTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WarehouseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/02 - V1201] - Warehouse identifier for the store of the document line - Related to column [LIGNE.GL_DEPOT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Get_Line" nillable="true" type="tns:Get_Line" />
+  <xs:complexType name="GetOmniChannelLine">
+    <xs:annotation>
+      <xs:documentation>Omni-Channel data</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FollowUpStatus" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Line follow-up status.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WarehouseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Line warehouse.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetOmniChannelLine" nillable="true" type="tns:GetOmniChannelLine" />
+  <xs:complexType name="ArrayOfGet_Payment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Get_Payment" nillable="true" type="tns:Get_Payment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGet_Payment" nillable="true" type="tns:ArrayOfGet_Payment" />
+  <xs:complexType name="Get_Payment">
+    <xs:annotation>
+      <xs:documentation>Payment.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Payment amount (in payment currency). - Related to column [PIEDECHE.GPE_MONTANTENCAIS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CashAmount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Amount paid in this currency. - Related to column [PIEDECHE.GPE_MONTANTECHE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Payment method code. - Related to column [PIEDECHE.GPE_MODEPAIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CreditCard" nillable="true" type="tns:CreditCard" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Currency ID. - Related to column [PIEDECHE.GPE_DEVISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencySymbol" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Obsolete].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DueDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Installment due date. - Related to column [PIEDECHE.GPE_DATEECHE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IsReceivedPayment" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/09 - V1105] - In the case of a non e-Commerce order, this specifies that the payment is a collected payment. In the other cases, the default value is false. - Related to column [PIEDECHE.GPE_PERCU].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Label" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Currency description. - Related to column [PIEDECHE.GPE_CBLIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Get_Payment" nillable="true" type="tns:Get_Payment" />
+  <xs:complexType name="CreditCard">
+    <xs:annotation>
+      <xs:documentation>Credit card information.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AuthorizationNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Authorization number. - Related to column [PIEDECHE.GPE_CBNUMAUTOR].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TransactionNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Transaction number. - Related to column [PIEDECHE.GPE_CBNUMTRANSAC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreditCard" nillable="true" type="tns:CreditCard" />
+  <xs:complexType name="ArrayOfGet_ShippingTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Get_ShippingTax" nillable="true" type="tns:Get_ShippingTax" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGet_ShippingTax" nillable="true" type="tns:ArrayOfGet_ShippingTax" />
+  <xs:complexType name="Get_ShippingTax">
+    <xs:annotation>
+      <xs:documentation>Shipping fees.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ShippingTaxCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Shipping fee code. - Related to column [PIEDPORT.GPT_CODEPORT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxExcludedAmount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Tax excl. shipping fee amount. - Related to column [PIEDPORT.GPT_TOTALHT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxIncludedAmount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Tax incl. shipping fee amount. - Related to column [PIEDPORT.GPT_TOTALTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Get_ShippingTax" nillable="true" type="tns:Get_ShippingTax" />
+  <xs:element name="GetByReference">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets a sales document based its customer reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="searchRequest" nillable="true" type="tns:GetByReference_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GetByReference_Request">
+    <xs:annotation>
+      <xs:documentation>Object used to convey data to get a sales document</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="tns:SaleDocumentReference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetByReference_Request" nillable="true" type="tns:GetByReference_Request" />
+  <xs:element name="GetByReferenceResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets a sales document based its customer reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetByReferenceResult" nillable="true" type="tns:Get_Reply">
+          <xs:annotation>
+            <xs:documentation />
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Create">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Enables the creation of a sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="createRequest" nillable="true" type="tns:Create_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Create_Request">
+    <xs:annotation>
+      <xs:documentation>Sales document to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DeliveryAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Delivery address of the sales document.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Header" nillable="true" type="tns:Create_Header" />
+      <xs:element minOccurs="0" name="InvoicingAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Billing address of the sales document.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Lines" nillable="true" type="tns:ArrayOfCreate_Line">
+        <xs:annotation>
+          <xs:documentation>Document line list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Payments" nillable="true" type="tns:ArrayOfCreate_Payment">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Document payment list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShippingTaxes" nillable="true" type="tns:ArrayOfCreate_ShippingTax">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Document shipping fees list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Create_Request" nillable="true" type="tns:Create_Request" />
+  <xs:complexType name="Create_Header">
+    <xs:annotation>
+      <xs:documentation>Document header.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Active document. - Related to column [PIECE.GP_VIVANTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Comment on document header that can be in plain text or in RTF format - Related to column [PIECE.GP_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Identifier of the document currency. If the currency is not specified, the default value is the identifier of the folder currency. - Related to column [DEVISE.D_DEVISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ID of the customer associated with the document. - Related to column [TIERS.T_TIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Document date. - Related to column [PIECE.GP_DATEPIECE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Deposit" nillable="true" type="tns:SaleDocumentLineIdentifier">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1201] [Optional] - Original document line of the deposit payment in the sales receipt - Default value: nil.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>External reference. - Related to column [PIECE.GP_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReferenceDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>External referencing date. - Related to column [PIECE.GP_DATEREFEXTERNE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FollowedReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Follow-up reference. - Related to column [PIECE.GP_REFSUIVI].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Internal reference. - Related to column [PIECE.GP_REFINTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LinesUnmodifiable" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Specifies if the lines are non modifiable. - Default value: False - Related to column [PIECE.GP_NONMODIFIABLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OmniChannel" nillable="true" type="tns:OmniChannel">
+        <xs:annotation>
+          <xs:documentation>Omni-Channel information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Origin" type="tns:DocumentOrigin">
+        <xs:annotation>
+          <xs:documentation>Origin. - Related to column [PIECE.GP_TYPEPROVENANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID. - Related to column [PIECE.GP_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StoreId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Document store. - Related to column [ETABLISSEMENT.ET_ETABLISSEMENT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxExcluded" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Tax-exclusive document. - Related to column [PIECE.GP_FACTUREHT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Type" type="tns:SaleDocumentType">
+        <xs:annotation>
+          <xs:documentation>Document type. Value "Receipt" is depreciated, its only authorized usage is the creation of a deposit payment receipt. - Related to column [PIECE.GP_NATUREPIECEG].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedDates" nillable="true" type="tns:ArrayOfUserDefinedDate">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined dates. - Related to column [PIECE.GP_DATELIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTableCustomers" nillable="true" type="tns:ArrayOfUserDefinedTableCustomer">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined Third-party tables. - Related to column [PIECE.GP_LIBRETIERSx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTables" nillable="true" type="tns:ArrayOfUserDefinedTable">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined tables. - Related to column [PIECE.GP_LIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserFields" nillable="true" type="tns:ArrayOfUserField">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Document user fields.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WarehouseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/02 - V1201] [Optional] - Warehouse identifier of the document store - Related to column [DEPOTS.GDE_DEPOT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Create_Header" nillable="true" type="tns:Create_Header" />
+  <xs:complexType name="SaleDocumentLineIdentifier">
+    <xs:annotation>
+      <xs:documentation>Identification criteria of a sales document line: provide either 'Key' or 'Reference' to find a document respectively via its key or reference</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DocumentId" nillable="true" type="tns:SaleDocumentIdentifier">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LineId" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Document line number - Related to column [LIGNE.GL_NUMORDRE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SaleDocumentLineIdentifier" nillable="true" type="tns:SaleDocumentLineIdentifier" />
+  <xs:complexType name="ArrayOfUserDefinedTableCustomer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDefinedTableCustomer" nillable="true" type="tns:UserDefinedTableCustomer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserDefinedTableCustomer" nillable="true" type="tns:ArrayOfUserDefinedTableCustomer" />
+  <xs:complexType name="UserDefinedTableCustomer">
+    <xs:annotation>
+      <xs:documentation>Data in user-defined Third-party table</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="tns:UserDefinedTableCustomerId">
+        <xs:annotation>
+          <xs:documentation>Identifier the user-defined Third-party table.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Value of the user-defined Third-party table.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserDefinedTableCustomer" nillable="true" type="tns:UserDefinedTableCustomer" />
+  <xs:simpleType name="UserDefinedTableCustomerId">
+    <xs:annotation>
+      <xs:documentation>User-defined data identifier (Third-party table)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #1.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #2.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #3.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #4.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #5.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="6">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #6.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="7">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #7.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="8">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #8.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="9">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #9.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="10">
+        <xs:annotation>
+          <xs:documentation>User-defined data (Third-party table) #10.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UserDefinedTableCustomerId" nillable="true" type="tns:UserDefinedTableCustomerId" />
+  <xs:complexType name="ArrayOfCreate_Line">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Create_Line" nillable="true" type="tns:Create_Line" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCreate_Line" nillable="true" type="tns:ArrayOfCreate_Line" />
+  <xs:complexType name="Create_Line">
+    <xs:annotation>
+      <xs:documentation>Document line to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/03 - V1105] [Optional] - Gift card ID. Associated with a financial item of type acquisition of gift card, this enables the creation of the gift card. This is valid only for documents of type e-Commerce customer order.  - Related to column [OPERCAISSE.GOC_NUMBON].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CatalogReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/01 - V1400] [Optional] - Catalog reference - Related to column [LIGNE.GL_REFCATALOGUE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Comment on document line that can be in plain text or in RTF format - Related to column [LIGNE.GL_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ComplementaryDescription" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Complementary description for the line - Related to column [LIGNE.GL_LIBCOMPL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Line delivery date - Related to column [LIGNE.GL_DATELIVRAISON].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DiscountTypeId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Discount type identifier. - Related to column [LIGNE.GL_TYPEREMISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/02 - V1105] [Optional] - Line external reference. - Related to column [LIGNE.GL_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InitialDeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Initial line delivery date - Related to column [LIGNE.GL_DATELIVINITIALE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ItemIdentifier" nillable="true" type="tns:ItemIdentifier" />
+      <xs:element minOccurs="0" name="Label" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Line description. - Related to column [LIGNE.GL_LIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MovementReasonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/02 - V1105] [Optional] - Identifier of the movement reason associated with the line. - Related to column [LIGNE.GL_MOTIFMVT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NetUnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Net unit price. Uses [UnitPrice] to calculate the tax-inclusive or tax-exclusive line discount, based on the value of [TaxExcluded] - Related to column [LIGNE.GL_PUHTNET / LIGNE.GL_PUTTCNET].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OmniChannel" nillable="true" type="tns:OmniChannelLine" />
+      <xs:element minOccurs="0" name="Origin" type="tns:DocumentOrigin">
+        <xs:annotation>
+          <xs:documentation>Origin. - Related to column [LIGNE.GL_TYPEPROVENANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PackageReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Package reference - Related to column [LIGNE.GL_REFCOLIS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Quantity. - Related to column [LIGNE.GL_QTEFACT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID for the line. - Related to column [LIGNE.GL_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SerialNumberId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/12 - V1300] [Optional] - Item serial number - Related to column [LIGNESERIE.GLS_IDSERIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Taxes" nillable="true" type="tns:ArrayOfCreate_Tax">
+        <xs:annotation>
+          <xs:documentation>[Optional] - List of taxes associated with the line (max. 5 taxes.) The order in the collection determines how the document line is allocated to the 5 tax fields of the document.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Unit price. Uses the NetUnitPrice property to calculate the tax-inclusive or tax-exclusive line discount, based on the value of [TaxExcluded] - Related to column [LIGNE.GL_PUHT / LIGNE.GL_PUTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Create_Line" nillable="true" type="tns:Create_Line" />
+  <xs:complexType name="ItemIdentifier">
+    <xs:annotation>
+      <xs:documentation>Item identification criteria: provide either its 'ID' or 'Reference' to find an item respectively via its identifier or reference.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Item identifier. - Related to column [ARTICLE.GA_ARTICLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Item reference - uses the item search priorities.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ItemIdentifier" nillable="true" type="tns:ItemIdentifier" />
+  <xs:complexType name="OmniChannelLine">
+    <xs:annotation>
+      <xs:documentation>[Optional] - Omni-Channel data for line</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WarehouseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/05 - V1300] [Optional] - Warehouse identifier for depleting goods - Related to column [MLIGNEECO.MEK_DEPOT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OmniChannelLine" nillable="true" type="tns:OmniChannelLine" />
+  <xs:complexType name="ArrayOfCreate_Tax">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Create_Tax" nillable="true" type="tns:Create_Tax" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCreate_Tax" nillable="true" type="tns:ArrayOfCreate_Tax" />
+  <xs:complexType name="Create_Tax">
+    <xs:annotation>
+      <xs:documentation>Tax.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Tax amount. - Related to column [LIGNE.GL_TOTALTAXEDEVx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FamilyId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Tax category ID. - Related to column [LIGNE.GL_FAMILLETAXEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Create_Tax" nillable="true" type="tns:Create_Tax" />
+  <xs:complexType name="ArrayOfCreate_Payment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Create_Payment" nillable="true" type="tns:Create_Payment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCreate_Payment" nillable="true" type="tns:ArrayOfCreate_Payment" />
+  <xs:complexType name="Create_Payment">
+    <xs:annotation>
+      <xs:documentation>Payment of the document to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Amount paid in document currency. - Related to column [PIEDECHE.GPE_MONTANTDEV].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/04 - V1105] [Optional] - Gift card identifier. Must be associated with a payment method of type gift card. Is valid only for documents of type e-Commerce customer order.  - Related to column [OPERCAISSE.GOC_NUMBON].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CreditCard" nillable="true" type="tns:CreditCard">
+        <xs:annotation>
+          <xs:documentation>[Optional].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Currency ID. - Related to column [DEVISE.D_DEVISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DueDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Installment due date. - Related to column [PIEDECHE.GPE_DATEECHE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Id" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Payment ID. - Related to column [PIEDECHE.GPE_NUMECHE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IsReceivedPayment" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>In the case of a non e-Commerce order, this specifies that the payment is a collected payment. In the other cases, the default value is false. - Related to column [PIEDECHE.GPE_PERCU].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MethodId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Payment method ID. - Related to column [MODEPAIE.MP_MODEPAIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RegisterOperationForReceivedPayment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Optional] - In the case of a collected payment, allows you to specify the register operation associated with the payment.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Create_Payment" nillable="true" type="tns:Create_Payment" />
+  <xs:complexType name="ArrayOfCreate_ShippingTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Create_ShippingTax" nillable="true" type="tns:Create_ShippingTax" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCreate_ShippingTax" nillable="true" type="tns:ArrayOfCreate_ShippingTax" />
+  <xs:complexType name="Create_ShippingTax">
+    <xs:annotation>
+      <xs:documentation>Shipping fees to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Shipping fees amount. - Related to column [PIEDPORT.GPT_TOTALHT / PIEDPORT.GPT_TOTALTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Shipping fees ID. - Related to column [PIEDPORT.GPT_CODEPORT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Create_ShippingTax" nillable="true" type="tns:Create_ShippingTax" />
+  <xs:element name="CreateResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Enables the creation of a sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateResult" nillable="true" type="tns:Create_Reply" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Create_Reply">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="tns:SaleDocumentKey" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Create_Reply" nillable="true" type="tns:Create_Reply" />
+  <xs:element name="Cancel">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1105] - Enables the cancellation of a sales document, without having blocked it before.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cancelRequest" nillable="true" type="tns:Cancel_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Cancel_Request">
+    <xs:annotation>
+      <xs:documentation>Sales document to cancel</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="tns:SaleDocumentIdentifier" />
+      <xs:element minOccurs="0" name="ReasonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Identifier of cancellation reason - Related to column [MPIECEECO.MEJ_MOTIFANNUL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Cancel_Request" nillable="true" type="tns:Cancel_Request" />
+  <xs:element name="CancelResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1105] - Enables the cancellation of a sales document, without having blocked it before.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Close">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/07 - V1105] - ??? Permet de solder une commande standard et les documents eCommerce. ???</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="closeRequest" nillable="true" type="tns:Close_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Close_Request">
+    <xs:annotation>
+      <xs:documentation>??? Document de vente à solder. Commande standard et documents eCommerce. ???</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="tns:CloseDocumentIdentifier" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Close_Request" nillable="true" type="tns:Close_Request" />
+  <xs:complexType name="CloseDocumentIdentifier">
+    <xs:annotation>
+      <xs:documentation>??? Critères d'identification d'un document à solder : fournir soit 'Key' soit 'Reference' pour rechercher un document respectivement par sa clef ou bien par sa référence ???</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="tns:CloseDocumentKey" />
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="tns:CloseDocumentReference">
+        <xs:annotation>
+          <xs:documentation>[Added 2019/08].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseDocumentIdentifier" nillable="true" type="tns:CloseDocumentIdentifier" />
+  <xs:complexType name="CloseDocumentKey">
+    <xs:annotation>
+      <xs:documentation>??? Clé identifiant le document à solder. ???</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Number" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>??? Numéro ??? - Related to column [PIECE.GP_NUMERO].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Stump" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>??? Souche ??? - Related to column [PIECE.GP_SOUCHE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Type" type="tns:CloseDocumentType">
+        <xs:annotation>
+          <xs:documentation>??? Type de document ??? - Related to column [PIECE.GP_NATUREPIECEG].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseDocumentKey" nillable="true" type="tns:CloseDocumentKey" />
+  <xs:simpleType name="CloseDocumentType">
+    <xs:annotation>
+      <xs:documentation>Type de document à solder</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CustomerOrder">
+        <xs:annotation>
+          <xs:documentation>Commande client.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AvailableOrder">
+        <xs:annotation>
+          <xs:documentation>Commande disponible.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TransferRequest">
+        <xs:annotation>
+          <xs:documentation>Demande de transfert.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CustomersReservation">
+        <xs:annotation>
+          <xs:documentation>Réservations clients.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CloseDocumentType" nillable="true" type="tns:CloseDocumentType" />
+  <xs:complexType name="CloseDocumentReference">
+    <xs:annotation>
+      <xs:documentation>Sales document reference</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>??? Identifiant du client ??? - Related to column [TIERS.T_TIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>??? Référence interne. ??? - Related to column [PIECE.GP_REFINTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Type" type="tns:CloseDocumentType">
+        <xs:annotation>
+          <xs:documentation>Document type - Related to column [PIECE.GP_NATUREPIECEG].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseDocumentReference" nillable="true" type="tns:CloseDocumentReference" />
+  <xs:element name="CloseResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/07 - V1105] - ??? Permet de solder une commande standard et les documents eCommerce. ???</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Update">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Enables the modification of a sales document. Cancels and replaces the original document, thus keeping its identifiers. The document must not have any link with other documents. To update existent payment received, use the UpdatePayments method.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="updateRequest" nillable="true" type="tns:Update_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Update_Request">
+    <xs:annotation>
+      <xs:documentation>Sales document to modify.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DeliveryAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Sales document delivery address.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Header" nillable="true" type="tns:Update_Header" />
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="tns:SaleDocumentIdentifier" />
+      <xs:element minOccurs="0" name="InvoicingAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Sales document billing address.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Lines" nillable="true" type="tns:ArrayOfUpdate_Line">
+        <xs:annotation>
+          <xs:documentation>Sales document line list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Payments" nillable="true" type="tns:ArrayOfUpdate_Payment">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Sales document payment list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ShippingTaxes" nillable="true" type="tns:ArrayOfUpdate_ShippingTax">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Sales document shipping fees.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Update_Request" nillable="true" type="tns:Update_Request" />
+  <xs:complexType name="Update_Header">
+    <xs:annotation>
+      <xs:documentation>Sales document header.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Active document. - Related to column [PIECE.GP_VIVANTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Comment on document header that can be in plain text or in RTF format - Related to column [PIECE.GP_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Document date. - Related to column [PIECE.GP_DATEPIECE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>External reference. - Related to column [PIECE.GP_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReferenceDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>External referencing date. - Related to column [PIECE.GP_DATEREFEXTERNE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FollowedReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Follow-up reference. - Related to column [PIECE.GP_REFSUIVI].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LinesUnmodifiable" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Specifies if the lines are non modifiable. - Default value: False - Related to column [PIECE.GP_NONMODIFIABLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OmniChannel" nillable="true" type="tns:OmniChannel">
+        <xs:annotation>
+          <xs:documentation>Omni-Channel information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Origin" type="tns:DocumentOrigin">
+        <xs:annotation>
+          <xs:documentation>Origin. - Related to column [PIECE.GP_TYPEPROVENANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID. - Related to column [PIECE.GP_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxExcluded" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Tax-exclusive document. - Related to column [PIECE.GP_FACTUREHT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedDates" nillable="true" type="tns:ArrayOfUserDefinedDate">
+        <xs:annotation>
+          <xs:documentation>User-defined dates. - Related to column [PIECE.GP_DATELIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTables" nillable="true" type="tns:ArrayOfUserDefinedTable">
+        <xs:annotation>
+          <xs:documentation>User-defined tables. - Related to column [PIECE.GP_LIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserFields" nillable="true" type="tns:ArrayOfUserField">
+        <xs:annotation>
+          <xs:documentation>Document user fields.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Update_Header" nillable="true" type="tns:Update_Header" />
+  <xs:complexType name="ArrayOfUpdate_Line">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Update_Line" nillable="true" type="tns:Update_Line" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUpdate_Line" nillable="true" type="tns:ArrayOfUpdate_Line" />
+  <xs:complexType name="Update_Line">
+    <xs:annotation>
+      <xs:documentation>Document line to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CatalogReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/01 - V1400] [Optional] - Catalog reference - Related to column [LIGNE.GL_REFCATALOGUE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Comment on document line that can be in plain text or in RTF format - Related to column [LIGNE.GL_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ComplementaryDescription" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Complementary description for the line - Related to column [LIGNE.GL_LIBCOMPL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Line delivery date - Related to column [LIGNE.GL_DATELIVRAISON].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DiscountTypeId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Discount type identifier. - Related to column [LIGNE.GL_TYPEREMISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InitialDeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Initial line delivery date - Related to column [LIGNE.GL_DATELIVINITIALE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ItemIdentifier" nillable="true" type="tns:ItemIdentifier" />
+      <xs:element minOccurs="0" name="Label" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Line description. - Related to column [LIGNE.GL_LIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NetUnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Net unit price. Uses [UnitPrice] to calculate the tax-inclusive or tax-exclusive line discount, based on the value of [TaxExcluded] - Related to column [LIGNE.GL_PUHTNET / LIGNE.GL_PUTTCNET].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OmniChannel" nillable="true" type="tns:OmniChannelLine" />
+      <xs:element minOccurs="0" name="Origin" type="tns:DocumentOrigin">
+        <xs:annotation>
+          <xs:documentation>Origin. - Related to column [LIGNE.GL_TYPEPROVENANCE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PackageReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Package reference - Related to column [LIGNE.GL_REFCOLIS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Quantity. - Related to column [LIGNE.GL_QTEFACT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID for the line. - Related to column [LIGNE.GL_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SerialNumberId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/12 - V1300] [Optional] - Item serial number - Related to column [LIGNESERIE.GLS_IDSERIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Taxes" nillable="true" type="tns:ArrayOfUpdate_Tax">
+        <xs:annotation>
+          <xs:documentation>[Optional] - List of taxes associated with the line (max. 5 taxes.) The order in the collection determines how the document line is allocated to the 5 tax fields of the document.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Unit price. Uses the NetUnitPrice property to calculate the tax-inclusive or tax-exclusive line discount, based on the value of [TaxExcluded] - Related to column [LIGNE.GL_PUHT / LIGNE.GL_PUTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Update_Line" nillable="true" type="tns:Update_Line" />
+  <xs:complexType name="ArrayOfUpdate_Tax">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Update_Tax" nillable="true" type="tns:Update_Tax" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUpdate_Tax" nillable="true" type="tns:ArrayOfUpdate_Tax" />
+  <xs:complexType name="Update_Tax">
+    <xs:annotation>
+      <xs:documentation>Tax.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Tax amount. - Related to column [LIGNE.GL_TOTALTAXEDEVx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FamilyId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Tax category ID. - Related to column [LIGNE.GL_FAMILLETAXEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Update_Tax" nillable="true" type="tns:Update_Tax" />
+  <xs:complexType name="ArrayOfUpdate_Payment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Update_Payment" nillable="true" type="tns:Update_Payment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUpdate_Payment" nillable="true" type="tns:ArrayOfUpdate_Payment" />
+  <xs:complexType name="Update_Payment">
+    <xs:annotation>
+      <xs:documentation>Payment of the document to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Amount paid in document currency. - Related to column [PIEDECHE.GPE_MONTANTDEV].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="BonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/04 - V1105] [Optional] - Gift card identifier. Must be associated with a payment method of type gift card. Is valid only for documents of type e-Commerce customer order.  - Related to column [OPERCAISSE.GOC_NUMBON].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CreditCard" nillable="true" type="tns:CreditCard">
+        <xs:annotation>
+          <xs:documentation>[Optional].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Currency ID. - Related to column [DEVISE.D_DEVISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DueDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Installment due date. - Related to column [PIEDECHE.GPE_DATEECHE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Id" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Payment ID. - Related to column [PIEDECHE.GPE_NUMECHE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IsReceivedPayment" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>In the case of a non e-Commerce order, this specifies that the payment is a collected payment. In the other cases, the default value is false. - Related to column [PIEDECHE.GPE_PERCU].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MethodId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Payment method ID. - Related to column [MODEPAIE.MP_MODEPAIE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RegisterOperationForReceivedPayment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Optional] - In the case of a collected payment, allows you to specify the register operation associated with the payment.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Update_Payment" nillable="true" type="tns:Update_Payment" />
+  <xs:complexType name="ArrayOfUpdate_ShippingTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Update_ShippingTax" nillable="true" type="tns:Update_ShippingTax" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUpdate_ShippingTax" nillable="true" type="tns:ArrayOfUpdate_ShippingTax" />
+  <xs:complexType name="Update_ShippingTax">
+    <xs:annotation>
+      <xs:documentation>Shipping fees to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Shipping fees amount. - Related to column [PIEDPORT.GPT_TOTALHT / PIEDPORT.GPT_TOTALTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Shipping fees ID. - Related to column [PIEDPORT.GPT_CODEPORT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Update_ShippingTax" nillable="true" type="tns:Update_ShippingTax" />
+  <xs:element name="UpdateResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Enables the modification of a sales document. Cancels and replaces the original document, thus keeping its identifiers. The document must not have any link with other documents. To update existent payment received, use the UpdatePayments method.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePayments">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1105] - Enables the modification of payments for a sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="updatePaymentsRequest" nillable="true" type="tns:UpdatePayments_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="UpdatePayments_Request">
+    <xs:annotation>
+      <xs:documentation>List of payments to modify</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="tns:SaleDocumentIdentifier" />
+      <xs:element minOccurs="0" name="Payments" nillable="true" type="tns:ArrayOfUpdate_Payment">
+        <xs:annotation>
+          <xs:documentation>List of payments.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UpdatePayments_Request" nillable="true" type="tns:UpdatePayments_Request" />
+  <xs:element name="UpdatePaymentsResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1105] - Enables the modification of payments for a sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateHeader">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Enables the modification of header elements in a sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="updateHeaderRequest" nillable="true" type="tns:UpdateHeader_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="UpdateHeader_Request">
+    <xs:annotation>
+      <xs:documentation>Sales document header.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/01 - V1201] [Optional] - Comment on document header that can be in plain text or in RTF format - Related to column [PIECE.GP_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Delivery address of the sales document.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>External reference. - Related to column [PIECE.GP_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReferenceDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>External reference date. - Related to column [PIECE.GP_DATEREFEXTERNE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FollowedReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Follow-up reference. - Related to column [PIECE.GP_REFSUIVI].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="tns:SaleDocumentIdentifier" />
+      <xs:element minOccurs="0" name="InvoicingAddress" nillable="true" type="tns:Address">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Billing address of the sales document.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LinesUnmodifiable" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>[Added 2013/08 - V1105] [Optional] - Specifies if the lines are non modifiable. - Default value: False.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OmniChannel" nillable="true" type="tns:OmniChannel">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Omni-Channel information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID. - Related to column [PIECE.GP_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedDates" nillable="true" type="tns:ArrayOfUserDefinedDate">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined dates. - Related to column [PIECE.GP_DATELIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTables" nillable="true" type="tns:ArrayOfUserDefinedTable">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined tables. - Related to column [PIECE.GP_LIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserFields" nillable="true" type="tns:ArrayOfUserField">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User fields.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UpdateHeader_Request" nillable="true" type="tns:UpdateHeader_Request" />
+  <xs:element name="UpdateHeaderResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Enables the modification of header elements in a sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetByExternalReference">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets a list of sales documents based on an external reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="searchRequest" nillable="true" type="tns:GetByExternalReference_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GetByExternalReference_Request">
+    <xs:annotation>
+      <xs:documentation>Object used to convey data to get a list of sales documents</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>External reference. - Related to column [PIECE.GP_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Type" type="tns:SaleDocumentType">
+        <xs:annotation>
+          <xs:documentation>Document type. - Related to column [PIECE.GP_NATUREPIECEG].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetByExternalReference_Request" nillable="true" type="tns:GetByExternalReference_Request" />
+  <xs:element name="GetByExternalReferenceResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/04 - V1102] - Gets a list of sales documents based on an external reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetByExternalReferenceResult" nillable="true" type="tns:GetByExternalReference_Reply">
+          <xs:annotation>
+            <xs:documentation />
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="GetByExternalReference_Reply">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Get_Replies" nillable="true" type="tns:ArrayOfGet_Reply" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetByExternalReference_Reply" nillable="true" type="tns:GetByExternalReference_Reply" />
+  <xs:complexType name="ArrayOfGet_Reply">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Get_Reply" nillable="true" type="tns:Get_Reply" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGet_Reply" nillable="true" type="tns:ArrayOfGet_Reply" />
+  <xs:element name="Lock">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/08 - V1105] - Locks an e-Commerce sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lockRequest" nillable="true" type="tns:Lock_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Lock_Request">
+    <xs:annotation>
+      <xs:documentation>Input parameter to provide to lock the order.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="tns:SaleDocumentIdentifier" />
+      <xs:element minOccurs="0" name="ReasonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Lock reason identifier. - Related to column [MPIECEECO.MEJ_MOTIFANNUL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Lock_Request" nillable="true" type="tns:Lock_Request" />
+  <xs:element name="LockResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/08 - V1105] - Locks an e-Commerce sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Unlock">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/08 - V1105] - Unlocks an e-Commerce sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="unlockRequest" nillable="true" type="tns:Unlock_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Unlock_Request">
+    <xs:annotation>
+      <xs:documentation>Input parameters to provide to unlock an order.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Identifier" nillable="true" type="tns:SaleDocumentIdentifier" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Unlock_Request" nillable="true" type="tns:Unlock_Request" />
+  <xs:element name="UnlockResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2013/08 - V1105] - Unlocks an e-Commerce sales document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomersReservationCreate">
+    <xs:annotation>
+      <xs:documentation>[Added 2014/05 - V1110] [Beta] - Enables the creation of a customer reservation.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="customersReservationCreateRequest" nillable="true" type="tns:CustomersReservationCreate_Request" />
+        <xs:element minOccurs="0" name="clientContext" nillable="true" type="tns:RetailContext" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CustomersReservationCreate_Request">
+    <xs:annotation>
+      <xs:documentation>Customer reservation to create.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Header" nillable="true" type="tns:CustomersReservationCreate_Header" />
+      <xs:element minOccurs="0" name="Lines" nillable="true" type="tns:ArrayOfCustomersReservationCreate_Line">
+        <xs:annotation>
+          <xs:documentation>Customer reservation line list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Payments" nillable="true" type="tns:ArrayOfCreate_Payment">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Document payment list.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomersReservationCreate_Request" nillable="true" type="tns:CustomersReservationCreate_Request" />
+  <xs:complexType name="CustomersReservationCreate_Header">
+    <xs:annotation>
+      <xs:documentation>Customer reservation header</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Active document. - Related to column [PIECE.GP_VIVANTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2016/06 - V1201] [Optional] - Comment on document header that can be in plain text or in RTF format - Related to column [PIECE.GP_BLOCNOTE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CurrencyId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Identifier of the document currency. If the currency is not specified, the default value is the identifier of the folder currency. - Related to column [DEVISE.D_DEVISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ID of the customer associated with the document. - Related to column [TIERS.T_TIERS].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Document date. - Related to column [PIECE.GP_DATEPIECE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Deposit" nillable="true" type="tns:SaleDocumentLineIdentifier">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1201] [Optional] - Original document line of the deposit payment in the sales receipt - Default value: nil.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/07 - V1110] [Optional] - Expiry date. - Related to column [PIECE.GP_DATEEXPIRATION]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>External reference. - Related to column [PIECE.GP_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReferenceDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>External referencing date. - Related to column [PIECE.GP_DATEREFEXTERNE]. The date passed in must not specify time information.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="FollowedReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Follow-up reference. - Related to column [PIECE.GP_REFSUIVI].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Internal reference. - Related to column [PIECE.GP_REFINTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LinesUnmodifiable" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Specifies if the lines are non modifiable. - Related to column [PIECE.GP_NONMODIFIABLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID. - Related to column [PIECE.GP_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StoreId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Document store. - Related to column [ETABLISSEMENT.ET_ETABLISSEMENT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TaxExcluded" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Tax-exclusive document. - Related to column [PIECE.GP_FACTUREHT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedDates" nillable="true" type="tns:ArrayOfUserDefinedDate">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined dates. - Related to column [PIECE.GP_DATELIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTableCustomers" nillable="true" type="tns:ArrayOfUserDefinedTableCustomer">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined Third-party tables. - Related to column [PIECE.GP_LIBRETIERSx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserDefinedTables" nillable="true" type="tns:ArrayOfUserDefinedTable">
+        <xs:annotation>
+          <xs:documentation>[Optional] - User-defined tables. - Related to column [PIECE.GP_LIBREPIECEx].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UserFields" nillable="true" type="tns:ArrayOfUserField">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Document user fields.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="WarehouseId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/02 - V1201] [Optional] - Warehouse identifier of the document store - Related to column [DEPOTS.GDE_DEPOT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomersReservationCreate_Header" nillable="true" type="tns:CustomersReservationCreate_Header" />
+  <xs:complexType name="ArrayOfCustomersReservationCreate_Line">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomersReservationCreate_Line" nillable="true" type="tns:CustomersReservationCreate_Line" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCustomersReservationCreate_Line" nillable="true" type="tns:ArrayOfCustomersReservationCreate_Line" />
+  <xs:complexType name="CustomersReservationCreate_Line">
+    <xs:annotation>
+      <xs:documentation>Customer reservation line</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CatalogReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2018/01 - V1400] [Optional] - Catalog reference - Related to column [LIGNESERIE.GL_REFCATALOGUE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ComplementaryDescription" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Complementary description for the line - Related to column [LIGNE.GL_LIBCOMPL].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Line delivery date - Related to column [LIGNE.GL_DATELIVRAISON].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DiscountTypeId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Discount type identifier. - Related to column [LIGNE.GL_TYPEREMISE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExternalReference" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Optional] - Line external reference. - Related to column [LIGNE.GL_REFEXTERNE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="InitialDeliveryDate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/11 - V1300] [Optional] - Initial line delivery date - Related to column [LIGNE.GL_DATELIVINITIALE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ItemIdentifier" nillable="true" type="tns:ItemIdentifier" />
+      <xs:element minOccurs="0" name="Label" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Line description. - Related to column [LIGNE.GL_LIBELLE].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="NetUnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Net unit price. Uses [UnitPrice] to calculate the tax-inclusive or tax-exclusive line discount, based on the value of [TaxExcluded] - Related to column [LIGNE.GL_PUHTNET / LIGNE.GL_PUTTCNET].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Quantity. - Related to column [LIGNE.GL_QTEFACT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SalesPersonId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2014/10 - V1105] [Optional] - Seller ID for the line. - Related to column [LIGNE.GL_REPRESENTANT].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SerialNumberId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>[Added 2015/12 - V1300] [Optional] - Item serial number - Related to column [LIGNESERIE.GLS_IDSERIE ].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Taxes" nillable="true" type="tns:ArrayOfCreate_Tax">
+        <xs:annotation>
+          <xs:documentation>[Optional] - List of taxes associated with the line (max. 5 taxes.) The order in the collection determines how the document line is allocated to the 5 tax fields of the document.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="UnitPrice" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Unit price. Uses the NetUnitPrice property to calculate the tax-inclusive or tax-exclusive line discount, based on the value of [TaxExcluded] - Related to column [LIGNE.GL_PUHT / LIGNE.GL_PUTTC].</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomersReservationCreate_Line" nillable="true" type="tns:CustomersReservationCreate_Line" />
+  <xs:element name="CustomersReservationCreateResponse">
+    <xs:annotation>
+      <xs:documentation>[Added 2014/05 - V1110] [Beta] - Enables the creation of a customer reservation.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CustomersReservationCreateResult" nillable="true" type="tns:CustomersReservationCreate_Reply" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CustomersReservationCreate_Reply">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="tns:SaleDocumentKey" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomersReservationCreate_Reply" nillable="true" type="tns:CustomersReservationCreate_Reply" />
+</xs:schema>
