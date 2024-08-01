@@ -140,32 +140,7 @@ Public Class frmMain
             'Asigno Variables
             strPath = fbdSeleccionarOrigen.SelectedPath
 
-            'Obtengo Nombre
-FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
-
-            'Valido Nombre Ingresado
-            If ValidarNombre(strNombre) Then
-
-                'Nombre Validado
-                ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarOrigen", strNombre, strPath, idUsuario)
-
-
-            Else
-
-                'Fallo Validacion
-                If MsgBox("El nombre ingresado es invalido, ¿Deséa continuar?", MsgBoxStyle.RetryCancel) = MsgBoxResult.Retry Then
-
-                    GoTo FlagNom
-
-                Else
-
-                    'nO DESEO cONTINUAR
-
-
-                End If
-
-            End If
-
+            AddOrigen(strPath)
 
         Else
 
@@ -202,6 +177,19 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
 
 
     End Sub
+    Sub InsertarLog(ByVal origen As String, destino As String, desc As String, est As String)
+        Dim fechayhora As DateTime = DateTime.Now
+
+        ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarLog",
+            idUsuario,
+            origen,
+            destino,
+            desc,
+            fechayhora,
+            est
+        )
+
+    End Sub
     Public Sub CopiarDatos(origen As String, destino As String)
 
         Try
@@ -236,19 +224,25 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
                     ' Copiar el archivo al destino
                     IO.File.Copy(file, Path.Combine(destino, relativePath), True)
                 Catch ex As Exception
-                    MsgBox("Error al copiar archivo: " & vbCrLf & ex.Message)
+                    'Log Error al copiar archivo
+                    InsertarLog(origen, destino, ex.Message, "Error")
+                    'MsgBox("Error al copiar archivo: " & vbCrLf & ex.Message)
                 End Try
             Next
 
             ' Informar que la copia se ha completado
-            CerrarEspera()
-            MsgBox("Copia finalizada exitosamente.")
+            'CerrarEspera()
+            'MsgBox("Copia finalizada exitosamente.")
         Catch ex As DirectoryNotFoundException
             ' Manejar la excepción cuando el directorio de origen no se encuentra
-            MsgBox("No se encontró el directorio de origen: " & ex.Message)
+            'Log Error de directorio de origen
+            InsertarLog(origen, destino, ex.Message, "Error")
+            'MsgBox("No se encontró el directorio de origen: " & ex.Message)
         Catch ex As Exception
             ' Manejar cualquier otra excepción que pueda ocurrir
-            MsgBox("Ocurrió un error al copiar los archivos: " & ex.Message)
+            'Log Error copiar Archivo
+            InsertarLog(origen, destino, ex.Message, "Error")
+            'MsgBox("Ocurrió un error al copiar los archivos: " & ex.Message)
         End Try
 
     End Sub
@@ -275,18 +269,24 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
                             If strPrimerDestino Is vbNullString Then
 
                                 AbrirEspera("Desde: " & rowOrigen("Directorio") & vbCrLf & "Hasta: " & rowDestino("Directorio"))
-
+                                'Log de Inicio
+                                InsertarLog(rowOrigen("Directorio"), rowDestino("Directorio"), "Inicio Copia", "Ok")
                                 strPrimerDestino = rowDestino("Directorio")
                                 CopiarDatos(rowOrigen("Directorio"), rowDestino("Directorio"))
+                                'Log de Fin
+                                InsertarLog(rowOrigen("Directorio"), rowDestino("Directorio"), "Fin Copia", "Ok")
 
                             Else
 
                                 AbrirEspera("Copiando desde: " & strPrimerDestino & vbCrLf & "Hasta: " & rowDestino("Directorio"))
-
+                                'Log de Inicio
+                                InsertarLog(strPrimerDestino, rowDestino("Directorio"), "Inicio Copia", "Ok")
                                 CopiarDatos(strPrimerDestino, rowDestino("Directorio"))
+                                'Log de Fin
+                                InsertarLog(strPrimerDestino, rowDestino("Directorio"), "Fin Copia", "Ok")
+
 
                             End If
-
                             CerrarEspera()
                         Next
 
@@ -307,7 +307,6 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
         Dim fbdSeleccionarDestino As New XtraFolderBrowserDialog
         fbdSeleccionarDestino.DialogStyle = FolderBrowserDialogStyle.Wide
         Dim strPath As String
-        Dim strNombre As String
         Dim idOrigen As Integer
 
         If Not gvOrigen Is vbNullString Then
@@ -326,35 +325,7 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
             'Asigno Variables
             strPath = fbdSeleccionarDestino.SelectedPath
 
-FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
-
-            'Valido Nombre Ingresado
-            If ValidarNombre(strNombre) Then
-
-                'Nombre Validado
-                ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarDestinoXOrigen", idOrigen, strNombre, strPath)
-
-                If Not gvOrigen Is vbNullString Then
-
-                    ActualizarDestinos(idOrigen)
-
-                End If
-
-            Else
-
-                    'Fallo Validacion
-                    If MsgBox("El nombre ingresado es invalido, ¿Deséa continuar?", MsgBoxStyle.RetryCancel) = MsgBoxResult.Retry Then
-
-                    GoTo FlagNom
-
-                Else
-
-                    'No continuar
-
-
-                End If
-
-            End If
+            AddDestino(strPath, idOrigen)
 
 
         Else
@@ -366,4 +337,126 @@ FlagNom:    strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
 
     End Sub
 
+    Private Sub btnAddOrigenManual_Click(sender As Object, e As EventArgs) Handles btnAddOrigenManual.Click
+        Dim strPath As String
+
+        'Ingresa direccion
+        strPath = InputBox("Ingrese direccion de Origen: ", "FileApp")
+
+        If Not Directory.Exists(strPath) Or strPath Is vbNullString Then
+            'Termina
+            Exit Sub
+        Else
+            If Directory.Exists(strPath) Then
+                MessageBox.Show("La carpeta existe.")
+                AddOrigen(strPath)
+            Else
+                If MsgBox("La carpeta no ha sido encontrado, desea agregarlo de todos modos?.", MsgBoxStyle.YesNoCancel) = MsgBoxResult.Yes Then
+                    MessageBox.Show("La ruta ha sido creada.")
+                    AddOrigen(strPath)
+                End If
+            End If
+
+        End If
+
+    End Sub
+
+    Sub AddOrigen(ByVal strPath As String)
+        Dim strNombre As String
+
+FlagNom: strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
+
+        'Valido Nombre Ingresado
+        If ValidarNombre(strNombre) Then
+
+            'Nombre Validado
+            ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarOrigen", strNombre, strPath, idUsuario)
+
+
+        Else
+
+            'Fallo Validacion
+            If MsgBox("El nombre ingresado es invalido, ¿Deséa continuar?", MsgBoxStyle.RetryCancel) = MsgBoxResult.Retry Then
+
+                GoTo FlagNom
+
+            Else
+
+                'nO DESEO cONTINUAR
+
+
+            End If
+
+        End If
+    End Sub
+
+    Sub AddDestino(ByVal strPath As String, ByVal idOrigen As String)
+        Dim strNombre As String
+
+FlagNom: strNombre = InputBox("Ingrese Nombre:", "FileApp", "Nombre")
+
+        'Valido Nombre Ingresado
+        If ValidarNombre(strNombre) Then
+
+            'Nombre Validado
+            ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarDestinoXOrigen", idOrigen, strNombre, strPath)
+
+            If Not gvOrigen Is vbNullString Then
+
+                ActualizarDestinos(idOrigen)
+
+            End If
+
+        Else
+
+            'Fallo Validacion
+            If MsgBox("El nombre ingresado es invalido, ¿Deséa continuar?", MsgBoxStyle.RetryCancel) = MsgBoxResult.Retry Then
+
+                GoTo FlagNom
+
+            Else
+
+                'No continuar
+
+
+            End If
+
+        End If
+    End Sub
+
+    Private Sub AddDestinoManual_Click(sender As Object, e As EventArgs) Handles AddDestinoManual.Click
+        Dim strPath As String
+
+        Dim idOrigen As Integer
+
+        If Not gvOrigen Is vbNullString Then
+
+            idOrigen = GridViewOrigen.GetFocusedRowCellValue("idOrigen")
+
+        Else
+
+            Exit Sub
+
+        End If
+        'Ingresa direccion
+        strPath = InputBox("Ingrese direccion de Destino: ", "FileApp")
+
+        If Not Directory.Exists(strPath) Or strPath Is vbNullString Then
+            'Termina
+            Exit Sub
+        Else
+            'Verifica que exista directorio
+            If Directory.Exists(strPath) Then
+                MessageBox.Show("La carpeta existe.")
+                AddDestino(strPath, idOrigen)
+            Else 'Pregunta si desea agregar de todas formas
+                If MsgBox("La carpeta no ha sido encontrada, desea agregarla de todos modos?.", MsgBoxStyle.YesNoCancel) = MsgBoxResult.Yes Then
+                    MessageBox.Show("La ruta ha sido creada.")
+                    AddDestino(strPath, idOrigen)
+                End If
+            End If
+
+        End If
+    End Sub
 End Class
+
