@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("WinForms y api rest"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c9e3461b71aec67ecf6b66db089407bf6ca60b3"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4cfcaa1c3a775c2c1decf2cb67aa3b61d215462c"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("WinForms y api rest"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("WinForms y api rest"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _
