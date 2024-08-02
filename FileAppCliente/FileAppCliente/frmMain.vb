@@ -15,6 +15,8 @@ Public Class frmMain
     Dim dtOrigenes As DataTable
     Dim dtDestinos As DataTable
 
+    Dim idLog As Integer
+
     Dim gvOrigen As String
     Dim gvDestino As String = ""
 
@@ -116,8 +118,8 @@ Public Class frmMain
         If Not gvOrigen Is vbNullString Then
 
             ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_EliminarOrigen", gvOrigen)
+            ActualizarDestinos(gvOrigen)
             ActualizarOrigenes()
-
         End If
 
     End Sub
@@ -177,42 +179,58 @@ Public Class frmMain
 
 
     End Sub
-    Sub InsertarLog(ByVal origen As String, destino As String, desc As String, est As String)
-        Dim fechayhora As DateTime = DateTime.Now
+    Sub UpdateLog(ByVal idlog As Integer, cantCarp As Integer, cantArch As Integer, cantCarpFail As Integer, cantArchFail As Integer, errorLog As String)
+        ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_UpdateLog",
+            idlog,
+            cantCarp,
+            cantArch,
+            cantCarpFail,
+            cantArchFail,
+            errorLog
+        )
+    End Sub
+    Function InsertarLog(ByVal origen As String, destino As String) As Integer
 
-        ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarLog",
+        Dim idLog As Integer
+        Dim dtLog As DataTable
+
+        dtLog = ConexionBBDD.ConexionSQL.EjecutarSP("sp_FileAppCliente_InsertarLog",
             idUsuario,
             origen,
-            destino,
-            desc,
-            fechayhora,
-            est
-        )
+            destino
+)
 
-    End Sub
+        idLog = dtLog.Rows(0).Item(0)
+
+        Return idLog
+
+    End Function
     Public Sub CopiarDatos(origen As String, destino As String)
+        Dim contDirectoriesFail As Integer = 0
+        Dim contFilesFail As Integer = 0
 
+        Dim directories As String()
+        Dim files As String()
         Try
             ' Verificar si el directorio de origen existe
             If Not Directory.Exists(origen) Then
                 Throw New DirectoryNotFoundException("El directorio de origen no existe: " & origen)
             End If
 
-            ' Crear el directorio de destino si no existe
-            'If Not Directory.Exists(destino) Then
-            '    Directory.CreateDirectory(destino)
-            'End If
-
             ' Obtener los subdirectorios y archivos en el directorio de origen
-            Dim directories As String() = Directory.GetDirectories(origen, "*", SearchOption.AllDirectories)
-            Dim files As String() = Directory.GetFiles(origen, "*", SearchOption.AllDirectories)
+            directories = Directory.GetDirectories(origen, "*", SearchOption.AllDirectories)
+            files = Directory.GetFiles(origen, "*", SearchOption.AllDirectories)
 
             ' Crear subdirectorios en el directorio de destino
             For Each directorio In directories
-                ' Obtener la ruta relativa del subdirectorio
-                Dim relativePath As String = directorio.Substring(origen.Length + 1)
-                ' Crear el subdirectorio en el destino
-                Directory.CreateDirectory(Path.Combine(destino, relativePath))
+                Try
+                    ' Obtener la ruta relativa del subdirectorio
+                    Dim relativePath As String = directorio.Substring(origen.Length + 1)
+                    ' Crear el subdirectorio en el destino
+                    Directory.CreateDirectory(Path.Combine(destino, relativePath))
+                Catch ex As Exception
+                    contDirectoriesFail += 1
+                End Try
             Next
 
             ' Copiar archivos al directorio de destino
@@ -225,25 +243,19 @@ Public Class frmMain
                     IO.File.Copy(file, Path.Combine(destino, relativePath), True)
                 Catch ex As Exception
                     'Log Error al copiar archivo
-                    InsertarLog(origen, destino, ex.Message, "Error")
-                    'MsgBox("Error al copiar archivo: " & vbCrLf & ex.Message)
+                    contFilesFail += 1
                 End Try
             Next
 
-            ' Informar que la copia se ha completado
-            'CerrarEspera()
-            'MsgBox("Copia finalizada exitosamente.")
         Catch ex As DirectoryNotFoundException
-            ' Manejar la excepción cuando el directorio de origen no se encuentra
             'Log Error de directorio de origen
-            InsertarLog(origen, destino, ex.Message, "Error")
-            'MsgBox("No se encontró el directorio de origen: " & ex.Message)
+            UpdateLog(idLog, directories.Length, files.Length, contDirectoriesFail, contFilesFail, ex.Message)
         Catch ex As Exception
-            ' Manejar cualquier otra excepción que pueda ocurrir
             'Log Error copiar Archivo
-            InsertarLog(origen, destino, ex.Message, "Error")
-            'MsgBox("Ocurrió un error al copiar los archivos: " & ex.Message)
+            UpdateLog(idLog, directories.Length, files.Length, contDirectoriesFail, contFilesFail, ex.Message)
         End Try
+
+        UpdateLog(idLog, directories.Length, files.Length, contDirectoriesFail, contFilesFail, "OK")
 
     End Sub
     Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
@@ -270,21 +282,16 @@ Public Class frmMain
 
                                 AbrirEspera("Desde: " & rowOrigen("Directorio") & vbCrLf & "Hasta: " & rowDestino("Directorio"))
                                 'Log de Inicio
-                                InsertarLog(rowOrigen("Directorio"), rowDestino("Directorio"), "Inicio Copia", "Ok")
+                                idLog = InsertarLog(rowOrigen("Directorio"), rowDestino("Directorio"))
                                 strPrimerDestino = rowDestino("Directorio")
                                 CopiarDatos(rowOrigen("Directorio"), rowDestino("Directorio"))
-                                'Log de Fin
-                                InsertarLog(rowOrigen("Directorio"), rowDestino("Directorio"), "Fin Copia", "Ok")
 
                             Else
 
                                 AbrirEspera("Copiando desde: " & strPrimerDestino & vbCrLf & "Hasta: " & rowDestino("Directorio"))
                                 'Log de Inicio
-                                InsertarLog(strPrimerDestino, rowDestino("Directorio"), "Inicio Copia", "Ok")
+                                idLog = InsertarLog(rowOrigen("Directorio"), rowDestino("Directorio"))
                                 CopiarDatos(strPrimerDestino, rowDestino("Directorio"))
-                                'Log de Fin
-                                InsertarLog(strPrimerDestino, rowDestino("Directorio"), "Fin Copia", "Ok")
-
 
                             End If
                             CerrarEspera()
