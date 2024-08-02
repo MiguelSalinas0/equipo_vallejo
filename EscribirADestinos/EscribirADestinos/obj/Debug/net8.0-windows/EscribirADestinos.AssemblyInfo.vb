@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("EscribirADestinos"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b8234ed9a3b2acb6f6cd157821c6b032d02fdbc"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4cfcaa1c3a775c2c1decf2cb67aa3b61d215462c"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("EscribirADestinos"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("EscribirADestinos"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _

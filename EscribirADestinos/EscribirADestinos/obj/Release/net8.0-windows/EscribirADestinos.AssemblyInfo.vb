@@ -13,12 +13,12 @@ Option Explicit On
 
 Imports System
 Imports System.Reflection
-<Assembly: System.Reflection.AssemblyCompanyAttribute("ImportarArchivos"),  _
- Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
+<Assembly: System.Reflection.AssemblyCompanyAttribute("EscribirADestinos"),  _
+ Assembly: System.Reflection.AssemblyConfigurationAttribute("Release"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
  Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4cfcaa1c3a775c2c1decf2cb67aa3b61d215462c"),  _
- Assembly: System.Reflection.AssemblyProductAttribute("ImportarArchivos"),  _
- Assembly: System.Reflection.AssemblyTitleAttribute("ImportarArchivos"),  _
+ Assembly: System.Reflection.AssemblyProductAttribute("EscribirADestinos"),  _
+ Assembly: System.Reflection.AssemblyTitleAttribute("EscribirADestinos"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _
  Assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0"),  _
  Assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")> 
