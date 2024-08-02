@@ -15,9 +15,9 @@ Public Class Form1
     Dim ReadOnly dateFrom As String = Date.Now.AddDays(- 1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
     Dim ReadOnly dateTo As String = Date.Now.Date.ToString("yyyy-MM-dd") + "T00:00:00"
 
-    Dim ReadOnly _
+    ReadOnly _
         urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString +
-                                  "&order.status=paid&order.date_created.from=" + dateFrom +
+                                  "&order.status=paid&order.date_created.from=" + "2024-07-01T00:00:00" +
                                   ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
 
     Dim ReadOnly httpClient As New HttpClient()
@@ -51,7 +51,7 @@ Public Class Form1
 
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Await ConsultasMLAsync()
-        Await ProcesarOrdenes()
+        'Await ProcesarOrdenes()
         Dispose()
     End Sub
 
@@ -63,49 +63,73 @@ Public Class Form1
     End Function
 
     Private Async Function ConsultasMLAsync() As Task
+        Dim total As Integer
+        Dim offset As Integer
+        Dim limit As Integer
+
         ' Consulto órdenes
         tokenML = GetToken()
         httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
-        respuestaOrdenes = Await httpClient.GetAsync(requestUri := urlGetOrdenes)
+        respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes + "&offset=0")
         bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
         jsonDoc = JsonDocument.Parse(bodyOrdenes)
         root = jsonDoc.RootElement
 
-        ordenes = JsonConvert.DeserializeObject (Of List(Of Producto))(root.GetProperty("results").ToString())
+        If Not Integer.TryParse(root.GetProperty("paging").GetProperty("total").ToString, total) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("offset").ToString, offset) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("limit").ToString, limit) Then
+            Exit Function
+        End If
 
-        httpClient.DefaultRequestHeaders.Add("x-version", "2")
+        For pagina As Integer = offset To total Step limit
+            respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes + "&offset=" + pagina.ToString())
+            bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+            jsonDoc = JsonDocument.Parse(bodyOrdenes)
+            root = jsonDoc.RootElement
+            ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString())
 
-        ' Iteración de órdenes
-        For Each ord In ordenes
-            ordenId = ord.Id
-            urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
+            ' Header necesario para billing info
+            httpClient.DefaultRequestHeaders.Add("x-version", "2")
 
-            ' Petición para traer detalles del cliente a partir de una orden
-            respuestaBuy = Await httpClient.GetAsync(urlGetBuy)
-            bodyBuy = Await respuestaBuy.Content.ReadAsStringAsync()
-            jsonClient = JsonDocument.Parse(bodyBuy)
-            rootC = jsonClient.RootElement
-            buy = JsonConvert.DeserializeObject (Of ClienteML)(rootC.ToString())
+            ' Iteración de órdenes
+            For Each ord In ordenes
+                Try
 
-            ' Petición para traer datos del envío a partir de una orden
-            urlGetshipment = apiMLBase & "orders/" & ordenId & "/shipments"
-            respuestaShip = Await httpClient.GetAsync(urlGetshipment)
-            bodyShip = Await respuestaShip.Content.ReadAsStringAsync()
-            jsonShip = JsonDocument.Parse(bodyShip)
-            rootS = jsonShip.RootElement
 
-            'Insertar en cabecera
-            If InsertarCabecera(ordenId, buy, ord, rootS) = 1 Then
-                ' Iteración de artículos dentro de la orden
-                orderItems = ord.OrderItems
-                Dim headerDate As DateTime = DateTime.Parse(rootS.GetProperty("date_created").ToString())
+                    ordenId = ord.Id ' ------------ seguir aqui
+                    urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
 
-                For Each item In orderItems
-                    InsertarDetalle(ordenId, item, headerDate)
-                Next
-            End If
+                    ' Petición para traer detalles del cliente a partir de una orden
+                    respuestaBuy = Await httpClient.GetAsync(urlGetBuy)
+                    bodyBuy = Await respuestaBuy.Content.ReadAsStringAsync()
+                    jsonClient = JsonDocument.Parse(bodyBuy)
+                    rootC = jsonClient.RootElement
+                    buy = JsonConvert.DeserializeObject(Of ClienteML)(rootC.ToString())
+
+                    ' Petición para traer datos del envío a partir de una orden
+                    urlGetshipment = apiMLBase & "orders/" & ordenId & "/shipments"
+                    respuestaShip = Await httpClient.GetAsync(urlGetshipment)
+                    bodyShip = Await respuestaShip.Content.ReadAsStringAsync()
+                    jsonShip = JsonDocument.Parse(bodyShip)
+                    rootS = jsonShip.RootElement
+                Catch ex As Exception
+
+                End Try
+                'Insertar en cabecera
+                If InsertarCabecera(ordenId, buy, ord, rootS) = 1 Then
+                    ' Iteración de artículos dentro de la orden
+                    orderItems = ord.OrderItems
+                    Dim headerDate As DateTime = DateTime.Parse(rootS.GetProperty("date_created").ToString())
+
+                    For Each item In orderItems
+                        InsertarDetalle(ordenId, item, headerDate)
+                    Next
+                End If
+            Next
+
         Next
+
     End Function
 
     Private Function InsertarCabecera(ordenId As Long, buy As ClienteML, ord As Producto, rootS As JsonElement)
