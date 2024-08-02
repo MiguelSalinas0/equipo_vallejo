@@ -33,6 +33,8 @@ Partial Class frmMain
         Me.btnDeleteDestino = New System.Windows.Forms.Button()
         Me.btnCopy = New System.Windows.Forms.Button()
         Me.WaitFormManager = New DevExpress.XtraSplashScreen.SplashScreenManager(Me, GetType(Global.FileAppCliente.WaitForm), True, True)
+        Me.btnAddOrigenManual = New System.Windows.Forms.Button()
+        Me.AddDestinoManual = New System.Windows.Forms.Button()
         CType(Me.dgcOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridViewOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgcDestino, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -131,11 +133,32 @@ Partial Class frmMain
         '
         Me.WaitFormManager.ClosingDelay = 500
         '
+        'btnAddOrigenManual
+        '
+        Me.btnAddOrigenManual.Location = New System.Drawing.Point(12, 531)
+        Me.btnAddOrigenManual.Name = "btnAddOrigenManual"
+        Me.btnAddOrigenManual.Size = New System.Drawing.Size(125, 30)
+        Me.btnAddOrigenManual.TabIndex = 9
+        Me.btnAddOrigenManual.Text = "Agregar Origen Manual"
+        Me.btnAddOrigenManual.UseVisualStyleBackColor = True
+        '
+        'AddDestinoManual
+        '
+        Me.AddDestinoManual.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddDestinoManual.Location = New System.Drawing.Point(654, 531)
+        Me.AddDestinoManual.Name = "AddDestinoManual"
+        Me.AddDestinoManual.Size = New System.Drawing.Size(125, 30)
+        Me.AddDestinoManual.TabIndex = 10
+        Me.AddDestinoManual.Text = "Agregar Destino Manual"
+        Me.AddDestinoManual.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1387, 745)
+        Me.Controls.Add(Me.AddDestinoManual)
+        Me.Controls.Add(Me.btnAddOrigenManual)
         Me.Controls.Add(Me.btnCopy)
         Me.Controls.Add(Me.btnDeleteDestino)
         Me.Controls.Add(Me.btnAddDestino)
@@ -165,4 +188,6 @@ Partial Class frmMain
     Friend WithEvents btnDeleteDestino As Button
     Friend WithEvents btnCopy As Button
     Friend WithEvents WaitFormManager As DevExpress.XtraSplashScreen.SplashScreenManager
+    Friend WithEvents btnAddOrigenManual As Button
+    Friend WithEvents AddDestinoManual As Button
 End Class
