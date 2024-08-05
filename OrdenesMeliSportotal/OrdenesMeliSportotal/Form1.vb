@@ -424,8 +424,10 @@ Public Class Form1
         ' Configuración de los pagos
         payments(0).Amount = 0
         payments(0).MethodId = "ECO"
-        payments(0).Id = 20
-        payments(0).DueDate = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
+            payments(0).Id = 20
+            Dim dueDate As DateTime = DateTime.Parse(orden.Item("Header_Date").ToString())
+            Dim formattedDueDate As String = dueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+            payments(0).DueDate = formattedDueDate
         payments(0).IsReceivedPayment = False
         payments(0).CurrencyId = "ARG"
 
