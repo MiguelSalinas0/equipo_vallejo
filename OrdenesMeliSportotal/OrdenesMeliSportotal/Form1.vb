@@ -15,7 +15,7 @@ Public Class Form1
     Dim ReadOnly dateFrom As String = Date.Now.AddDays(- 1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
     Dim ReadOnly dateTo As String = Date.Now.Date.ToString("yyyy-MM-dd") + "T00:00:00"
 
-    Dim ReadOnly _
+    ReadOnly _
         urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString +
                                   "&order.status=paid&order.date_created.from=" + dateFrom +
                                   ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
@@ -51,7 +51,7 @@ Public Class Form1
 
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Await ConsultasMLAsync()
-        Await ProcesarOrdenes()
+        'Await ProcesarOrdenes()
         Dispose()
     End Sub
 
@@ -63,52 +63,82 @@ Public Class Form1
     End Function
 
     Private Async Function ConsultasMLAsync() As Task
+        Dim total As Integer
+        Dim offset As Integer
+        Dim limit As Integer
+
         ' Consulto órdenes
         tokenML = GetToken()
         httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
-        respuestaOrdenes = Await httpClient.GetAsync(requestUri := urlGetOrdenes)
+        respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes + "&offset=0")
         bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
         jsonDoc = JsonDocument.Parse(bodyOrdenes)
         root = jsonDoc.RootElement
 
-        ordenes = JsonConvert.DeserializeObject (Of List(Of Producto))(root.GetProperty("results").ToString())
+        If Not Integer.TryParse(root.GetProperty("paging").GetProperty("total").ToString, total) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("offset").ToString, offset) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("limit").ToString, limit) Then
+            Exit Function
+        End If
 
-        httpClient.DefaultRequestHeaders.Add("x-version", "2")
+        For pagina As Integer = offset To total Step limit
+            respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes + "&offset=" + pagina.ToString())
+            bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+            jsonDoc = JsonDocument.Parse(bodyOrdenes)
+            root = jsonDoc.RootElement
+            ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString())
 
-        ' Iteración de órdenes
-        For Each ord In ordenes
-            ordenId = ord.Id
-            urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
+            ' Header necesario para billing info
+            httpClient.DefaultRequestHeaders.Add("x-version", "2")
 
-            ' Petición para traer detalles del cliente a partir de una orden
-            respuestaBuy = Await httpClient.GetAsync(urlGetBuy)
-            bodyBuy = Await respuestaBuy.Content.ReadAsStringAsync()
-            jsonClient = JsonDocument.Parse(bodyBuy)
-            rootC = jsonClient.RootElement
-            buy = JsonConvert.DeserializeObject (Of ClienteML)(rootC.ToString())
+            ' Iteración de órdenes
+            For Each ord In ordenes
+                Dim packIdAux As String = ""
+                Try
+                    If ord.PackId IsNot Nothing Then
+                        packIdAux = ord.PackId
+                    End If
 
-            ' Petición para traer datos del envío a partir de una orden
-            urlGetshipment = apiMLBase & "orders/" & ordenId & "/shipments"
-            respuestaShip = Await httpClient.GetAsync(urlGetshipment)
-            bodyShip = Await respuestaShip.Content.ReadAsStringAsync()
-            jsonShip = JsonDocument.Parse(bodyShip)
-            rootS = jsonShip.RootElement
+                    ordenId = ord.Id ' ------------ seguir aqui
 
-            'Insertar en cabecera
-            If InsertarCabecera(ordenId, buy, ord, rootS) = 1 Then
-                ' Iteración de artículos dentro de la orden
-                orderItems = ord.OrderItems
-                Dim headerDate As DateTime = DateTime.Parse(rootS.GetProperty("date_created").ToString())
+                    ' Petición para traer detalles del cliente a partir de una orden
+                    urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
+                    respuestaBuy = Await httpClient.GetAsync(urlGetBuy)
+                    bodyBuy = Await respuestaBuy.Content.ReadAsStringAsync()
+                    jsonClient = JsonDocument.Parse(bodyBuy)
+                    rootC = jsonClient.RootElement
+                    buy = JsonConvert.DeserializeObject(Of ClienteML)(rootC.ToString())
 
-                For Each item In orderItems
-                    InsertarDetalle(ordenId, item, headerDate)
-                Next
-            End If
+                    ' Petición para traer datos del envío a partir de una orden
+                    urlGetshipment = apiMLBase & "orders/" & ordenId & "/shipments"
+                    respuestaShip = Await httpClient.GetAsync(urlGetshipment)
+                    bodyShip = Await respuestaShip.Content.ReadAsStringAsync()
+                    jsonShip = JsonDocument.Parse(bodyShip)
+                    rootS = jsonShip.RootElement
+                Catch ex As Exception
+
+                End Try
+                'Insertar en cabecera
+                If InsertarCabecera(ordenId, buy, ord, rootS, packIdAux) = 1 Then
+                    ' Iteración de artículos dentro de la orden
+                    orderItems = ord.OrderItems
+                    Dim headerDate As DateTime = DateTime.Parse(rootS.GetProperty("date_created").ToString())
+
+                    For Each item In orderItems
+                        If packIdAux <> "" Then
+                            ordenId = packIdAux
+                        End If
+                        InsertarDetalle(ordenId, item, headerDate)
+                    Next
+                End If
+            Next
+
         Next
+
     End Function
 
-    Private Function InsertarCabecera(ordenId As Long, buy As ClienteML, ord As Producto, rootS As JsonElement)
+    Private Function InsertarCabecera(ordenId As Long, buy As ClienteML, ord As Producto, rootS As JsonElement, packId As String)
 
         Dim CompanyIdNumer As String
         Dim homePhoneNumber = ""
@@ -138,7 +168,8 @@ Public Class Form1
         Dim formattedDate As String = headerDate2.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)
 
         Dim headerDate As String = formattedDate
-        Dim headerInternalReference As String = ordenId
+        'Dim headerInternalReference As String = ordenId 
+        Dim headerInternalReference As String = If(packId <> "", packId, ordenId)
         Dim headerBillingStatus As String = rootS.GetProperty("status").ToString
         Dim headerDeliveryType As String = rootS.GetProperty("shipping_option").GetProperty("delivery_type").ToString
         Dim headerFollowUpStatus = "WaitingCommodity"
@@ -210,7 +241,14 @@ Public Class Form1
                                                         currencyId
                                                         )
 
-            Return dtMLCabecera.Rows(0).Item(0)
+            Dim resp = dtMLCabecera.Rows(0).Item(0)
+
+            If (resp = 0 And packId <> "") Then
+                Return 1
+            End If
+
+            Return resp
+
 
         Catch ex As Exception
             Return 0
@@ -355,9 +393,13 @@ Public Class Form1
         createHeader.Active = True
         createHeader.Comment = orden.Field (Of String)("Header_Comment")
         createHeader.CustomerId = orden.Field (Of String)("Header_CustomerId")
-        createHeader.CurrencyId = orden.Field (Of String)("Header_CurrencyId")
-        createHeader.Date = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
-        createHeader.InternalReference = orden.Field (Of String)("Header_InternalReference")
+            createHeader.CurrencyId = orden.Field(Of String)("Header_CurrencyId")
+
+            Dim headerDate As DateTime = DateTime.Parse(orden.Item("Header_Date").ToString())
+            Dim formattedHeaderDate As String = headerDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+
+            createHeader.Date = formattedHeaderDate
+            createHeader.InternalReference = orden.Field (Of String)("Header_InternalReference")
         createHeader.Origin = DocumentOrigin.ECommerce
 
         ' Configuración del canal omni
@@ -382,8 +424,10 @@ Public Class Form1
         ' Configuración de los pagos
         payments(0).Amount = 0
         payments(0).MethodId = "ECO"
-        payments(0).Id = 20
-        payments(0).DueDate = Date.Parse(orden.Item("Header_Date").ToString).ToString("dd-MM-yyyy")
+            payments(0).Id = 20
+            Dim dueDate As DateTime = DateTime.Parse(orden.Item("Header_Date").ToString())
+            Dim formattedDueDate As String = dueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+            payments(0).DueDate = formattedDueDate
         payments(0).IsReceivedPayment = False
         payments(0).CurrencyId = "ARG"
 
@@ -396,9 +440,11 @@ Public Class Form1
             itemIdentifier.Reference = item.Field (Of String)("Reference")
 
             newCreateLine.Label = item.Field (Of String)("Label")
-            newCreateLine.Origin = DocumentOrigin.ECommerce
-            newCreateLine.DeliveryDate = Date.Parse(item.Item("DeliveryDate").ToString).ToString("dd-MM-yyyy")
-            newCreateLine.Quantity = Integer.Parse(item.Item("Quantity"))
+                newCreateLine.Origin = DocumentOrigin.ECommerce
+                Dim deliveryDate As DateTime = DateTime.Parse(item.Item("DeliveryDate").ToString())
+                Dim formattedDeliveryDate As String = deliveryDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                newCreateLine.DeliveryDate = formattedDeliveryDate
+                newCreateLine.Quantity = Integer.Parse(item.Item("Quantity"))
             newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
             newCreateLine.SalesPersonId = item.Field (Of String)("SalesPersonId")
             newCreateLine.ItemIdentifier = itemIdentifier

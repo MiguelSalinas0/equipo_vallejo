@@ -2,7 +2,6 @@ C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal
 C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal\bin\Debug\OrdenesMeliSportotal.exe
 C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal\bin\Debug\OrdenesMeliSportotal.pdb
 C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal\bin\Debug\OrdenesMeliSportotal.xml
-C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal\bin\Debug\ConexionBBDD.dll
 C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal\bin\Debug\Newtonsoft.Json.dll
 C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal\bin\Debug\System.Data.SqlClient.dll
 C:\xampp\htdocs\scripts\equipo_vallejo\OrdenesMeliSportotal\OrdenesMeliSportotal\bin\Debug\Newtonsoft.Json.xml
