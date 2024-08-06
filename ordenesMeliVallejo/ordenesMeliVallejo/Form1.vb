@@ -8,6 +8,7 @@ Imports ordenesMeliVallejo.WSProductos
 Imports ordenesMeliVallejo.WSorden
 Imports System.ServiceModel
 Imports System.Globalization
+Imports System.Security.Cryptography
 
 
 Public Class Form1
@@ -17,7 +18,7 @@ Public Class Form1
     Dim userId As Integer = 257128833
     Dim clientId As String = "5038796649356510"
     Dim clientSecret As String = "SSP5q4xPndDRru0ut4FelVTg5BrUXRu7"
-    Dim dateFrom As String = Date.Now.AddDays(-2).Date.ToString("yyyy-MM-dd") + "T00:00:00"
+    Dim dateFrom As String = Date.Now.AddDays(-5).Date.ToString("yyyy-MM-dd") + "T00:00:00"
     Dim dateTo As String = Date.Now.AddDays(1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
     Dim urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString + "&order.status=paid&order.date_created.from=" + dateFrom + ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
     Dim httpClient As New HttpClient()
@@ -53,7 +54,9 @@ Public Class Form1
 
         Await ConsultasMLAsync()
 
-        Await ProcesarOrdenes()
+        'Await ProcesarOrdenes()
+
+        Await CancelOrden()
 
         Dispose()
 
@@ -104,7 +107,7 @@ Public Class Form1
                         packIdAux = ord.PackId
                     End If
 
-                    ordenId = ord.PackId
+                    ordenId = ord.Id
                     urlGetBuy = apiMLBase & "orders/" & ordenId & "/billing_info"
 
                     ' Petición para traer detalles del cliente a partir de una orden
@@ -125,6 +128,7 @@ Public Class Form1
                 End Try
                 ' Insertar en cabecera
                 If insertarCabecera(ordenId, buy, ord, rootS, packIdAux) = 1 Then
+
                     ' Iteración de artículos dentro de la orden
                     orderItems = ord.OrderItems
                     Dim headerDate As DateTime = DateTime.Parse(rootS.GetProperty("date_created").ToString())
@@ -512,7 +516,6 @@ Public Class Form1
         End Try
     End Function
 
-
     Sub CrearCliente(ByVal orden As Object)
         ' Declaración de variables
         Dim retailContext As New WSClientes.RetailContext
@@ -569,5 +572,59 @@ Public Class Form1
             Console.WriteLine($"Error al crear cliente: {ex.Message}")
         End Try
     End Sub
+
+
+
+
+    Private Async Function CancelOrden() As Task
+
+        Dim total As Integer
+        Dim offset As Integer
+        Dim limit As Integer
+
+        Dim token = GetToken()
+        'httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token)
+        Dim urlGetOrders As String = apiMLBase + "orders/search?seller=" + userId.ToString + "&order.status=cancelled&order.date_created.from=" + dateFrom + ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
+
+        respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrders + "&offset=0")
+        bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+        jsonDoc = JsonDocument.Parse(bodyOrdenes)
+        root = jsonDoc.RootElement
+
+        If Not Integer.TryParse(root.GetProperty("paging").GetProperty("total").ToString, total) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("offset").ToString, offset) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("limit").ToString, limit) Then
+            Exit Function
+        End If
+
+        For pagina As Integer = offset To total Step limit
+            respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrders + "&offset=" + pagina.ToString())
+            bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+            jsonDoc = JsonDocument.Parse(bodyOrdenes)
+            root = jsonDoc.RootElement
+
+            ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString())
+
+            For Each orden In ordenes
+
+                ordenId = If(orden.PackId <> "", orden.PackId, orden.Id)
+
+                ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
+
+
+            Next
+            '1° obtener orden de cegid, implementar el metodo: GetByReference
+            '2° cancelar, metodo: Cancel
+
+        Next
+
+
+    End Function
+
+
+
+
+
+
 
 End Class
