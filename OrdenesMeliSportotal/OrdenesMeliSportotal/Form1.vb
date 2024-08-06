@@ -13,7 +13,7 @@ Public Class Form1
     Dim clientId As String = "5038796649356510"
     Dim clientSecret As String = "SSP5q4xPndDRru0ut4FelVTg5BrUXRu7"
     Dim ReadOnly dateFrom As String = Date.Now.AddDays(- 1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
-    Dim ReadOnly dateTo As String = Date.Now.Date.ToString("yyyy-MM-dd") + "T00:00:00"
+    Dim ReadOnly dateTo As String = Date.Now.AddDays(1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
 
     ReadOnly _
         urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString +
@@ -51,7 +51,7 @@ Public Class Form1
 
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Await ConsultasMLAsync()
-        'Await ProcesarOrdenes()
+        Await ProcesarOrdenes()
         Dispose()
     End Sub
 
@@ -185,7 +185,7 @@ Public Class Form1
         Dim amount = "0"
         Dim methodId = "ECO"
         Dim paymentId = 20
-        Dim dueDate As DateTime = rootS.GetProperty("date_created").ToString
+        Dim dueDate As string = formattedDate
         Dim isReceivedPayment As Boolean = 0
         Dim currencyId = "ARG"
 
