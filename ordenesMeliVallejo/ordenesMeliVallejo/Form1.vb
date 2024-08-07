@@ -55,9 +55,9 @@ Public Class Form1
         tokenML = GetToken()
         httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
-        'Await ConsultasMLAsync()
+        Await ConsultasMLAsync()
 
-        'Await ProcesarOrdenes()
+        Await ProcesarOrdenes()
 
         Await CancelOrden()
 
@@ -643,24 +643,29 @@ Public Class Form1
 
                     Dim getByReferenceResponse = clientCegid.GetByReference(getByReferenceRequest, clientContext)
 
+
                     ' Posibilidad de evaluar algun criterio para cancelar la orden
+                    If getByReferenceResponse.Header.OmniChannel.BillingStatus = BillingStatus.Pending And getByReferenceResponse.Header.OmniChannel.CancelStatus <> CancelStatus.Canceled Then
+                        '2° cancelar, metodo: Cancel
+                        Dim cancelRequest As New Cancel_Request
+                        cancelRequest.Identifier = New SaleDocumentIdentifier()
+                        cancelRequest.Identifier.Reference = New SaleDocumentReference()
+                        cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
+                        cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
+                        cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
+                        cancelRequest.ReasonId = "CAN"
 
+                        clientCegid.Cancel(cancelRequest, clientContext)
 
-                    '2° cancelar, metodo: Cancel
-                    Dim cancelRequest As New Cancel_Request
-                    cancelRequest.Identifier = New SaleDocumentIdentifier()
-                    cancelRequest.Identifier.Reference = New SaleDocumentReference()
-                    cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
-                    cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
-                    cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
-                    cancelRequest.ReasonId = "CAN"
+                        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
 
-                    clientCegid.Cancel(cancelRequest, clientContext)
+                    Else
+                        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", getByReferenceResponse.Header.InternalReference.ToString, "FIN")
+                    End If
+
                 Catch ex As Exception
 
                 End Try
-
-
 
             Next
 
