@@ -50,8 +50,16 @@ Public Class Form1
     Dim orderItems As List(Of OrderItem)
 
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Await ConsultasMLAsync()
-        Await ProcesarOrdenes()
+
+        tokenML = GetToken()
+        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
+
+        'Await ConsultasMLAsync()
+
+        'Await ProcesarOrdenes()
+
+        Await CancelOrden()
+
         Dispose()
     End Sub
 
@@ -185,7 +193,13 @@ Public Class Form1
         Dim amount = "0"
         Dim methodId = "ECO"
         Dim paymentId = 20
-        Dim dueDate As string = formattedDate
+
+        Dim dueDates As DateTime = DateTime.Parse(rootS.GetProperty("shipping_option").GetProperty("estimated_handling_limit").GetProperty("date").ToString())
+        Dim formattedDueDate As String = dueDates.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)
+
+        'Dim dueDate As DateTime = rootS.GetProperty("date_created").ToString
+        Dim dueDate = formattedDueDate
+
         Dim isReceivedPayment As Boolean = 0
         Dim currencyId = "ARG"
 
@@ -533,4 +547,91 @@ Public Class Form1
             MsgBox($"Error al crear cliente: {ex.Message}")
         End Try
     End Sub
+
+    Private Async Function CancelOrden() As Task
+
+        ' Declaración de variables
+        Dim clientContext As New WSOrden.RetailContext
+        Dim createRequest As New Create_Request
+        Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?singleWsdl")
+        Dim clientCegid As SaleDocumentServiceClient
+
+        binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
+        binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
+        clientCegid = New SaleDocumentServiceClient(binding, endpoint)
+        clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
+        clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
+        clientContext.DatabaseId = "VATEST"
+
+        Dim total As Integer
+        Dim offset As Integer
+        Dim limit As Integer
+
+        Dim urlGetOrders As String = apiMLBase + "orders/search?seller=" + userId.ToString + "&order.status=cancelled&order.date_created.from=" + dateFrom + ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
+
+        respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrders + "&offset=0")
+        bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+        jsonDoc = JsonDocument.Parse(bodyOrdenes)
+        root = jsonDoc.RootElement
+
+        If Not Integer.TryParse(root.GetProperty("paging").GetProperty("total").ToString, total) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("offset").ToString, offset) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("limit").ToString, limit) Then
+            Exit Function
+        End If
+
+        For pagina As Integer = offset To total Step limit
+            respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrders + "&offset=" + pagina.ToString())
+            bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+            jsonDoc = JsonDocument.Parse(bodyOrdenes)
+            root = jsonDoc.RootElement
+
+            ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString())
+
+            For Each orden In ordenes
+
+                ordenId = If(orden.PackId <> "", orden.PackId, orden.Id)
+
+                Dim dtCancelledOrder = ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
+
+                '1° obtener orden de cegid, implementar el metodo: GetByReference
+                If dtCancelledOrder Is Nothing Then
+                    Continue For
+                End If
+                Try
+                    Dim orderId = dtCancelledOrder.Rows(0).Item(0)
+                    Dim customerId = dtCancelledOrder.Rows(0).Item(1)
+                    Dim getByReferenceRequest As New GetByReference_Request()
+                    getByReferenceRequest.Reference = New SaleDocumentReference()
+
+                    getByReferenceRequest.Reference.InternalReference = orderId
+                    getByReferenceRequest.Reference.CustomerId = customerId
+                    getByReferenceRequest.Reference.Type = SaleDocumentType.CustomerOrder
+
+                    Dim getByReferenceResponse = clientCegid.GetByReference(getByReferenceRequest, clientContext)
+
+                    ' Posibilidad de evaluar algun criterio para cancelar la orden
+
+
+                    '2° cancelar, metodo: Cancel
+                    Dim cancelRequest As New Cancel_Request
+                    cancelRequest.Identifier = New SaleDocumentIdentifier()
+                    cancelRequest.Identifier.Reference = New SaleDocumentReference()
+                    cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
+                    cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
+                    cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
+                    cancelRequest.ReasonId = "CAN"
+
+                    clientCegid.Cancel(cancelRequest, clientContext)
+                Catch ex As Exception
+
+                End Try
+
+            Next
+
+        Next
+
+    End Function
+
 End Class
