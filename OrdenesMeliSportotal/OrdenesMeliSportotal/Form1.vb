@@ -53,11 +53,11 @@ Public Class Form1
         tokenML = GetToken()
         httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
-        'Await ConsultasMLAsync()
+        Await ConsultasMLAsync()
 
         Await ProcesarOrdenes()
 
-        'Await CancelOrden()
+        Await CancelOrden()
 
         Dispose()
     End Sub
@@ -98,6 +98,7 @@ Public Class Form1
 
             ' Iteración de órdenes
             For Each ord In ordenes
+
                 Dim packIdAux As String = ""
                 Try
                     If ord.PackId IsNot Nothing Then
@@ -409,8 +410,8 @@ Public Class Form1
             Dim formattedHeaderDate As String = headerDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
 
             createHeader.Date = formattedHeaderDate
-            createHeader.InternalReference = orden.Field (Of String)("Header_InternalReference")
-        createHeader.Origin = DocumentOrigin.ECommerce
+            createHeader.InternalReference = orden.Field(Of String)("Header_InternalReference")
+            createHeader.Origin = DocumentOrigin.ECommerce
 
         ' Configuración del canal omni
         omniChannel.BillingStatus = BillingStatus.Pending
@@ -435,11 +436,9 @@ Public Class Form1
         payments(0).Amount = 0
         payments(0).MethodId = "ECO"
             payments(0).Id = 20
-            Dim dueDate As DateTime = DateTime.Parse(orden.Item("Header_Date").ToString())
-            Dim formattedDueDate As String = dueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-            payments(0).DueDate = formattedDueDate
-        payments(0).IsReceivedPayment = False
-        payments(0).CurrencyId = "ARG"
+            payments(0).DueDate = formattedHeaderDate
+            payments(0).IsReceivedPayment = False
+            payments(0).CurrencyId = "ARG"
 
         ' Creación de líneas de la orden
         For Each item As DataRow In orderItems.Rows
@@ -451,11 +450,11 @@ Public Class Form1
 
             newCreateLine.Label = item.Field (Of String)("Label")
                 newCreateLine.Origin = DocumentOrigin.ECommerce
-                Dim deliveryDate As DateTime = DateTime.Parse(item.Item("DeliveryDate").ToString())
-                Dim formattedDeliveryDate As String = deliveryDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-                newCreateLine.DeliveryDate = formattedDeliveryDate
+                Dim dueDate As DateTime = DateTime.Parse(orden.Item("DueDate").ToString())
+                Dim formattedDueDate As String = dueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                newCreateLine.DeliveryDate = formattedDueDate
                 newCreateLine.Quantity = Integer.Parse(item.Item("Quantity"))
-            newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
+                newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
             newCreateLine.SalesPersonId = item.Field (Of String)("SalesPersonId")
             newCreateLine.ItemIdentifier = itemIdentifier
             omniChannelLine.WarehouseId = item.Field (Of String)("WarehouseId") '
@@ -478,12 +477,10 @@ Public Class Form1
             ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_MELI_CABECERA", orden.Field (Of Integer)("id"))
 
         Catch ex As Exception
-            ' Manejar cualquier excepción que pueda ocurrir durante la creación de la orden
-            MsgBox($"Error al crear la orden: {ex.Message}")
 
-        End Try
+            End Try
         Catch ex As Exception
-            MsgBox("error en crearOrdenCegid "+ ex.Message)
+            MsgBox("error en crearOrdenCegid " + ex.Message)
         End Try
     End Function
 
@@ -595,41 +592,41 @@ Public Class Form1
                 If dtCancelledOrder Is Nothing Then
                     Continue For
                 End If
-                'Try
-                '    Dim orderId = dtCancelledOrder.Rows(0).Item(0)
-                '    Dim customerId = dtCancelledOrder.Rows(0).Item(1)
-                '    Dim getByReferenceRequest As New GetByReference_Request()
-                '    getByReferenceRequest.Reference = New SaleDocumentReference()
+                Try
+                    Dim orderId = dtCancelledOrder.Rows(0).Item(0)
+                    Dim customerId = dtCancelledOrder.Rows(0).Item(1)
+                    Dim getByReferenceRequest As New GetByReference_Request()
+                    getByReferenceRequest.Reference = New SaleDocumentReference()
 
-                '    getByReferenceRequest.Reference.InternalReference = orderId
-                '    getByReferenceRequest.Reference.CustomerId = customerId
-                '    getByReferenceRequest.Reference.Type = SaleDocumentType.CustomerOrder
+                    getByReferenceRequest.Reference.InternalReference = orderId
+                    getByReferenceRequest.Reference.CustomerId = customerId
+                    getByReferenceRequest.Reference.Type = SaleDocumentType.CustomerOrder
 
-                '    Dim getByReferenceResponse = clientCegid.GetByReference(getByReferenceRequest, clientContext)
+                    Dim getByReferenceResponse = clientCegid.GetByReference(getByReferenceRequest, clientContext)
 
 
-                '    ' Posibilidad de evaluar algun criterio para cancelar la orden
-                '    If getByReferenceResponse.Header.OmniChannel.BillingStatus = BillingStatus.Pending And getByReferenceResponse.Header.OmniChannel.CancelStatus <> CancelStatus.Canceled Then
-                '        '2° cancelar, metodo: Cancel
-                '        Dim cancelRequest As New Cancel_Request
-                '        cancelRequest.Identifier = New SaleDocumentIdentifier()
-                '        cancelRequest.Identifier.Reference = New SaleDocumentReference()
-                '        cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
-                '        cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
-                '        cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
-                '        cancelRequest.ReasonId = "CAN"
+                    ' Posibilidad de evaluar algun criterio para cancelar la orden
+                    If getByReferenceResponse.Header.OmniChannel.BillingStatus = BillingStatus.Pending And getByReferenceResponse.Header.OmniChannel.CancelStatus <> CancelStatus.Canceled Then
+                        '2° cancelar, metodo: Cancel
+                        Dim cancelRequest As New Cancel_Request
+                        cancelRequest.Identifier = New SaleDocumentIdentifier()
+                        cancelRequest.Identifier.Reference = New SaleDocumentReference()
+                        cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
+                        cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
+                        cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
+                        cancelRequest.ReasonId = "CAN"
 
-                '        clientCegid.Cancel(cancelRequest, clientContext)
+                        clientCegid.Cancel(cancelRequest, clientContext)
 
-                '        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
+                        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
 
-                '    Else
-                '        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", getByReferenceResponse.Header.InternalReference.ToString, "FIN")
-                '    End If
+                    Else
+                        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", getByReferenceResponse.Header.InternalReference.ToString, "FIN")
+                    End If
 
-                'Catch ex As Exception
+                Catch ex As Exception
 
-                'End Try
+                End Try
 
             Next
 
