@@ -188,6 +188,7 @@ Public Class Form1
         Dim amount As String = "0"
         Dim methodId As String = "ECO"
         Dim paymentId As Integer = 20
+
         Dim dueDates As DateTime = DateTime.Parse(rootS.GetProperty("shipping_option").GetProperty("estimated_handling_limit").GetProperty("date").ToString())
         Dim formattedDueDate As String = dueDates.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)
 
@@ -463,11 +464,7 @@ Public Class Form1
         payments(0).Amount = 0
         payments(0).MethodId = "ECO"
         payments(0).Id = 20
-
-        Dim DueDate As DateTime = DateTime.Parse(orden.Item("Header_Date").ToString())
-        Dim formattedDueDate As String = DueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-
-        payments(0).DueDate = formattedDueDate
+        payments(0).DueDate = formattedDate
         payments(0).IsReceivedPayment = False
         payments(0).CurrencyId = "ARG"
 
@@ -482,10 +479,10 @@ Public Class Form1
             newCreateLine.Label = item.Field(Of String)("Label")
             newCreateLine.Origin = WSorden.DocumentOrigin.ECommerce
 
-            Dim DeliveryDate As DateTime = DateTime.Parse(item.Item("DeliveryDate").ToString())
-            Dim formattedDeliveryDate As String = DeliveryDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+            Dim DueDate As DateTime = DateTime.Parse(orden.Item("DueDate").ToString())
+            Dim formattedDueDate As String = DueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
 
-            newCreateLine.DeliveryDate = formattedDeliveryDate
+            newCreateLine.DeliveryDate = formattedDueDate
             newCreateLine.Quantity = Integer.Parse(item.Item("Quantity"))
             newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
 
@@ -576,9 +573,6 @@ Public Class Form1
             Console.WriteLine($"Error al crear cliente: {ex.Message}")
         End Try
     End Sub
-
-
-
 
     Private Async Function CancelOrden() As Task
 
@@ -671,13 +665,6 @@ Public Class Form1
 
         Next
 
-
     End Function
-
-
-
-
-
-
 
 End Class
