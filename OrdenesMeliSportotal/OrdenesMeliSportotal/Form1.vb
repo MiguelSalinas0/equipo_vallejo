@@ -15,8 +15,7 @@ Public Class Form1
     Dim ReadOnly dateFrom As String = Date.Now.AddDays(- 1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
     Dim ReadOnly dateTo As String = Date.Now.AddDays(1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
 
-    ReadOnly _
-        urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString +
+    ReadOnly urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString +
                                   "&order.status=paid&order.date_created.from=" + dateFrom +
                                   ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
 
@@ -50,8 +49,16 @@ Public Class Form1
     Dim orderItems As List(Of OrderItem)
 
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        tokenML = GetToken()
+        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
+
         Await ConsultasMLAsync()
+
         Await ProcesarOrdenes()
+
+        Await CancelOrden()
+
         Dispose()
     End Sub
 
@@ -63,13 +70,12 @@ Public Class Form1
     End Function
 
     Private Async Function ConsultasMLAsync() As Task
+        ' Header necesario para billing info
+        httpClient.DefaultRequestHeaders.Add("x-version", "2")
+
         Dim total As Integer
         Dim offset As Integer
         Dim limit As Integer
-
-        ' Consulto órdenes
-        tokenML = GetToken()
-        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
         respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes + "&offset=0")
         bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
@@ -89,11 +95,10 @@ Public Class Form1
             root = jsonDoc.RootElement
             ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString())
 
-            ' Header necesario para billing info
-            httpClient.DefaultRequestHeaders.Add("x-version", "2")
 
             ' Iteración de órdenes
             For Each ord In ordenes
+
                 Dim packIdAux As String = ""
                 Try
                     If ord.PackId IsNot Nothing Then
@@ -185,7 +190,13 @@ Public Class Form1
         Dim amount = "0"
         Dim methodId = "ECO"
         Dim paymentId = 20
-        Dim dueDate As string = formattedDate
+
+        Dim dueDates As DateTime = DateTime.Parse(rootS.GetProperty("shipping_option").GetProperty("estimated_handling_limit").GetProperty("date").ToString())
+        Dim formattedDueDate As String = dueDates.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)
+
+        'Dim dueDate As DateTime = rootS.GetProperty("date_created").ToString
+        Dim dueDate = formattedDueDate
+
         Dim isReceivedPayment As Boolean = 0
         Dim currencyId = "ARG"
 
@@ -264,8 +275,8 @@ Public Class Form1
         Dim reference As String = item.Item.SellerCustomField
         Dim storeId = "000111"
         Dim label As String = item.Item.Title.ToString
-        Dim deliveryDate As Date = headerDate.ToString("yyyy-MM-dd")
-        Dim quantity As Integer = item.Quantity
+            Dim deliveryDate As Date = Date.Parse(headerDate.ToString("yyyy-MM-dd"), CultureInfo.InvariantCulture)
+            Dim quantity As Integer = item.Quantity
         Dim netUnitPrice As Double = item.UnitPrice
         Dim warehouse = "000198"
 
@@ -399,8 +410,8 @@ Public Class Form1
             Dim formattedHeaderDate As String = headerDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
 
             createHeader.Date = formattedHeaderDate
-            createHeader.InternalReference = orden.Field (Of String)("Header_InternalReference")
-        createHeader.Origin = DocumentOrigin.ECommerce
+            createHeader.InternalReference = orden.Field(Of String)("Header_InternalReference")
+            createHeader.Origin = DocumentOrigin.ECommerce
 
         ' Configuración del canal omni
         omniChannel.BillingStatus = BillingStatus.Pending
@@ -425,11 +436,9 @@ Public Class Form1
         payments(0).Amount = 0
         payments(0).MethodId = "ECO"
             payments(0).Id = 20
-            Dim dueDate As DateTime = DateTime.Parse(orden.Item("Header_Date").ToString())
-            Dim formattedDueDate As String = dueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-            payments(0).DueDate = formattedDueDate
-        payments(0).IsReceivedPayment = False
-        payments(0).CurrencyId = "ARG"
+            payments(0).DueDate = formattedHeaderDate
+            payments(0).IsReceivedPayment = False
+            payments(0).CurrencyId = "ARG"
 
         ' Creación de líneas de la orden
         For Each item As DataRow In orderItems.Rows
@@ -441,11 +450,11 @@ Public Class Form1
 
             newCreateLine.Label = item.Field (Of String)("Label")
                 newCreateLine.Origin = DocumentOrigin.ECommerce
-                Dim deliveryDate As DateTime = DateTime.Parse(item.Item("DeliveryDate").ToString())
-                Dim formattedDeliveryDate As String = deliveryDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-                newCreateLine.DeliveryDate = formattedDeliveryDate
+                Dim dueDate As DateTime = DateTime.Parse(orden.Item("DueDate").ToString())
+                Dim formattedDueDate As String = dueDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                newCreateLine.DeliveryDate = formattedDueDate
                 newCreateLine.Quantity = Integer.Parse(item.Item("Quantity"))
-            newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
+                newCreateLine.NetUnitPrice = Decimal.Parse(item.Item("NetUnitPrice"))
             newCreateLine.SalesPersonId = item.Field (Of String)("SalesPersonId")
             newCreateLine.ItemIdentifier = itemIdentifier
             omniChannelLine.WarehouseId = item.Field (Of String)("WarehouseId") '
@@ -468,12 +477,10 @@ Public Class Form1
             ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_MELI_CABECERA", orden.Field (Of Integer)("id"))
 
         Catch ex As Exception
-            ' Manejar cualquier excepción que pueda ocurrir durante la creación de la orden
-            MsgBox($"Error al crear la orden: {ex.Message}")
 
-        End Try
+            End Try
         Catch ex As Exception
-            MsgBox("error en crearOrdenCegid "+ ex.Message)
+            MsgBox("error en crearOrdenCegid " + ex.Message)
         End Try
     End Function
 
@@ -533,4 +540,98 @@ Public Class Form1
             MsgBox($"Error al crear cliente: {ex.Message}")
         End Try
     End Sub
+
+    Private Async Function CancelOrden() As Task
+
+        ' Declaración de variables
+        Dim clientContext As New WSOrden.RetailContext
+        Dim createRequest As New Create_Request
+        Dim binding = New BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+        Dim endpoint As New EndpointAddress("http://cegid.sportotal.com.ar/Y2_VAL/SaleDocumentService.svc?singleWsdl")
+        Dim clientCegid As SaleDocumentServiceClient
+
+        binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic
+        binding.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName
+        clientCegid = New SaleDocumentServiceClient(binding, endpoint)
+        clientCegid.ClientCredentials.UserName.UserName = "VATEST\MATIAS"
+        clientCegid.ClientCredentials.UserName.Password = "MATIAS2020"
+        clientContext.DatabaseId = "VATEST"
+
+        Dim total As Integer
+        Dim offset As Integer
+        Dim limit As Integer
+
+        Dim urlGetOrders As String = apiMLBase + "orders/search?seller=" + userId.ToString + "&order.status=cancelled&order.date_created.from=" + dateFrom + ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
+
+        respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrders + "&offset=0")
+        bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+        jsonDoc = JsonDocument.Parse(bodyOrdenes)
+        root = jsonDoc.RootElement
+
+        If Not Integer.TryParse(root.GetProperty("paging").GetProperty("total").ToString, total) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("offset").ToString, offset) Or
+           Not Integer.TryParse(root.GetProperty("paging").GetProperty("limit").ToString, limit) Then
+            Exit Function
+        End If
+
+        For pagina As Integer = offset To total Step limit
+            respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrders + "&offset=" + pagina.ToString())
+            bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
+            jsonDoc = JsonDocument.Parse(bodyOrdenes)
+            root = jsonDoc.RootElement
+
+            ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString())
+
+            For Each orden In ordenes
+
+                ordenId = If(orden.PackId <> "", orden.PackId, orden.Id)
+
+                Dim dtCancelledOrder = ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "SPORTOTAL", ordenId.ToString)
+
+                '1° obtener orden de cegid, implementar el metodo: GetByReference
+                If dtCancelledOrder Is Nothing Then
+                    Continue For
+                End If
+                Try
+                    Dim orderId = dtCancelledOrder.Rows(0).Item(0)
+                    Dim customerId = dtCancelledOrder.Rows(0).Item(1)
+                    Dim getByReferenceRequest As New GetByReference_Request()
+                    getByReferenceRequest.Reference = New SaleDocumentReference()
+
+                    getByReferenceRequest.Reference.InternalReference = orderId
+                    getByReferenceRequest.Reference.CustomerId = customerId
+                    getByReferenceRequest.Reference.Type = SaleDocumentType.CustomerOrder
+
+                    Dim getByReferenceResponse = clientCegid.GetByReference(getByReferenceRequest, clientContext)
+
+
+                    ' Posibilidad de evaluar algun criterio para cancelar la orden
+                    If getByReferenceResponse.Header.OmniChannel.BillingStatus = BillingStatus.Pending And getByReferenceResponse.Header.OmniChannel.CancelStatus <> CancelStatus.Canceled Then
+                        '2° cancelar, metodo: Cancel
+                        Dim cancelRequest As New Cancel_Request
+                        cancelRequest.Identifier = New SaleDocumentIdentifier()
+                        cancelRequest.Identifier.Reference = New SaleDocumentReference()
+                        cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
+                        cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
+                        cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
+                        cancelRequest.ReasonId = "CAN"
+
+                        clientCegid.Cancel(cancelRequest, clientContext)
+
+                        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
+
+                    Else
+                        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", getByReferenceResponse.Header.InternalReference.ToString, "FIN")
+                    End If
+
+                Catch ex As Exception
+
+                End Try
+
+            Next
+
+        Next
+
+    End Function
+
 End Class
