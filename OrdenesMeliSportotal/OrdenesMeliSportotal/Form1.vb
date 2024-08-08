@@ -15,8 +15,7 @@ Public Class Form1
     Dim ReadOnly dateFrom As String = Date.Now.AddDays(- 1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
     Dim ReadOnly dateTo As String = Date.Now.AddDays(1).Date.ToString("yyyy-MM-dd") + "T00:00:00"
 
-    ReadOnly _
-        urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString +
+    ReadOnly urlGetOrdenes As String = apiMLBase + "orders/search?seller=" + userId.ToString +
                                   "&order.status=paid&order.date_created.from=" + dateFrom +
                                   ".000-00:00&order.date_created.to=" + dateTo + ".000-00:00"
 
@@ -56,9 +55,9 @@ Public Class Form1
 
         'Await ConsultasMLAsync()
 
-        'Await ProcesarOrdenes()
+        Await ProcesarOrdenes()
 
-        Await CancelOrden()
+        'Await CancelOrden()
 
         Dispose()
     End Sub
@@ -71,13 +70,12 @@ Public Class Form1
     End Function
 
     Private Async Function ConsultasMLAsync() As Task
+        ' Header necesario para billing info
+        httpClient.DefaultRequestHeaders.Add("x-version", "2")
+
         Dim total As Integer
         Dim offset As Integer
         Dim limit As Integer
-
-        ' Consulto órdenes
-        tokenML = GetToken()
-        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenML)
 
         respuestaOrdenes = Await httpClient.GetAsync(requestUri:=urlGetOrdenes + "&offset=0")
         bodyOrdenes = Await respuestaOrdenes.Content.ReadAsStringAsync()
@@ -97,8 +95,6 @@ Public Class Form1
             root = jsonDoc.RootElement
             ordenes = JsonConvert.DeserializeObject(Of List(Of Producto))(root.GetProperty("results").ToString())
 
-            ' Header necesario para billing info
-            httpClient.DefaultRequestHeaders.Add("x-version", "2")
 
             ' Iteración de órdenes
             For Each ord In ordenes
@@ -278,8 +274,8 @@ Public Class Form1
         Dim reference As String = item.Item.SellerCustomField
         Dim storeId = "000111"
         Dim label As String = item.Item.Title.ToString
-        Dim deliveryDate As Date = headerDate.ToString("yyyy-MM-dd")
-        Dim quantity As Integer = item.Quantity
+            Dim deliveryDate As Date = Date.Parse(headerDate.ToString("yyyy-MM-dd"), CultureInfo.InvariantCulture)
+            Dim quantity As Integer = item.Quantity
         Dim netUnitPrice As Double = item.UnitPrice
         Dim warehouse = "000198"
 
@@ -593,40 +589,47 @@ Public Class Form1
 
                 ordenId = If(orden.PackId <> "", orden.PackId, orden.Id)
 
-                Dim dtCancelledOrder = ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
+                Dim dtCancelledOrder = ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "SPORTOTAL", ordenId.ToString)
 
                 '1° obtener orden de cegid, implementar el metodo: GetByReference
                 If dtCancelledOrder Is Nothing Then
                     Continue For
                 End If
-                Try
-                    Dim orderId = dtCancelledOrder.Rows(0).Item(0)
-                    Dim customerId = dtCancelledOrder.Rows(0).Item(1)
-                    Dim getByReferenceRequest As New GetByReference_Request()
-                    getByReferenceRequest.Reference = New SaleDocumentReference()
+                'Try
+                '    Dim orderId = dtCancelledOrder.Rows(0).Item(0)
+                '    Dim customerId = dtCancelledOrder.Rows(0).Item(1)
+                '    Dim getByReferenceRequest As New GetByReference_Request()
+                '    getByReferenceRequest.Reference = New SaleDocumentReference()
 
-                    getByReferenceRequest.Reference.InternalReference = orderId
-                    getByReferenceRequest.Reference.CustomerId = customerId
-                    getByReferenceRequest.Reference.Type = SaleDocumentType.CustomerOrder
+                '    getByReferenceRequest.Reference.InternalReference = orderId
+                '    getByReferenceRequest.Reference.CustomerId = customerId
+                '    getByReferenceRequest.Reference.Type = SaleDocumentType.CustomerOrder
 
-                    Dim getByReferenceResponse = clientCegid.GetByReference(getByReferenceRequest, clientContext)
-
-                    ' Posibilidad de evaluar algun criterio para cancelar la orden
+                '    Dim getByReferenceResponse = clientCegid.GetByReference(getByReferenceRequest, clientContext)
 
 
-                    '2° cancelar, metodo: Cancel
-                    Dim cancelRequest As New Cancel_Request
-                    cancelRequest.Identifier = New SaleDocumentIdentifier()
-                    cancelRequest.Identifier.Reference = New SaleDocumentReference()
-                    cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
-                    cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
-                    cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
-                    cancelRequest.ReasonId = "CAN"
+                '    ' Posibilidad de evaluar algun criterio para cancelar la orden
+                '    If getByReferenceResponse.Header.OmniChannel.BillingStatus = BillingStatus.Pending And getByReferenceResponse.Header.OmniChannel.CancelStatus <> CancelStatus.Canceled Then
+                '        '2° cancelar, metodo: Cancel
+                '        Dim cancelRequest As New Cancel_Request
+                '        cancelRequest.Identifier = New SaleDocumentIdentifier()
+                '        cancelRequest.Identifier.Reference = New SaleDocumentReference()
+                '        cancelRequest.Identifier.Reference.CustomerId = getByReferenceResponse.Header.CustomerId
+                '        cancelRequest.Identifier.Reference.InternalReference = getByReferenceResponse.Header.InternalReference
+                '        cancelRequest.Identifier.Reference.Type = SaleDocumentType.CustomerOrder
+                '        cancelRequest.ReasonId = "CAN"
 
-                    clientCegid.Cancel(cancelRequest, clientContext)
-                Catch ex As Exception
+                '        clientCegid.Cancel(cancelRequest, clientContext)
 
-                End Try
+                '        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", ordenId.ToString)
+
+                '    Else
+                '        ConexionBBDD.ConexionSQL.EjecutarSP("SP_UPDATE_ORDENES_CABECERA_CANCELACION", "VALLEJO", getByReferenceResponse.Header.InternalReference.ToString, "FIN")
+                '    End If
+
+                'Catch ex As Exception
+
+                'End Try
 
             Next
 
